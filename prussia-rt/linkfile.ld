@@ -1,14 +1,14 @@
-ENTRY(_start)
-
-MEMORY {
-    /* The EE kernel reserves the first megabyte of RAM to itself. */
-    KERNEL_MEM = 0x00000000;
-    USER_MEM   = 0x00100000;
-}
+/* We need the linker to start executing code from _start to bring up the Rust runtime before Rust runs */
+ENTRY(_start);
+EXTERN(_start);
 
 SECTIONS {
-    /* The .text segment contains the executable machine code. */
-    .text : {
+    /* The .text segment contains the executable machine code.
+     * PS2 programs must load at 0x0010'0000 or higher, because the EE kernel reserves the first megabyte
+     * of memory for internal use.
+     */
+    .text 0x00100000: {
+        *(.text.4095);
         *(.text .text.*);
     } > USER_MEM
 

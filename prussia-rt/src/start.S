@@ -3,6 +3,8 @@
 # Licenced under Academic Free License version 2.0
 # Review ps2sdk README & LICENSE files for further details.
 
+.text 4095
+
 # Used for setting up the global pointer register.
 # Note that this is a pointer, rather than a value specifically.
 .extern START_OF_BSS

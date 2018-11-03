@@ -4,11 +4,9 @@
   "data-layout": "e-m:m-p:32:32-i8:8:32-i16:16:32-i64:64-n32-S64",
   "executables": true,
   "features": "+mips2",
-  "has-elf-tls": true,
-  "has-rpath": true,
   "is-builtin": false,
-  "linker": "rust-lld",
-  "linker-flavor": "ld.lld",
+  "linker": "mips64el-none-elf-ld",
+  "linker-flavor": "ld",
   "llvm-target": "mipsel-none-elf",
   "max-atomic-width": 32,
   "os": "none",
@@ -19,5 +17,8 @@
   "target-endian": "little",
   "target-pointer-width": "32",
   "soft-float": true,
-  "vendor": "unknown"
+  "vendor": "unknown",
+  "post-link-args": {
+    "ld": ["--verbose", "-Tlinkfile.ld"]
+  }
 }
