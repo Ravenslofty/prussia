@@ -1,0 +1,7 @@
+SPDX-License-Identifier: MIT OR Apache-2.0
+
+Copyright (C) Dan Ravensloft 2018
+
+In layman's terms: the same license as Rust itself.
+
+Note that I have in some cases used PS2SDK as a reference, which is licensed under the Academic Free License 2.0.
