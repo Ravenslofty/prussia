@@ -51,7 +51,7 @@ _start:
     dla     $5, END_OF_RAM      # Second argument: the stack pointer should be initialised at the end of ram. Note that it grows downwards.
     li      $6, STACK_SIZE      # Third argument: how much stack space to allocate.
     dla     $7, ARG_SPACE       # Fourth argument: we want program arguments to be put in ARG_SPACE.
-    dla     $8, InfiniteLoop    # Fifth argument: I have no idea what this does.
+    dla     $8, _InfiniteLoop   # Fifth argument: I have no idea what this does.
     syscall
     move    $sp, $2             # The kernel gives us a new stack pointer in return.
 
