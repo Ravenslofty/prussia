@@ -8,6 +8,7 @@
   "linker": "mips64el-none-elf-ld",
   "linker-flavor": "ld",
   "llvm-target": "mipsel-none-elf",
+  "llvm-args": "-mxgot",
   "max-atomic-width": 32,
   "os": "none",
   "panic_strategy": "abort",
@@ -19,7 +20,7 @@
   "soft-float": true,
   "vendor": "unknown",
   "post-link-args": {
-    "ld": ["--verbose", "-Tlinkfile.ld", "-lprussia-rt"]
+    "ld": ["-Tlinkfile.ld"]
   },
-  "link-dead-code": true
+  "relocation-model": "static"
 }

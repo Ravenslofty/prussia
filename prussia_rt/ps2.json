@@ -8,6 +8,7 @@
   "linker": "mips64el-none-elf-ld",
   "linker-flavor": "ld",
   "llvm-target": "mipsel-none-elf",
+  "llvm-args": "-mxgot",
   "max-atomic-width": 32,
   "os": "none",
   "panic_strategy": "abort",
@@ -17,5 +18,9 @@
   "target-endian": "little",
   "target-pointer-width": "32",
   "soft-float": true,
-  "vendor": "unknown"
+  "vendor": "unknown",
+  "post-link-args": {
+    "ld": ["-Tlinkfile.ld"]
+  },
+  "relocation-model": "static"
 }

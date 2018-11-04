@@ -2,10 +2,10 @@
 name = "hello-rs"
 version = "0.1.0"
 dependencies = [
- "prussia-rt 0.1.0",
+ "prussia_rt 0.1.0",
 ]
 
 [[package]]
-name = "prussia-rt"
+name = "prussia_rt"
 version = "0.1.0"
 

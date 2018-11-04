@@ -5,7 +5,7 @@ authors = ["Dan Ravensloft <dan.ravensloft@gmail.com>"]
 edition = "2018"
 
 [dependencies]
-prussia-rt = { path = "../prussia-rt" }
+prussia_rt = { path = "../prussia_rt" }
 
 [profile.dev]
 panic = "abort"

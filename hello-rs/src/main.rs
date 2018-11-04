@@ -1,5 +1,7 @@
 #![no_std]
 #![no_main]
+extern crate prussia_rt;
+
 use core::panic::PanicInfo;
 
 #[panic_handler]
