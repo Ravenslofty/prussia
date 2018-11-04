@@ -3,8 +3,7 @@
 # Licenced under Academic Free License version 2.0
 # Review ps2sdk README & LICENSE files for further details.
 
-.text 4095
-
+.text
 # Used for setting up the global pointer register.
 # Note that this is a pointer, rather than a value specifically.
 .extern START_OF_BSS
@@ -27,7 +26,10 @@
 .globl ARG_SPACE
 
 # And we want the end of heap to be visible too.
-.global END_OF_HEAP
+.globl END_OF_HEAP
+
+# We want the Rust runtime to be visible to us too, though.
+.extern _rust_startup
 
 # System call numbers used in initialisation
 .set InitMainThread, 60
@@ -35,6 +37,7 @@
 
 # The beginning of the program. Our job here is to set up the stack (and we get the heap set up as
 # a bonus) and then we call into _rust_startup to initialise things from Rust.
+.globl _start
 _start:
 
 # We need to set up the stack, and conveniently the EE kernel provides a routine called InitMainThread
@@ -70,6 +73,7 @@ _start:
 
 # It's an...infinite loop.
 # The padding NOPs are to work around a hardware bug.
+.globl _InfiniteLoop
 _InfiniteLoop:
     nop
     nop
@@ -79,8 +83,13 @@ _InfiniteLoop:
     j       _InfiniteLoop
     nop
 
+.data
 # Program arguments are stored here for Rust to parse and pass to the program.
 # 4-byte argc plus 16 argv pointers to parts of a 256-byte buffer.
 ARG_SPACE:
 .space  4 + (16 * 4) + 256
-  
+
+# We need somewhere to put the end of heap value.
+END_OF_HEAP:
+.int 0
+
