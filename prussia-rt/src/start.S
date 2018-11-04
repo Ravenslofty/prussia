@@ -36,7 +36,7 @@
 .set InitHeap, 61
 
 # The beginning of the program. Our job here is to set up the stack (and we get the heap set up as
-# a bonus) and then we call into _rust_startup to initialise things from Rust.
+# a bonus) and then we call into _rust_start to initialise things from Rust.
 .globl _start
 _start:
 
@@ -67,7 +67,7 @@ _start:
     sw      $2, 0($8)           # There is also a kernel function to return this, but I don't think it's worth using.
 
 # With that out the way, it's showtime!
-    dla     $3, _rust_startup   # Load the ps2-rt entry point into a register...
+    dla     $3, _rust_start     # Load the ps2-rt entry point into a register...
     jr      $3                  # And jump to it.
     nop
 
