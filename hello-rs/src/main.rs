@@ -8,6 +8,6 @@ fn panic(_panic: &PanicInfo<'_>) -> ! {
 }
 
 #[no_mangle]
-extern fn _start() -> ! {
+extern "C" fn main() -> ! {
     loop {}
 }

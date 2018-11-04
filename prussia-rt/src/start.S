@@ -29,7 +29,7 @@
 .globl END_OF_HEAP
 
 # We want the Rust runtime to be visible to us too, though.
-.extern _rust_startup
+.extern _rust_start
 
 # System call numbers used in initialisation
 .set InitMainThread, 60
@@ -37,6 +37,7 @@
 
 # The beginning of the program. Our job here is to set up the stack (and we get the heap set up as
 # a bonus) and then we call into _rust_start to initialise things from Rust.
+.ent _start
 .globl _start
 _start:
 
@@ -45,13 +46,13 @@ _start:
 # It has a signature that (in C terms) looks like this:
 # void* InitMainThread(void* start_of_globals, void* start_of_stack, int stack_size, void* start_of_args, void* root_func)
 # And it returns the stack pointer for us to use.
-    dla     $gp, START_OF_BSS   # We want the global pointer register to reference our globals, wherever they may be.
+    la      $gp, START_OF_BSS   # We want the global pointer register to reference our globals, wherever they may be.
     li      $3, InitMainThread  # Call InitMainThread, obviously.
     move    $4, $gp             # First argument: the global pointer register, which we just initialised.
-    dla     $5, END_OF_RAM      # Second argument: the stack pointer should be initialised at the end of ram. Note that it grows downwards.
+    la      $5, END_OF_RAM      # Second argument: the stack pointer should be initialised at the end of ram. Note that it grows downwards.
     li      $6, STACK_SIZE      # Third argument: how much stack space to allocate.
-    dla     $7, ARG_SPACE       # Fourth argument: we want program arguments to be put in ARG_SPACE.
-    dla     $8, _InfiniteLoop   # Fifth argument: I have no idea what this does.
+    la      $7, ARG_SPACE       # Fourth argument: we want program arguments to be put in ARG_SPACE.
+    la      $8, _InfiniteLoop   # Fifth argument: I have no idea what this does.
     syscall
     move    $sp, $2             # The kernel gives us a new stack pointer in return.
 
@@ -63,16 +64,18 @@ _start:
     li      $4, END_OF_BSS      # First argument: we want heap to start at the end of static data.
     li      $5, HEAP_SIZE       # Second argument: we want heap to continue until the beginning of stack.
     syscall
-    dla     $8, END_OF_HEAP     # Make the end of heap pointer visible to Rust.
+    la      $8, END_OF_HEAP     # Make the end of heap pointer visible to Rust.
     sw      $2, 0($8)           # There is also a kernel function to return this, but I don't think it's worth using.
 
 # With that out the way, it's showtime!
-    dla     $3, _rust_start     # Load the ps2-rt entry point into a register...
+    la      $3, _rust_start     # Load the ps2-rt entry point into a register...
     jr      $3                  # And jump to it.
     nop
+.end _start
 
 # It's an...infinite loop.
 # The padding NOPs are to work around a hardware bug.
+.ent _InfiniteLoop
 .globl _InfiniteLoop
 _InfiniteLoop:
     nop
@@ -82,6 +85,7 @@ _InfiniteLoop:
     nop
     j       _InfiniteLoop
     nop
+.end _InfiniteLoop
 
 .data
 # Program arguments are stored here for Rust to parse and pass to the program.

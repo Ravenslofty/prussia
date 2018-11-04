@@ -19,6 +19,7 @@
   "soft-float": true,
   "vendor": "unknown",
   "post-link-args": {
-    "ld": ["--verbose", "-Tlinkfile.ld"]
-  }
+    "ld": ["--verbose", "-Tlinkfile.ld", "-lprussia-rt"]
+  },
+  "link-dead-code": true
 }

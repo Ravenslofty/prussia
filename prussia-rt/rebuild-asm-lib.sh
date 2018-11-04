@@ -14,5 +14,5 @@ $AS --help | grep mips >/dev/null || echo "Your assembler does not support MIPS.
 $AS --help | grep r5900 >/dev/null || echo "Your assembler does not support the MIPS R5900"
 
 mkdir -p asm-obj
-find src -name "*.S" -exec "$AS" -march=r5900 -32 -o asm-obj/rt.o {} \;
+find src -name "*.S" -exec "$AS" -march=r5900 -32 -KPIC -G0 -xgot -o asm-obj/rt.o {} \;
 ar crs libprussia-rt.a asm-obj/*.o
