@@ -6,6 +6,7 @@ edition = "2018"
 
 [dependencies]
 prussia_rt = { path = "../prussia_rt" }
+prussia_dma = { path = "../prussia_dma" }
 
 [profile.dev]
 panic = "abort"
