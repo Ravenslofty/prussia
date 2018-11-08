@@ -1,0 +1,7 @@
+[workspace]
+
+members = [
+    "hello-rs",
+    "prussia_dma",
+    "prussia_rt",
+]
