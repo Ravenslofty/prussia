@@ -2,6 +2,7 @@
 
 # It doesn't need to target mips64el-none-elf, as long as it's mips64el.
 AS=mips64el-none-elf-as
+ASFLAGS="-march=r5900 -32 -KPIC -G0 -xgot"
 
 # Sanity check the given assembler
 # Does it exist?
@@ -14,5 +15,10 @@ $AS --help | grep mips >/dev/null || echo "Your assembler does not support MIPS.
 $AS --help | grep r5900 >/dev/null || echo "Your assembler does not support the MIPS R5900"
 
 mkdir -p asm-obj
-find src -name "*.S" -exec "$AS" -march=r5900 -32 -KPIC -G0 -xgot -o asm-obj/rt.o {} \;
+rm asm-obj/*
+
+cd src
+find . -name "*.S" -exec $AS $ASFLAGS -o ../asm-obj/{}.o {} \;
+cd ..
+
 ar crs libprussia-rt.a asm-obj/*.o

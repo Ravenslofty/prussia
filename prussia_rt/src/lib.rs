@@ -6,6 +6,8 @@
 #![warn(rust_2018_idioms)]
 #![no_std]
 
+mod interrupts;
+
 use core::ptr;
 
 // Static data initialised to zero goes in the .bss segment, which is essentially a pointer to
