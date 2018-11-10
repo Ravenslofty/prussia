@@ -1,5 +1,3 @@
-#![deny(missing_docs)]
-
 // Whether a channel can be read from.
 pub trait ReadChannel {}
 

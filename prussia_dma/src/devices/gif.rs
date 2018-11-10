@@ -1,13 +1,5 @@
-#![deny(missing_docs)]
-
 use crate::devices::traits;
 
-/// The GS Interface handles setting up and changing the registers of the Graphics Synthesizer, the
-/// GPU of the PS2. It is write-only, and most use of the GIF requires a GIF-specific header called
-/// a GIFtag. For those situations it is better to use prussia_gs than prussia_dma directly.
-///
-/// This struct is empty, but is used as a type parameter for Transfer.
-#[derive(Default)]
 pub struct Gif;
 
 impl traits::Address for Gif {
