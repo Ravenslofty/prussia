@@ -1,0 +1,26 @@
+{
+  "arch": "mips",
+  "cpu": "mips2",
+  "data-layout": "e-m:m-p:32:32-i8:8:32-i16:16:32-i64:64-n32-S64",
+  "executables": true,
+  "features": "+mips2",
+  "is-builtin": false,
+  "linker": "rust-lld",
+  "linker-flavor": "ld.lld",
+  "llvm-target": "mipsel-none-elf",
+  "llvm-args": "-mxgot",
+  "max-atomic-width": 32,
+  "os": "none",
+  "panic_strategy": "abort",
+  "position-independent-executables": false,
+  "relro-level": "full",
+  "target-c-int-width": "32",
+  "target-endian": "little",
+  "target-pointer-width": "32",
+  "soft-float": true,
+  "vendor": "unknown",
+  "post-link-args": {
+    "ld": ["-Tlinkfile.ld"]
+  },
+  "relocation-model": "static"
+}
