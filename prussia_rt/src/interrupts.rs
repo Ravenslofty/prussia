@@ -12,8 +12,11 @@ pub fn disable() {
     status.store();
 }
 
+/// Whether interrupts are enabled or disabled.
 pub enum Status {
+    /// Interrupts are disabled.
     Disabled,
+    /// Interrupts are enabled.
     Enabled,
 }
 
