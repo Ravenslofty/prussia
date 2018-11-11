@@ -1,6 +1,8 @@
 use crate::devices::traits;
 
+/// VU Interface 0, for writing data to Vector Unit 0.
 pub struct Vif0;
+/// VU Interface 1, for reading/writing data to Vector Unit 1.
 pub struct Vif1;
 
 impl traits::Address for Vif0 {

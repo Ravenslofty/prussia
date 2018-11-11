@@ -1,6 +1,8 @@
 use crate::devices::traits;
 
+/// The Image Processing Unit, for sending MPEG2 frames to be decoded.
 pub struct IpuFrom;
+/// The Image Processing Unit for receiving decoded MPEG2 frames.
 pub struct IpuTo;
 
 impl traits::Address for IpuFrom {

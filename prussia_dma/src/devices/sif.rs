@@ -1,7 +1,10 @@
 use crate::devices::traits;
 
+/// SBUS Interface 0, for reading data from the Input/Output Processor.
 pub struct Sif0;
+/// SBUS Interface 1, for writing data to the Input/Output Processor.
 pub struct Sif1;
+/// SBUS Interface 2, for reading/writing debugging data to the Input/Output Processor.
 pub struct Sif2;
 
 impl traits::Address for Sif0 {

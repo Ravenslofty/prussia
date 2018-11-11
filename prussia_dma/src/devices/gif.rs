@@ -1,5 +1,6 @@
 use crate::devices::traits;
 
+/// The GS Interface, for writing data for the Graphics Synthesizer to render later.
 pub struct Gif;
 
 impl traits::Address for Gif {

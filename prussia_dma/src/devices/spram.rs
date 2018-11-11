@@ -1,6 +1,8 @@
 use crate::devices::traits;
 
+/// Scratchpad RAM, for fast data reads.
 pub struct SpramFrom;
+/// Scratchpad RAM, for fast data writes.
 pub struct SpramTo;
 
 impl traits::Address for SpramFrom {

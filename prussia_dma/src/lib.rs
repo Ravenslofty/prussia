@@ -20,7 +20,7 @@
 //!     static mut DATA: Aligned<A16, [u32; 4]> = Aligned([0xdeadbeef, 0xcafed00d, 0x0c0ffee0, 0xcafebabe]);
 //!
 //!     let tx = dma::Transfer::from_mem(gif, unsafe { &mut DATA });
-//!  
+//!
 //!     // Transfer in progress; don't touch DATA.
 //!     // In future versions, there may be a better solution for avoiding memory aliasing.
 //!
@@ -39,16 +39,12 @@
 
 extern crate aligned;
 
-use aligned::{A16, Aligned};
-use core::{
-    mem,
-    ptr,
-    sync::atomic,
-};
+use aligned::{Aligned, A16};
+use core::{mem, ptr, sync::atomic};
 
 mod devices;
 
-pub use crate::devices::{Vif0, Vif1, Gif, IpuFrom, IpuTo, Sif0, Sif1, Sif2, SpramFrom, SpramTo};
+pub use crate::devices::{Gif, IpuFrom, IpuTo, Sif0, Sif1, Sif2, SpramFrom, SpramTo, Vif0, Vif1};
 
 /// Represents the channels of the DMA controller.
 pub struct Channels {
@@ -101,13 +97,25 @@ impl Channels {
             ptr::write_volatile(T::ADDRESS, 0);
             ptr::write_volatile(T::COUNT, 0);
         }
-    
-    
+
         atomic::compiler_fence(atomic::Ordering::SeqCst);
     }
 
     /// Initialise and return the DMA channels.
-    pub fn split(mut self) -> (Vif0, Vif1, Gif, IpuFrom, IpuTo, Sif0, Sif1, Sif2, SpramFrom, SpramTo) {
+    pub fn split(
+        mut self,
+    ) -> (
+        Vif0,
+        Vif1,
+        Gif,
+        IpuFrom,
+        IpuTo,
+        Sif0,
+        Sif1,
+        Sif2,
+        SpramFrom,
+        SpramTo,
+    ) {
         Channels::init(&mut self.vif0);
         Channels::init(&mut self.vif1);
         Channels::init(&mut self.gif);
@@ -119,7 +127,18 @@ impl Channels {
         Channels::init(&mut self.spram_from);
         Channels::init(&mut self.spram_to);
 
-        (self.vif0, self.vif1, self.gif, self.ipu_from, self.ipu_to, self.sif0, self.sif1, self.sif2, self.spram_from, self.spram_to)
+        (
+            self.vif0,
+            self.vif1,
+            self.gif,
+            self.ipu_from,
+            self.ipu_to,
+            self.sif0,
+            self.sif1,
+            self.sif2,
+            self.spram_from,
+            self.spram_to,
+        )
     }
 }
 
@@ -128,10 +147,10 @@ enum TransferDirection {
     FromMem,
 }
 
-/// An in-progress DMA transfer. 
+/// An in-progress DMA transfer.
 ///
 /// This struct holds a mutable reference to the data that it is operating on to ensure it does not
-/// go out of scope while the transfer is in progress. It also owns the channel that it is 
+/// go out of scope while the transfer is in progress. It also owns the channel that it is
 /// operating on to avoid multithread races.
 pub struct Transfer<DEVICE: devices::Address, T: 'static> {
     data: &'static mut Aligned<A16, [T]>,
@@ -154,7 +173,7 @@ impl<DEVICE: devices::ReadChannel + devices::Address, T> Transfer<DEVICE, T> {
     ///     let transfer = Transfer::to_mem(SIF0, &mut data);
     ///     // Do work.
     /// }
-    /// // The contents of data are now one quadword from SIF0 (the IOP). 
+    /// // The contents of data are now one quadword from SIF0 (the IOP).
     /// ```
     pub fn to_mem(dev: DEVICE, data: &'static mut Aligned<A16, [T]>) -> Transfer<DEVICE, T> {
         Transfer::transfer(TransferDirection::ToMem, dev, data)
@@ -185,7 +204,11 @@ impl<DEVICE: devices::WriteChannel + devices::Address, T> Transfer<DEVICE, T> {
 }
 
 impl<DEVICE: devices::Address, T: 'static> Transfer<DEVICE, T> {
-    fn transfer(dir: TransferDirection, dev: DEVICE, data: &'static mut Aligned<A16, [T]>) -> Transfer<DEVICE, T> {
+    fn transfer(
+        dir: TransferDirection,
+        dev: DEVICE,
+        data: &'static mut Aligned<A16, [T]>,
+    ) -> Transfer<DEVICE, T> {
         let address = data.as_ptr() as usize;
         // This assumes that data is on a 16-byte boundary.
         let qword_count: usize = (data.len() * mem::size_of::<T>()) / 16;
@@ -217,7 +240,7 @@ impl<DEVICE: devices::Address, T: 'static> Transfer<DEVICE, T> {
         Transfer {
             data: data,
             dev: dev,
-        } 
+        }
     }
 
     /// Returns true if the DMA transfer has completed.
@@ -232,7 +255,7 @@ impl<DEVICE: devices::Address, T: 'static> Transfer<DEVICE, T> {
 
     /// Wait for a transfer to complete, returning the buffer used for the transfer.
     ///
-    /// Failing to wait for a DMA transfer means it will continue to completion in the 
+    /// Failing to wait for a DMA transfer means it will continue to completion in the
     /// background, but the channel will remain locked.
     pub fn wait(self) -> (DEVICE, &'static mut Aligned<A16, [T]>) {
         while !self.is_done() {}
@@ -244,18 +267,11 @@ impl<DEVICE: devices::Address, T: 'static> Transfer<DEVICE, T> {
 }
 
 mod tests {
-    use aligned::{A16, Aligned};
+    use aligned::{Aligned, A16};
 
     use crate::Channels;
     use crate::Transfer;
-    use crate::{
-        Vif0,
-        Vif1,
-        Gif,
-        IpuFrom,
-        IpuTo,
-        Sif0
-    };
+    use crate::{Gif, IpuFrom, IpuTo, Sif0, Vif0, Vif1};
 
     fn test_vif0(vif0: Vif0) -> Vif0 {
         static mut DATA: Aligned<A16, [u32; 4]> = Aligned([0u32; 4]);
@@ -293,7 +309,7 @@ mod tests {
 
         let dma_to = Transfer::from_mem(ipu_to, unsafe { &mut READ_DATA });
         let dma_from = Transfer::to_mem(ipu_from, unsafe { &mut WRITE_DATA });
-        
+
         // Multiple transfers at once for fun and profit.
         // Note the separate read and write buffers; using the same buffer for multiple
         // simultaneous transfer is Undefined Behaviour.
@@ -321,5 +337,5 @@ mod tests {
         test_vif1(chans.1);
         test_gif(chans.2);
         test_sif0(chans.5);
-    }        
+    }
 }
