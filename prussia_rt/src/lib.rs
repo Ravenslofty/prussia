@@ -5,8 +5,10 @@
 #![deny(missing_docs)]
 #![warn(rust_2018_idioms)]
 #![no_std]
+#![feature(asm)]
 
-mod interrupts;
+pub mod cop0;
+pub mod interrupts;
 
 use core::ptr;
 
@@ -33,7 +35,12 @@ unsafe fn zero_bss() {
 // and then calls _rust_start. Our job here is to provide a safe Rust startup and then call main().
 #[doc(hidden)]
 #[no_mangle]
-pub unsafe extern "C" fn _rust_start() -> ! {
+pub unsafe extern "C" fn _start() -> ! {
+    // This is manually inlined to ensure no stack is used before this point.
+    // 0x0020'0000 is END_OF_RAM, but I haven't figured out how to get `asm!` to use it.
+    asm!("li $$sp, 0x00200000");
+    asm!("addi $$sp, $$sp, -8");
+
     extern "Rust" {
         fn main() -> !;
     }

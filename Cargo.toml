@@ -5,3 +5,9 @@ members = [
     "prussia_dma",
     "prussia_rt",
 ]
+
+[profile.dev]
+panic = "abort"
+
+[profile.release]
+panic = "abort"
