@@ -5,16 +5,9 @@ authors = ["Dan Ravensloft <dan.ravensloft@gmail.com>"]
 edition = "2018"
 
 [dependencies]
+panic-halt = "0.2.0"
 prussia_rt = { path = "../prussia_rt" }
 prussia_dma = { path = "../prussia_dma" }
-
-[profile.dev]
-panic = "abort"
-#linker-flavor = "lld"
-
-[profile.release]
-panic = "abort"
-#linker-flavor = "lld"
 
 [package.metadata.cargo-xbuild]
 memcpy = true

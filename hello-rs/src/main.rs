@@ -1,16 +1,15 @@
 #![no_std]
 #![no_main]
-extern crate prussia_rt as rt;
+#![feature(asm)]
+
+extern crate panic_halt;
 extern crate prussia_dma as dma;
-
-use core::panic::PanicInfo;
-
-#[panic_handler]
-fn panic(_panic: &PanicInfo<'_>) -> ! {
-        loop {}
-}
+extern crate prussia_rt as rt;
 
 #[no_mangle]
-extern "C" fn main() -> ! {
-    loop {}
+fn main() -> ! {
+    unsafe {
+        asm!("li $$3, 4; move $$4, $$0; syscall");
+    }
+    unreachable!("The syscall should not return");
 }
