@@ -1,16 +1,22 @@
 //! Startup / runtime for the Sony PlayStation 2.
 //!
 //! This crate provides routines to bootstrap a Rust environment for the PS2.
+//!
+//! Your main function needs to have the following declaration:
+//! ```
+//! #[no_mangle]
+//! fn main() -> !;
+//! ```
 
 #![deny(missing_docs)]
 #![warn(rust_2018_idioms)]
 #![no_std]
-#![feature(asm)]
 
+pub mod atomic;
 pub mod cop0;
 pub mod interrupts;
 
-use core::ptr;
+use r0;
 
 // Static data initialised to zero goes in the .bss segment, which is essentially a pointer to
 // uninitialised memory. We need to zero .bss before the main program runs.
@@ -21,14 +27,14 @@ unsafe fn zero_bss() {
     // allocated for them. Instead the addresses *are* the values, in this case referring to the
     // start and end of .bss.
     extern "C" {
-        static mut START_OF_BSS: u8;
+        static START_OF_BSS: u8;
         static END_OF_BSS: u8;
     }
 
-    let start = &START_OF_BSS as *const u8 as usize;
-    let end = &END_OF_BSS as *const u8 as usize;
-    let size = end - start;
-    ptr::write_bytes(&mut START_OF_BSS as *mut u8, 0, size);
+    r0::zero_bss::<u32>(
+        &START_OF_BSS as *const u8 as *mut u32,
+        &END_OF_BSS as *const u8 as *mut u32,
+    );
 }
 
 // A PS2 program's execution flow begins in _start, which calls the EE kernel to set up this thread

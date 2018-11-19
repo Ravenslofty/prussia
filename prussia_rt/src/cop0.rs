@@ -48,17 +48,21 @@ impl Status {
     /// Load the contents of the Coprocessor 0 Status register, returning a Status type with the
     /// value of Status.
     pub fn load() -> Self {
-        let status;
-        unsafe {
-            asm!("mfc0 $0, $$12" : "=r" (status));
+        extern "C" {
+            fn _read_status() -> u32;
         }
+
+        let status = unsafe { _read_status() };
+
         Status { bits: status }
     }
 
     /// Store this object to the Coprocessor 0 Status register.
     pub fn store(self) {
-        unsafe {
-            asm!("mtc0 $0, $$12" : : "r" (self.bits));
+        extern "C" {
+            fn _write_status(x: u32);
         }
+
+        unsafe { _write_status(self.bits) }
     }
 }
