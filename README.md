@@ -1,4 +1,4 @@
-# PruSSia - a Rust PS2 SDK.
+# Prussia - a Rust PS2 SDK.
 
 I can be found in the Freenode IRC channel #psugnd, or in the EmuDev discord (https://discord.gg/dkmJAes).
 
@@ -24,11 +24,11 @@ The PCSX2 first-time wizard will let you select your BIOS.
 
 ### Creating a project
 
-As PruSSia is not currently on crates.io, create a new project with `cargo new --bin project_name` in the PruSSia root directory. Then copy `ps2.json` (which can be found in the `hello-rs` project) into your new project's root directory.
+As Prussia is not currently on crates.io, create a new project with `cargo new --bin project_name` in the Prussia root directory. Then copy `ps2.json` (which can be found in the `hello-rs` project) into your new project's root directory.
 
 ### An example project
 
-PruSSia does not (yet) support the Rust Standard Library, so you will be working in `#![no_std]` land.
+Prussia does not (yet) support the Rust Standard Library, so you will be working in `#![no_std]` land.
 
 Here is a bare-bones example `src/main.rs`:
 ```rust
