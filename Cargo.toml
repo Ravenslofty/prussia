@@ -2,7 +2,9 @@
 
 members = [
     "hello-rs",
+    "prussia_debug",
     "prussia_dma",
+    "prussia_gs",
     "prussia_rt",
 ]
 
