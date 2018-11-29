@@ -1,4 +1,10 @@
-use std::{env, error::Error, fs::{self, File}, io::Write, path::PathBuf};
+use std::{
+    env,
+    error::Error,
+    fs::{self, File},
+    io::Write,
+    path::PathBuf,
+};
 
 fn main() -> Result<(), Box<Error>> {
     // build directory for this crate
@@ -8,6 +14,7 @@ fn main() -> Result<(), Box<Error>> {
     println!("cargo:rustc-link-search={}", out_dir.display());
 
     // put `linkfile.ld` in the build directory
+    #[cfg(not(feature = "no-linkfile"))]
     File::create(out_dir.join("linkfile.ld"))?.write_all(include_bytes!("linkfile.ld"))?;
 
     // and put `libprussia-rt.a` in there too
