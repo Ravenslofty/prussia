@@ -1,0 +1,14 @@
+[package]
+name = "biostation"
+version = "0.0.0"
+authors = ["Dan Ravensloft <dan.ravensloft@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+prussia_debug = { path = "../prussia_debug" }
+prussia_dma = { path = "../prussia_dma" }
+prussia_intc = { path = "../prussia_intc" }
+
+[dependencies.prussia_rt]
+path = "../prussia_rt"
+features = ["kernel-linkfile"]
