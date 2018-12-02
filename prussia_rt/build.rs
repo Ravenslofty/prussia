@@ -6,6 +6,22 @@ use std::{
     path::PathBuf,
 };
 
+#[cfg(not(feature = "kernel-linkfile"))]
+fn add_linkfile() -> Result<(), Box<Error>> {
+    let out_dir = PathBuf::from(env::var_os("OUT_DIR").unwrap());
+    File::create(out_dir.join("linkfile.ld"))?.write_all(include_bytes!("user-linkfile.ld"))?;
+
+    Ok(())
+}
+
+#[cfg(feature = "kernel-linkfile")]
+fn add_linkfile() -> Result<(), Box<Error>> {
+    let out_dir = PathBuf::from(env::var_os("OUT_DIR").unwrap());
+    File::create(out_dir.join("linkfile.ld"))?.write_all(include_bytes!("kernel-linkfile.ld"))?;
+
+    Ok(())
+}
+
 fn main() -> Result<(), Box<Error>> {
     // build directory for this crate
     let out_dir = PathBuf::from(env::var_os("OUT_DIR").unwrap());
@@ -14,8 +30,7 @@ fn main() -> Result<(), Box<Error>> {
     println!("cargo:rustc-link-search={}", out_dir.display());
 
     // put `linkfile.ld` in the build directory
-    #[cfg(not(feature = "no-linkfile"))]
-    File::create(out_dir.join("linkfile.ld"))?.write_all(include_bytes!("linkfile.ld"))?;
+    add_linkfile()?;
 
     // and put `libprussia-rt.a` in there too
     fs::copy("libprussia-rt.a", out_dir.join("libprussia-rt.a"))?;

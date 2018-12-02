@@ -1,6 +1,6 @@
 [package]
 name = "prussia_rt"
-version = "0.4.1"
+version = "0.4.2"
 license = "MIT OR Apache-2.0"
 authors = ["Dan Ravensloft <dan.ravensloft@gmail.com>"]
 edition = "2018"
@@ -11,4 +11,4 @@ r0 = "0.2.2"
 
 [features]
 default = []
-no-linkfile = []
+kernel-linkfile = []

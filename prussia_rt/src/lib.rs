@@ -8,9 +8,9 @@
 //! fn main() -> !;
 //! ```
 
-#![deny(missing_docs)]
-#![warn(rust_2018_idioms)]
 #![no_std]
+#![deny(missing_docs)]
+#![feature(asm)]
 
 pub mod atomic;
 pub mod cop0;
