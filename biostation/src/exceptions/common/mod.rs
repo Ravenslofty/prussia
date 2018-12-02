@@ -1,81 +1,30 @@
-use core::hint;
+use prussia_rt::cop0;
 
 mod syscall;
 
-#[no_mangle]
-static COMMON_HANDLERS: [extern "C" fn(); 16] = [
-    // Interrupt
-    unimplemented_handler,
-    // TLB Modified
-    unimplemented_handler,
-    // TLB Invalid (Load)
-    unimplemented_handler,
-    // TLB Invalid (Store)
-    unimplemented_handler,
-    // Address Error (Load)
-    unimplemented_handler,
-    // Address Error (Store)
-    unimplemented_handler,
-    // Bus Error (instruction fetch)
-    unimplemented_handler,
-    // Bus Error (data load/store)
-    unimplemented_handler,
-    // System Call
-    unimplemented_handler,
-    // Breakpoint
-    unimplemented_handler,
-    // Reserved Instruction
-    unimplemented_handler,
-    // Coprocessor Unusable
-    unimplemented_handler,
-    // Arithmetic Overflow
-    unimplemented_handler,
-    // Trap
-    unimplemented_handler,
-    // (not used)
-    unimplemented_handler,
-    // (not used)
-    unimplemented_handler,
-];
+global_asm!(include_str!("handler.S"));
 
-extern "C" fn unimplemented_handler() {
-    unimplemented!("common exception handler");
+extern "C" {
+    #[used]
+    static mut COMMON_HANDLERS: [usize; 16];
 }
 
-#[naked]
 #[no_mangle]
-#[link_section = ".ee_exc_common"]
-unsafe extern "C" fn handler() -> ! {
-    asm!(
-        "
-        // Load the COP0 cause register and extract the exception code.
-        mfc0 $$k0, $$13
-        andi $$k0, 0x3F
-        
-        // Save ra and t0 to stack.
-        addi $$sp, -32
-        sw   $$ra, 0($$sp)
-        sw   $$t0, 16($$sp)
+extern "C" fn unimplemented_common_handler() {
+    let exc_code = (cop0::Cause::load() & cop0::Cause::ExcCode).bits() >> 2;
+    let exc_code = cop0::L1Exception::try_from_common(exc_code as u8)
+        .expect("Exception codes are between 1 and 13 on real hardware");
 
-        // Load the base exception handler table and add the exception code.
-        la   $$t0, COMMON_HANDLERS
-        add  $$k0, $$t0
+    unimplemented!("Exception {:?} handler", exc_code);
+}
 
-        // Restore t0
-        lw   $$t0, 16($$sp)
+pub fn init() {
+    unsafe {
+        for x in COMMON_HANDLERS.iter_mut() {
+            *x = unimplemented_common_handler as usize;
+        }
 
-        // Get the exception handler address and jump to the handler.
-        lw   $$k0, 0($$k0)
-        jalr $$k0
-
-        // Restore the return address and pop stack.
-        lw   $$ra, 0($$sp)
-        addi $$sp, 32
-
-        // Flush the pipeline and return to user code.
-        .int 0x0000000f // sync
-        .int 0x42000018 // eret
-    "
-    );
-    hint::unreachable_unchecked();
+        COMMON_HANDLERS[9] = syscall::syscall_handler as usize;
+    }
+    syscall::init();
 }

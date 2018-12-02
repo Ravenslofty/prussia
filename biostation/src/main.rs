@@ -4,6 +4,8 @@
 #![no_main]
 #![deny(missing_docs)]
 #![feature(asm)]
+#![feature(const_raw_ptr_to_usize_cast)]
+#![feature(global_asm)]
 #![feature(naked_functions)]
 
 extern crate prussia_dma as dma;
@@ -13,7 +15,7 @@ use core::fmt::Write;
 use core::panic::PanicInfo;
 
 use prussia_debug::EEOut;
-use prussia_rt::interrupts;
+use prussia_rt::{cop0, interrupts};
 
 mod exceptions;
 
@@ -40,10 +42,16 @@ fn main() -> ! {
     // And from the DMA controller.
     dma::Status::load().store();
 
+    // Set up the exception tables.
+    exceptions::init();
+
+    // Switch to our exception tables.
+    let mut status = cop0::Status::load();
+    status &= !cop0::Status::BEV;
+    status.store();
+
     // Enable interrupts now that we've set everything up.
     interrupts::enable();
 
     panic!("Hello, World");
-
-    //loop {}
 }
