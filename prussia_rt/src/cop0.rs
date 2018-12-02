@@ -94,6 +94,7 @@ impl Cause {
 }
 
 /// Level 1 exception types.
+#[derive(Debug)]
 pub enum L1Exception {
     /// An interrupt occurred.
     Interrupt,
@@ -163,6 +164,7 @@ impl L1Exception {
 }
 
 /// Level 2 exception types.
+#[derive(Debug)]
 pub enum L2Exception {
     /// The processor was reset.
     Reset,
