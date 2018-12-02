@@ -1,12 +1,13 @@
 [package]
 name = "prussia_dma"
-version = "0.2.1"
+version = "0.2.2"
 authors = ["Dan Ravensloft <dan.ravensloft@gmail.com>"]
 license = "MIT OR Apache-2.0"
 edition = "2018"
 
 [dependencies]
 aligned = "0.3.0"
+bitflags = "1.0.4"
 
 [package.metadata.cargo-xbuild]
 memcpy = true

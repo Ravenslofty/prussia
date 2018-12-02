@@ -33,7 +33,6 @@
 //! ```
 
 #![no_std]
-#![feature(extern_crate_item_prelude)]
 #![allow(dead_code)]
 #![deny(missing_docs)]
 
@@ -42,8 +41,10 @@ extern crate aligned;
 use aligned::{Aligned, A16};
 use core::{mem, ptr, sync::atomic};
 
+mod control;
 mod devices;
 
+pub use crate::control::Status;
 pub use crate::devices::{Gif, IpuFrom, IpuTo, Sif0, Sif1, Sif2, SpramFrom, SpramTo, Vif0, Vif1};
 
 /// Represents the channels of the DMA controller.
