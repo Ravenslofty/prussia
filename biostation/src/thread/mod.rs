@@ -28,6 +28,8 @@ struct Thread {
     stack_size: usize,
     /// The bottom of the thread's stack.
     stack_bottom: usize,
+    /// The top of the thread's heap.
+    heap_top: usize,
     /// The thread context address.
     context: usize,
     /// Address to return to after the thread exits.
@@ -48,6 +50,7 @@ impl Thread {
             gp,
             stack_size,
             stack_bottom,
+            heap_top: stack_bottom,
             context: stack_bottom + stack_size - mem::size_of::<ThreadContext>(),
             return_address,
             args,
@@ -68,6 +71,21 @@ impl Thread {
     /// Return the top of a thread's stack, including the area of memory for the thread context.
     fn absolute_top_of_stack(&self) -> usize {
         self.stack_bottom + self.stack_size
+    }
+
+    /// Return the bottom of a thread's stack.
+    fn bottom_of_stack(&self) -> usize {
+        self.stack_bottom
+    }
+
+    /// Return the top of a thread's heap.
+    fn top_of_heap(&self) -> usize {
+        self.heap_top
+    }
+
+    /// Set the top of a thread's heap.
+    fn set_top_of_heap(&mut self, top: usize) {
+        self.heap_top = top;
     }
 }
 
@@ -111,6 +129,11 @@ impl KernelThreadState {
     /// Return the thread for a given ID.
     fn thread(&mut self, id: usize) -> &mut Option<Thread> {
         &mut self.threads[id]
+    }
+
+    /// Return the current thread ID.
+    fn current_thread(&self) -> u32 {
+        self.current
     }
 }
 
@@ -158,4 +181,20 @@ pub extern "C" fn init_main_thread(
     ctx.gprs[31] = return_address as u128; // Return address.
 
     thread.top_of_stack()
+}
+
+/// Initialise a thread's heap, returning the top of its heap.
+pub extern "C" fn init_heap(heap_bottom: usize, heap_size: i32) -> usize {
+    let thread = unsafe { THREAD_STATE.current_thread() };
+    let mut thread = unsafe { THREAD_STATE.thread(thread as usize).unwrap() };
+
+    if heap_size < 0 {
+        // A negative heap size means the top of the heap is the bottom of the stack.
+        thread.set_top_of_heap(thread.bottom_of_stack());
+    } else {
+        // A positive heap size means the heap is of a fixed size.
+        thread.set_top_of_heap(heap_bottom + (heap_size as usize));
+    }
+
+    thread.top_of_heap()
 }

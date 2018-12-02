@@ -1,3 +1,5 @@
+use crate::thread;
+
 global_asm!(include_str!("handler.S"));
 
 extern "C" {
@@ -25,5 +27,6 @@ pub fn init() {
         }
 
         SYSCALL_HANDLERS[0x3C] = init_main_thread_glue as usize;
+        SYSCALL_HANDLERS[0x3D] = thread::init_heap as usize;
     }
 }
