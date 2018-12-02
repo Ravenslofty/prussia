@@ -18,6 +18,7 @@ use prussia_debug::EEOut;
 use prussia_rt::{cop0, interrupts};
 
 mod exceptions;
+mod thread;
 
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {

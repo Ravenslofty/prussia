@@ -4,7 +4,11 @@ extern "C" {
     #[used]
     static mut SYSCALL_HANDLERS: [usize; 128];
 
+    /// Assembly dispatch function for system calls.
     pub fn syscall_handler();
+
+    /// ABI adapter between GCC and Rust for init_main_thread().
+    pub fn init_main_thread_glue();
 }
 
 #[no_mangle]
@@ -19,5 +23,7 @@ pub fn init() {
         for x in SYSCALL_HANDLERS.iter_mut() {
             *x = unimplemented_syscall_handler as usize;
         }
+
+        SYSCALL_HANDLERS[0x3C] = init_main_thread_glue as usize;
     }
 }

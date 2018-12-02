@@ -1,0 +1,161 @@
+use core::mem;
+
+/// The execution state of a thread.
+#[repr(C)]
+pub struct ThreadContext {
+    /// EE general purpose registers.
+    gprs: [u128; 32],
+    /// ALU high register.
+    hi: u128,
+    /// ALU low register.
+    lo: u128,
+    /// Shft amount register.
+    sa: u32,
+    /// EE floating point registers.
+    fprs: [u32; 32],
+    /// Floating point accumulator.
+    fp_acc: u32,
+    /// Floating point unit control register.
+    fp_ctrl: u32,
+}
+
+/// An EE kernel thread.
+#[derive(Copy, Clone, Debug)]
+struct Thread {
+    /// Thread global pointer.
+    gp: usize,
+    /// Thread stack size.
+    stack_size: usize,
+    /// The bottom of the thread's stack.
+    stack_bottom: usize,
+    /// The thread context address.
+    context: usize,
+    /// Address to return to after the thread exits.
+    return_address: usize,
+    /// Thread arguments.
+    args: usize,
+}
+
+impl Thread {
+    fn new(
+        gp: usize,
+        stack_size: usize,
+        stack_bottom: usize,
+        return_address: usize,
+        args: usize,
+    ) -> Self {
+        Thread {
+            gp,
+            stack_size,
+            stack_bottom,
+            context: stack_bottom + stack_size - mem::size_of::<ThreadContext>(),
+            return_address,
+            args,
+        }
+    }
+
+    /// Return a mutable reference to this thread's register context.
+    fn context(&self) -> &mut ThreadContext {
+        // Contexts are put at the top of the thread stack, but cannot overstep it.
+        unsafe { &mut *(self.context as *mut ThreadContext) }
+    }
+
+    /// Return the top of a thread's stack, excluding the area of memory for the thread context.
+    fn top_of_stack(&self) -> usize {
+        self.context
+    }
+
+    /// Return the top of a thread's stack, including the area of memory for the thread context.
+    fn absolute_top_of_stack(&self) -> usize {
+        self.stack_bottom + self.stack_size
+    }
+}
+
+/// The EE kernel thread state.
+struct KernelThreadState {
+    threads: [Option<Thread>; 256],
+    current: u32,
+}
+
+impl KernelThreadState {
+    const fn new() -> Self {
+        KernelThreadState {
+            threads: [None; 256],
+            current: 0,
+        }
+    }
+
+    /// Create the main thread, resetting internal state, and returning the thread ID of the main
+    /// thread.
+    fn create_main(
+        &mut self,
+        gp: usize,
+        stack_size: usize,
+        stack_bottom: usize,
+        return_address: usize,
+        args: usize,
+    ) -> u32 {
+        *self = KernelThreadState::new();
+
+        self.threads[self.current as usize] = Some(Thread::new(
+            gp,
+            stack_size,
+            stack_bottom,
+            return_address,
+            args,
+        ));
+
+        self.current
+    }
+
+    /// Return the thread for a given ID.
+    fn thread(&mut self, id: usize) -> &mut Option<Thread> {
+        &mut self.threads[id]
+    }
+}
+
+static mut THREAD_STATE: KernelThreadState = KernelThreadState::new();
+
+const END_OF_RAM: usize = 0x0200_0000;
+
+/// Initialise the threading system, returning the stack pointer for the main thread.
+#[no_mangle]
+pub extern "C" fn init_main_thread(
+    gp: usize,
+    mut stack_ptr: *mut u8,
+    stack_size: usize,
+    args: *mut u8,
+    return_address: usize,
+) -> usize {
+    assert!(
+        stack_size < END_OF_RAM,
+        "Attempted to allocate more stack than available RAM"
+    );
+
+    // A negative stack pointer means "put at the end of RAM". We give it a 4KiB buffer zone to
+    // avoid stack smashing.
+    if (stack_ptr as i32) < 0 {
+        stack_ptr = (END_OF_RAM - (stack_size + 4096)) as *mut u8;
+    }
+
+    let id = unsafe {
+        THREAD_STATE.create_main(
+            gp,
+            stack_size,
+            stack_ptr as usize,
+            return_address,
+            args as usize,
+        )
+    };
+
+    let thread = unsafe { THREAD_STATE.thread(id as usize).unwrap() };
+
+    let ctx = thread.context();
+
+    ctx.gprs[28] = gp as u128; // Global pointer.
+    ctx.gprs[29] = thread.absolute_top_of_stack() as u128; // Stack pointer.
+    ctx.gprs[30] = thread.absolute_top_of_stack() as u128; // Frame pointer.
+    ctx.gprs[31] = return_address as u128; // Return address.
+
+    thread.top_of_stack()
+}
