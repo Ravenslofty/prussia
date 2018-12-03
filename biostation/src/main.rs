@@ -18,6 +18,7 @@ use prussia_debug::EEOut;
 use prussia_rt::{cop0, interrupts};
 
 mod exceptions;
+mod romdir;
 mod thread;
 
 #[panic_handler]
@@ -54,5 +55,8 @@ fn main() -> ! {
     // Enable interrupts now that we've set everything up.
     interrupts::enable();
 
-    panic!("Hello, World");
+    // Fetch the payload address.
+    let elf_addr = romdir::lookup("PILLGEN").expect("Failed to find PILLGEN in ROM");
+
+    panic!("Found ELF in ROM at {}", elf_addr);
 }

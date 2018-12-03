@@ -57,9 +57,14 @@ impl Thread {
         }
     }
 
-    /// Return a mutable reference to this thread's register context.
-    fn context(&self) -> &mut ThreadContext {
+    /// Return a reference to this thread's register context.
+    fn context(&self) -> &ThreadContext {
         // Contexts are put at the top of the thread stack, but cannot overstep it.
+        unsafe { &*(self.context as *const ThreadContext) }
+    }
+
+    /// Return a mutable reference to this thread's register context.
+    fn context_mut(&mut self) -> &mut ThreadContext {
         unsafe { &mut *(self.context as *mut ThreadContext) }
     }
 
@@ -126,9 +131,14 @@ impl KernelThreadState {
         self.current
     }
 
-    /// Return the thread for a given ID.
-    fn thread(&mut self, id: usize) -> &mut Option<Thread> {
+    /// Return a mutable reference to the thread for a given ID.
+    fn thread_mut(&mut self, id: usize) -> &mut Option<Thread> {
         &mut self.threads[id]
+    }
+
+    /// Return a reference to the thread for a given ID.
+    fn thread(&self, id: usize) -> &Option<Thread> {
+        &self.threads[id]
     }
 
     /// Return the current thread ID.
@@ -171,13 +181,14 @@ pub extern "C" fn init_main_thread(
         )
     };
 
-    let thread = unsafe { THREAD_STATE.thread(id as usize).unwrap() };
+    let mut thread = unsafe { THREAD_STATE.thread(id as usize).unwrap() };
 
-    let ctx = thread.context();
+    let top_of_stack = thread.absolute_top_of_stack();
+    let ctx = thread.context_mut();
 
     ctx.gprs[28] = gp as u128; // Global pointer.
-    ctx.gprs[29] = thread.absolute_top_of_stack() as u128; // Stack pointer.
-    ctx.gprs[30] = thread.absolute_top_of_stack() as u128; // Frame pointer.
+    ctx.gprs[29] = top_of_stack as u128; // Stack pointer.
+    ctx.gprs[30] = top_of_stack as u128; // Frame pointer.
     ctx.gprs[31] = return_address as u128; // Return address.
 
     thread.top_of_stack()
