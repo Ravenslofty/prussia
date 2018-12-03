@@ -15,7 +15,7 @@ bitflags! {
     /// corresponding mask bit are both set, INT0 is raised.
     pub struct Status: u32 {
         /// An interrupt from the Graphics Synthesizer.
-        const GS = 1 << 0;
+        const GS = 1;
         /// An interrupt from the SBUS connection to the IOP.
         const SBUS = 1 << 1;
         /// The start of VBlank.
@@ -66,7 +66,7 @@ bitflags! {
     /// corresponding status bit are both set, INT0 is raised.
     pub struct Mask: u32 {
         /// An interrupt from the Graphics Synthesizer.
-        const GS = 1 << 0;
+        const GS = 1;
         /// An interrupt from the SBUS connection to the IOP.
         const SBUS = 1 << 1;
         /// The start of VBlank.

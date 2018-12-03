@@ -6,7 +6,7 @@ bitflags! {
     /// The current processor state.
     pub struct Status: u32 {
         /// Whether interrupts are enabled. 0 = masked, 1 = enabled.
-        const IE  = 1 << 0;
+        const IE  = 1;
         /// Whether we are in an exception (everything which isn't an error) context.
         const EXL = 1 << 1;
         /// Whether we are in an error (Reset, NMI, performance counter, debug exception) context.

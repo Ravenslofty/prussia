@@ -27,14 +27,11 @@ unsafe fn zero_bss() {
     // allocated for them. Instead the addresses *are* the values, in this case referring to the
     // start and end of .bss.
     extern "C" {
-        static START_OF_BSS: u8;
-        static END_OF_BSS: u8;
+        static mut START_OF_BSS: u32;
+        static mut END_OF_BSS: u32;
     }
 
-    r0::zero_bss::<u32>(
-        &START_OF_BSS as *const u8 as *mut u32,
-        &END_OF_BSS as *const u8 as *mut u32,
-    );
+    r0::zero_bss::<u32>(&mut START_OF_BSS as *mut u32, &mut END_OF_BSS as *mut u32);
 }
 
 // A PS2 program's execution flow begins in _start, which calls the EE kernel to set up this thread

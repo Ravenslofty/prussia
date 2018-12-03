@@ -176,6 +176,7 @@ impl<DEVICE: devices::ReadChannel + devices::Address, T> Transfer<DEVICE, T> {
     /// }
     /// // The contents of data are now one quadword from SIF0 (the IOP).
     /// ```
+    #[allow(clippy::wrong_self_convention)]
     pub fn to_mem(dev: DEVICE, data: &'static mut Aligned<A16, [T]>) -> Transfer<DEVICE, T> {
         Transfer::transfer(TransferDirection::ToMem, dev, data)
     }
@@ -238,10 +239,7 @@ impl<DEVICE: devices::Address, T: 'static> Transfer<DEVICE, T> {
             }
         }
 
-        Transfer {
-            data: data,
-            dev: dev,
-        }
+        Transfer { data, dev }
     }
 
     /// Returns true if the DMA transfer has completed.

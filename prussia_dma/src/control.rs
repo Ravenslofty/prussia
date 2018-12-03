@@ -10,7 +10,7 @@ bitflags! {
     /// DMA Controller interrupt status register.
     pub struct Status: u32 {
         /// Whether there is an interrupt on channel 0. 0 = no interrupt, 1 = interrupt.
-        const CIS0 = 1 << 0;
+        const CIS0 = 1;
         /// Whether there is an interrupt on channel 1. 0 = no interrupt, 1 = interrupt.
         const CIS1 = 1 << 1;
         /// Whether there is an interrupt on channel 2. 0 = no interrupt, 1 = interrupt.

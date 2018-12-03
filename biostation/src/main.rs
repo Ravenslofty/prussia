@@ -2,7 +2,12 @@
 
 #![no_std]
 #![no_main]
-#![deny(missing_docs)]
+#![deny(
+    missing_docs,
+    missing_debug_implementations,
+    trivial_casts,
+    trivial_numeric_casts
+)]
 #![feature(asm)]
 #![feature(const_raw_ptr_to_usize_cast)]
 #![feature(global_asm)]
