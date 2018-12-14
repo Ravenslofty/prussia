@@ -1,4 +1,5 @@
 use crate::cache;
+use crate::gs;
 use crate::thread;
 
 global_asm!(include_str!("handler.S"));
@@ -30,5 +31,7 @@ pub fn init() {
         SYSCALL_HANDLERS[0x3C] = init_main_thread_glue as usize;
         SYSCALL_HANDLERS[0x3D] = thread::init_heap as usize;
         SYSCALL_HANDLERS[0x64] = cache::flush_cache as usize;
+        SYSCALL_HANDLERS[0x70] = gs::gs_get_imr as usize;
+        SYSCALL_HANDLERS[0x71] = gs::gs_put_imr as usize;
     }
 }

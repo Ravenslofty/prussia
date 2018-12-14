@@ -24,6 +24,7 @@ use prussia_rt::{cop0, interrupts};
 
 mod cache;
 mod exceptions;
+mod gs;
 mod romdir;
 mod thread;
 
