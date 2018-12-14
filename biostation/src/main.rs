@@ -22,6 +22,7 @@ use core::panic::PanicInfo;
 use prussia_debug::EEOut;
 use prussia_rt::{cop0, interrupts};
 
+mod cache;
 mod exceptions;
 mod romdir;
 mod thread;
