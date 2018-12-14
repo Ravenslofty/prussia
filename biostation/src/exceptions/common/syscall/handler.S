@@ -1,4 +1,8 @@
+.extern init_main_thread
+
 .text
+.globl syscall_handler
+.ent syscall_handler
 syscall_handler:
         addi    $sp, -16                // Save $ra to stack.
         sw      $ra, 0($sp)
@@ -19,7 +23,10 @@ syscall_handler:
         mtc0    $k0, $14
 
 	jr      $ra
+.end syscall_handler
 
+.globl init_main_thread_glue
+.ent init_main_thread_glue
 init_main_thread_glue:
         addi    $sp, -20
         sw      $t0, 16($sp)
@@ -32,6 +39,7 @@ init_main_thread_glue:
         addi    $sp, 20
 
         jr      $ra
+.end init_main_thread_glue
 
 .section .bss
 SYSCALL_HANDLERS:

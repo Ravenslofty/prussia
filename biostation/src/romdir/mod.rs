@@ -63,9 +63,13 @@ pub fn lookup(name: &str) -> Option<usize> {
                 }
             }
             // The name should always be a valid ASCII (and thus UTF-8) string.
-            None => panic!("Failed to decode ROMDIR entry name at {}", entry_addr),
+            None => panic!(
+                "Failed to decode ROMDIR entry name at {}. This indicates a broken ROM build.",
+                entry_addr
+            ),
         }
     }
 
+    // If we didn't find it in the ROM directory (which is probably a bug), return none.
     None
 }
