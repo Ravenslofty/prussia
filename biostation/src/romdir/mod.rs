@@ -1,5 +1,3 @@
-use core::str;
-
 /// A ROMDIR entry.
 #[repr(packed)]
 pub struct Entry {
@@ -12,24 +10,17 @@ const START_OF_ROM: usize = 0x1fc0_0000;
 const END_OF_ROM: usize = 0x2000_0000;
 
 /// Search for an entry in the ROM contents directory, returning a pointer to it if it exists.
-pub fn lookup(name: &str) -> Option<usize> {
+pub fn lookup(name: &[u8; 10]) -> Option<usize> {
     let mut entry_addr: usize = START_OF_ROM;
 
     // Search for the start of the ROM directory.
     while entry_addr < END_OF_ROM {
         let entry_ptr = entry_addr as *const Entry;
         let entry_name = unsafe { &(*entry_ptr).name };
-        match str::from_utf8(entry_name).ok() {
-            // The start of the ROM directory is marked by the "RESET" entry.
-            Some(s) => {
-                if s == "RESET" {
-                    break;
-                } else {
-                    entry_addr += 1;
-                }
-            }
-            // Failure to decode could be due to pointing at garbage.
-            None => entry_addr += 1,
+        if entry_name == b"RESET\0\0\0\0\0" {
+            break;
+        } else {
+            entry_addr += 1;
         }
     }
 
@@ -53,20 +44,12 @@ pub fn lookup(name: &str) -> Option<usize> {
         let entry_ptr = entry_addr as *const Entry;
         let entry_name = unsafe { &(*entry_ptr).name };
         let entry_size = unsafe { (*entry_ptr).size };
-        match str::from_utf8(entry_name).ok() {
-            Some(s) => {
-                if s == name {
-                    return Some(start_addr);
-                } else {
-                    entry_addr += 16;
-                    start_addr += entry_size as usize;
-                }
-            }
-            // The name should always be a valid ASCII (and thus UTF-8) string.
-            None => panic!(
-                "Failed to decode ROMDIR entry name at {}. This indicates a broken ROM build.",
-                entry_addr
-            ),
+
+        if entry_name == name {
+            return Some(start_addr);
+        } else {
+            entry_addr += 16;
+            start_addr += entry_size as usize;
         }
     }
 

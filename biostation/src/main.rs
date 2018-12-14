@@ -30,7 +30,7 @@ mod thread;
 fn panic(info: &PanicInfo) -> ! {
     // Write the panic message to EE output.
     let mut out = EEOut;
-    writeln!(out, "{}", info).unwrap();
+    writeln!(out, "[EE] {}", info).unwrap();
 
     // Then crash to trigger the emulator.
     unsafe { asm!("break") };
@@ -39,6 +39,9 @@ fn panic(info: &PanicInfo) -> ! {
 
 #[no_mangle]
 fn main() -> ! {
+    let mut out = EEOut;
+    writeln!(out, "[EE] Hello, world!").unwrap();
+
     // Disable spurious interrupts while setting up.
     interrupts::disable();
 
@@ -60,8 +63,10 @@ fn main() -> ! {
     // Enable interrupts now that we've set everything up.
     interrupts::enable();
 
+    writeln!(out, "[EE] Init OK").unwrap();
+
     // Fetch the payload address.
-    let elf_addr = romdir::lookup("PILLGEN").expect("Failed to find PILLGEN in ROM");
+    let elf_addr = romdir::lookup(b"PILLGEN\0\0\0").expect("Failed to find PILLGEN in ROM");
 
     panic!("Found ELF in ROM at {}", elf_addr);
 }
