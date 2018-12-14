@@ -10,9 +10,6 @@ extern "C" {
 
     /// Assembly dispatch function for system calls.
     pub fn syscall_handler();
-
-    /// ABI adapter between GCC and Rust for init_main_thread().
-    pub fn init_main_thread_glue();
 }
 
 #[no_mangle]
@@ -28,10 +25,10 @@ pub fn init() {
             *x = unimplemented_syscall_handler as usize;
         }
 
-        SYSCALL_HANDLERS[0x3C] = init_main_thread_glue as usize;
+        SYSCALL_HANDLERS[0x3C] = thread::init_main_thread as usize;
         SYSCALL_HANDLERS[0x3D] = thread::init_heap as usize;
-        SYSCALL_HANDLERS[0x64] = cache::flush_cache as usize;
-        SYSCALL_HANDLERS[0x70] = gs::gs_get_imr as usize;
-        SYSCALL_HANDLERS[0x71] = gs::gs_put_imr as usize;
+        SYSCALL_HANDLERS[0x64] = cache::flush as usize;
+        SYSCALL_HANDLERS[0x70] = gs::imr::imr as usize;
+        SYSCALL_HANDLERS[0x71] = gs::imr::put_imr as usize;
     }
 }

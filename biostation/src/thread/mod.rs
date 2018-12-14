@@ -1,5 +1,7 @@
 use core::mem;
 
+global_asm!(include_str!("glue.S"));
+
 /// The execution state of a thread.
 #[repr(C)]
 pub struct ThreadContext {
@@ -55,12 +57,6 @@ impl Thread {
             return_address,
             args,
         }
-    }
-
-    /// Return a reference to this thread's register context.
-    fn context(&self) -> &ThreadContext {
-        // Contexts are put at the top of the thread stack, but cannot overstep it.
-        unsafe { &*(self.context as *const ThreadContext) }
     }
 
     /// Return a mutable reference to this thread's register context.
@@ -131,11 +127,6 @@ impl KernelThreadState {
         self.current
     }
 
-    /// Return a mutable reference to the thread for a given ID.
-    fn thread_mut(&mut self, id: usize) -> &mut Option<Thread> {
-        &mut self.threads[id]
-    }
-
     /// Return a reference to the thread for a given ID.
     fn thread(&self, id: usize) -> &Option<Thread> {
         &self.threads[id]
@@ -147,13 +138,25 @@ impl KernelThreadState {
     }
 }
 
+extern "C" {
+    /// ABI adapter for init_main_thread_rust
+    #[no_mangle]
+    pub fn init_main_thread(
+        gp: usize,
+        stack_ptr: *mut u8,
+        stack_size: usize,
+        args: *mut u8,
+        return_address: usize,
+    );
+}
+
 static mut THREAD_STATE: KernelThreadState = KernelThreadState::new();
 
 const END_OF_RAM: usize = 0x0200_0000;
 
 /// Initialise the threading system, returning the stack pointer for the main thread.
 #[no_mangle]
-pub extern "C" fn init_main_thread(
+pub extern "C" fn init_main_thread_rust(
     gp: usize,
     mut stack_ptr: *mut u8,
     stack_size: usize,

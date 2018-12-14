@@ -25,22 +25,6 @@ syscall_handler:
 	jr      $ra
 .end syscall_handler
 
-.globl init_main_thread_glue
-.ent init_main_thread_glue
-init_main_thread_glue:
-        addi    $sp, -20
-        sw      $t0, 16($sp)
-        sw      $ra, 0($sp)
-
-        jal     init_main_thread
-
-        lw      $ra, 0($sp)
-        lw      $t0, 16($sp)
-        addi    $sp, 20
-
-        jr      $ra
-.end init_main_thread_glue
-
 .section .bss
 SYSCALL_HANDLERS:
     .space 128*4
