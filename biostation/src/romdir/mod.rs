@@ -1,16 +1,16 @@
 /// A ROMDIR entry.
 #[repr(packed)]
 pub struct Entry {
-    name: [u8; 10],
+    pub name: [u8; 10],
     _something: u16,
-    size: u32,
+    pub size: u32,
 }
 
 const START_OF_ROM: usize = 0x1fc0_0000;
 const END_OF_ROM: usize = 0x2000_0000;
 
 /// Search for an entry in the ROM contents directory, returning a pointer to it if it exists.
-pub fn lookup(name: &[u8; 10]) -> Option<usize> {
+pub fn lookup(name: &[u8; 10]) -> Option<(usize, &Entry)> {
     let mut entry_addr: usize = START_OF_ROM;
 
     // Search for the start of the ROM directory.
@@ -42,14 +42,13 @@ pub fn lookup(name: &[u8; 10]) -> Option<usize> {
     // Search for the matching ROM directory entry.
     while entry_addr < END_OF_ROM && start_addr < END_OF_ROM {
         let entry_ptr = entry_addr as *const Entry;
-        let entry_name = unsafe { &(*entry_ptr).name };
-        let entry_size = unsafe { (*entry_ptr).size };
+        let entry = unsafe { &*entry_ptr };
 
-        if entry_name == name {
-            return Some(start_addr);
+        if &entry.name == name {
+            return Some((start_addr, entry));
         } else {
             entry_addr += 16;
-            start_addr += entry_size as usize;
+            start_addr += entry.size as usize;
         }
     }
 

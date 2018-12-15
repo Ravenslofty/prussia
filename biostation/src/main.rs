@@ -9,18 +9,24 @@
     trivial_numeric_casts
 )]
 #![feature(asm)]
-#![feature(const_raw_ptr_to_usize_cast)]
 #![feature(global_asm)]
 #![feature(naked_functions)]
+#![feature(core_intrinsics)]
 
 extern crate prussia_dma as dma;
 extern crate prussia_intc as intc;
 
 use core::fmt::Write;
+use core::intrinsics;
+use core::mem;
 use core::panic::PanicInfo;
+use core::ptr;
+use core::slice;
+use core::str;
 
 use prussia_debug::EEOut;
 use prussia_rt::{cop0, interrupts};
+use xmas_elf::ElfFile;
 
 mod cache;
 mod exceptions;
@@ -35,8 +41,10 @@ fn panic(info: &PanicInfo) -> ! {
     writeln!(out, "[EE] {}", info).unwrap();
 
     // Then crash to trigger the emulator.
-    unsafe { asm!("break") };
-    unreachable!();
+    // This gets converted to `break` by LLVM.
+    unsafe {
+        intrinsics::abort();
+    }
 }
 
 #[no_mangle]
@@ -68,7 +76,47 @@ fn main() -> ! {
     writeln!(out, "[EE] Init OK").unwrap();
 
     // Fetch the payload address.
-    let elf_addr = romdir::lookup(b"PILLGEN\0\0\0").expect("Failed to find PILLGEN in ROM");
+    let (addr, entry) = romdir::lookup(b"PILLGEN\0\0\0").expect("Failed to find PILLGEN in ROM");
 
-    panic!("Found ELF in ROM at {}", elf_addr);
+    // Load the ELF file.
+    writeln!(
+        out,
+        "[EE] Found {} at {:x}",
+        str::from_utf8(&entry.name).unwrap(),
+        addr
+    )
+    .unwrap();
+
+    let data = unsafe { slice::from_raw_parts(addr as *mut u8, entry.size as usize) };
+    let elf = ElfFile::new(data).expect("ELF should be valid. This indicates a broken ROM build.");
+
+    for header in elf.program_iter() {
+        unsafe {
+            ptr::copy_nonoverlapping(
+                data[header.offset() as usize..].as_ptr(),
+                header.physical_addr() as usize as *mut u8,
+                header.file_size() as usize,
+            );
+            writeln!(
+                out,
+                "[EE] copied {} bytes from {:x} to {:x}",
+                header.file_size(),
+                addr + (header.offset() as usize),
+                header.physical_addr()
+            )
+            .unwrap();
+        }
+    }
+
+    let elf_entry = elf.header.pt2.entry_point() as usize;
+
+    writeln!(out, "[EE] Entry point is {:x}", elf_entry).unwrap();
+
+    let elf_entry: fn() = unsafe { mem::transmute(elf_entry as *mut u8) };
+
+    writeln!(out, "[EE] Launching payload").unwrap();
+
+    elf_entry();
+
+    unreachable!("Somehow returned from entry point");
 }
