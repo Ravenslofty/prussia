@@ -35,10 +35,27 @@ pub enum FieldFrameMode {
 pub fn set_gs_crt(imode: Interlacing, vmode: VideoMode, ffmode: FieldFrameMode) {
     unsafe {
         asm!("li $$v1, 0x02; move $$a0, $0; move $$a1, $1; move $$a2, $2; syscall"
-         :
-         : "r" (imode), "r" (vmode), "r" (ffmode)
-         :
-         : "volatile"
+             :
+             : "r" (imode), "r" (vmode), "r" (ffmode)
+             : "$$v1", "$$a0", "$$a1", "$$a2"
+             : "volatile"
         );
     }
+}
+
+/// Exit the program and return to the PS2 browser.
+///
+/// This function is not recommended for use if developing with PS2Link; it won't return to PS2Link
+/// but instead go straight to the browser, meaning you'll need to relaunch PS2Link. Instead, use
+/// `sleep_thread`.
+pub fn exit(return_code: u32) -> ! {
+    unsafe {
+        asm!("li $$v1, 0x04; move $$a0, $0; syscall"
+             :
+             : "r" (return_code)
+             : "$$v1", "$$a0"
+             : "volatile"
+        );
+    }
+    unreachable!();
 }
