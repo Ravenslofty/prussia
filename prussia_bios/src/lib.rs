@@ -2,7 +2,7 @@
 
 #![no_std]
 #![deny(missing_docs)]
-#![feature(asm)]
+#![feature(llvm_asm)]
 
 /// The Graphics Synthesizer video mode, passed to `set_gs_crt`.
 #[repr(i16)]
@@ -34,7 +34,7 @@ pub enum FieldFrameMode {
 /// Configure the Graphics Synthesizer's display controller to output a given VideoMode.
 pub fn set_gs_crt(imode: Interlacing, vmode: VideoMode, ffmode: FieldFrameMode) {
     unsafe {
-        asm!("li $$v1, 0x02; move $$a0, $0; move $$a1, $1; move $$a2, $2; syscall"
+        llvm_asm!("li $$v1, 0x02; move $$a0, $0; move $$a1, $1; move $$a2, $2; syscall"
              :
              : "r" (imode), "r" (vmode), "r" (ffmode)
              : "$$v1", "$$a0", "$$a1", "$$a2"
@@ -50,7 +50,7 @@ pub fn set_gs_crt(imode: Interlacing, vmode: VideoMode, ffmode: FieldFrameMode) 
 /// `sleep_thread`.
 pub fn exit(return_code: u32) -> ! {
     unsafe {
-        asm!("li $$v1, 0x04; move $$a0, $0; syscall"
+        llvm_asm!("li $$v1, 0x04; move $$a0, $0; syscall"
              :
              : "r" (return_code)
              : "$$v1", "$$a0"

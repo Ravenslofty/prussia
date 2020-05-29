@@ -49,14 +49,14 @@ impl Status {
     /// value of Status.
     pub fn load() -> Self {
         let status;
-        unsafe { asm!("mfc0 $0, $$12" : "=r" (status)) };
+        unsafe { llvm_asm!("mfc0 $0, $$12" : "=r" (status)) };
 
         Status { bits: status }
     }
 
     /// Store this object to the Coprocessor 0 Status register.
     pub fn store(self) {
-        unsafe { asm!("mtc0 $0, $$12" : : "r" (self.bits)) };
+        unsafe { llvm_asm!("mtc0 $0, $$12" : : "r" (self.bits)) };
     }
 }
 
@@ -87,7 +87,7 @@ impl Cause {
     /// value of Cause.
     pub fn load() -> Self {
         let cause;
-        unsafe { asm!("mfc0 $0, $$13" : "=r" (cause)) };
+        unsafe { llvm_asm!("mfc0 $0, $$13" : "=r" (cause)) };
 
         Cause { bits: cause }
     }
