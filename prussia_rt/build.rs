@@ -7,7 +7,7 @@ use std::{
 };
 
 #[cfg(not(feature = "kernel-linkfile"))]
-fn add_linkfile() -> Result<(), Box<Error>> {
+fn add_linkfile() -> Result<(), Box<dyn Error>> {
     let out_dir = PathBuf::from(env::var_os("OUT_DIR").unwrap());
     File::create(out_dir.join("linkfile.ld"))?.write_all(include_bytes!("user-linkfile.ld"))?;
 
@@ -15,14 +15,14 @@ fn add_linkfile() -> Result<(), Box<Error>> {
 }
 
 #[cfg(feature = "kernel-linkfile")]
-fn add_linkfile() -> Result<(), Box<Error>> {
+fn add_linkfile() -> Result<(), Box<dyn Error>> {
     let out_dir = PathBuf::from(env::var_os("OUT_DIR").unwrap());
     File::create(out_dir.join("linkfile.ld"))?.write_all(include_bytes!("kernel-linkfile.ld"))?;
 
     Ok(())
 }
 
-fn main() -> Result<(), Box<Error>> {
+fn main() -> Result<(), Box<dyn Error>> {
     // build directory for this crate
     let out_dir = PathBuf::from(env::var_os("OUT_DIR").unwrap());
 

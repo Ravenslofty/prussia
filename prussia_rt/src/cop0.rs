@@ -64,7 +64,7 @@ bitflags! {
     /// Cause of the most recent exception.
     pub struct Cause: u32 {
         /// Level 1 exception code.
-        const ExcCode = 0x1F << 2;
+        const EXC_CODE = 0x1F << 2;
         /// Interrupt from the Interrupt Controller is pending.
         const IP2 = 1 << 10;
         /// Interrupt from the DMA Controller is pending.

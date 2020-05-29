@@ -42,9 +42,7 @@ fn panic(info: &PanicInfo) -> ! {
 
     // Then crash to trigger the emulator.
     // This gets converted to `break` by LLVM.
-    unsafe {
-        intrinsics::abort();
-    }
+    intrinsics::abort();
 }
 
 #[no_mangle]
