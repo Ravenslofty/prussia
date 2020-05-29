@@ -6,7 +6,6 @@ members = [
     "prussia_debug",
     "prussia_dma",
     "prussia_intc",
-    "prussia_gs",
     "prussia_rt",
 ]
 
