@@ -39,7 +39,7 @@ pub fn enable() {
 }
 
 /// Execute a closure in an interrupt-free context, preserving previous interrupt state.
-pub fn free<T: FnOnce() -> ()>(f: T) {
+pub fn free<T: FnOnce()>(f: T) {
     match status() {
         Status::Enabled => {
             disable();

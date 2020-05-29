@@ -16,8 +16,6 @@ pub mod atomic;
 pub mod cop0;
 pub mod interrupts;
 
-use r0;
-
 // Static data initialised to zero goes in the .bss segment, which is essentially a pointer to
 // uninitialised memory. We need to zero .bss before the main program runs.
 //
