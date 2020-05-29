@@ -5,7 +5,6 @@ use crate::thread;
 global_asm!(include_str!("handler.S"));
 
 extern "C" {
-    #[used]
     static mut SYSCALL_HANDLERS: [usize; 128];
 
     /// Assembly dispatch function for system calls.

@@ -5,7 +5,6 @@ mod syscall;
 global_asm!(include_str!("handler.S"));
 
 extern "C" {
-    #[used]
     static mut COMMON_HANDLERS: [usize; 16];
 }
 
