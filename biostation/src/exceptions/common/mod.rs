@@ -11,7 +11,7 @@ extern "C" {
 
 #[no_mangle]
 extern "C" fn unimplemented_common_handler() {
-    let exc_code = (cop0::Cause::load() & cop0::Cause::ExcCode).bits() >> 2;
+    let exc_code = (cop0::Cause::load() & cop0::Cause::EXC_CODE).bits() >> 2;
     let exc_code = cop0::L1Exception::try_from_common(exc_code as u8)
         .expect("Exception codes are between 1 and 13 on real hardware");
 
