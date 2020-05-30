@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<device schemaVersion="1.1" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="CMSIS-SVD.xsd">
+    <name>PlayStation2</name>
+    <series>other</series>
+    <version>1</version>
+    <description>Sony PlayStation 2</description>
+    <cpu>
+        <name>other</name>
+        <revision>r1p0</revision>
+        <endian>little</endian>
+        <mpuPresent>false</mpuPresent>
+        <fpuPresent>false</fpuPresent>
+        <nvicPrioBits>0</nvicPrioBits>
+        <vendorSystickConfig>false</vendorSystickConfig>
+    </cpu>
+    <addressUnitBits>128</addressUnitBits>
+    <width>128</width>
+
+    <size>31</size>
+    <access>read-write</access>
+    <resetValue>0x00000000</resetValue>
+    <resetMask>0xFFFFFFFF</resetMask>
+
+    <peripherals>
+        <peripheral>
+            <name>TIMER</name>
+            <version>1</version>
+            <description>Programmable Timers</description>
+            <groupName>TIMER</groupName>
+            <baseAddress>0xB0000000</baseAddress>
+
+            <registers>
+                <register>
+                    <name>T0_MODE</name>
+                    <description>Register for setting modes and reading status</description>
+                    <addressOffset>0x0000</addressOffset>
+                    <resetMask>0x00000FFF</resetMask>
+
+                    <fields>
+                        <field>
+                            <name>CLKS</name>
+                            <description>Clock Selection</description>
+                            <bitRange>[1:0]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>BUSCLK</name>
+                                    <description>BUSCLK (147.456MHz)</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>BUSCLK16</name>
+                                    <description>1/16 of the BUSCLK</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>BUSCLK256</name>
+                                    <description>1/256 of the BUSCLK</description>
+                                    <value>2</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>HBLNK</name>
+                                    <description>External Clock (H-BLNK)</description>
+                                    <value>3</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+
+                        <field>
+                            <name>GATE</name>
+                            <description>Gate Function Enable</description>
+                            <bitRange>[2:2]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>Disabled</name>
+                                    <description>Gate function is not used.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>Enabled</name>
+                                    <description>Gate function is used.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+
+                        <field>
+                            <name>GATS</name>
+                            <description>Gate Selection</description>
+                            <bitRange>[3:3]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>HBLNK</name>
+                                    <description>H-BLNK (Disabled when CLKS equals to 11.)</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>VBLNK</name>
+                                    <description>V-BLNK</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+
+                        <field>
+                            <name>GATM</name>
+                            <description>Gate Mode</description>
+                            <bitRange>[5:4]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>LOW</name>
+                                    <description>Counts while the gate signal is low.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>RISING</name>
+                                    <description>Resets and starts counting at the gate signal's rising edge.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>FALLING</name>
+                                    <description>Resets and starts counting at the gate signal's falling edge.</description>
+                                    <value>2</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>BOTH</name>
+                                    <description>Resets and starts counting at both edges of the gate signal.</description>
+                                    <value>3</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+
+                        <field>
+                            <name>ZRET</name>
+                            <description>Zero Return</description>
+                            <bitRange>[6:6]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>Disabled</name>
+                                    <description>The counter keeps counting, ignoring the reference value.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>Enabled</name>
+                                    <description>The counter is cleared to 0 when the counter value is equal to the reference value.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+
+                        <field>
+                            <name>CUE</name>
+                            <description>Count Up Enable</description>
+                            <bitRange>[7:7]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>Disabled</name>
+                                    <description>Stops counting.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>Enabled</name>
+                                    <description>Starts/restarts counting.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+
+                        <field>
+                            <name>CMPE</name>
+                            <description>Compare-Interrupt Enable</description>
+                            <bitRange>[8:8]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>Disabled</name>
+                                    <description>A compare-interrupt is not generated.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>Enabled</name>
+                                    <description>An interrupt is generated when the counter value is equal to the reference value.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+
+                        <field>
+                            <name>OVFE</name>
+                            <description>Overflow-Interrupt Enable</description>
+                            <bitRange>[9:9]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>Disabled</name>
+                                    <description>An overflow interrupt is not generated.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>Enabled</name>
+                                    <description>An interrupt is generated when an overflow occurs.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+
+                        <field>
+                            <name>EQUF</name>
+                            <description>Equal Flag</description>
+                            <bitRange>[10:10]</bitRange>
+                            <modifiedWriteValues>oneToClear</modifiedWriteValues>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>Clear</name>
+                                    <description>No compare-interrupt has occurred.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>Set</name>
+                                    <description>A compare-interrupt has occurred.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+
+                        <field>
+                            <name>OVFF</name>
+                            <description>Overflow Flag</description>
+                            <bitRange>[11:11]</bitRange>
+                            <modifiedWriteValues>oneToClear</modifiedWriteValues>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>Clear</name>
+                                    <description>No overflow-interrupt has occurred.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>Set</name>
+                                    <description>An overflow-interrupt has occurred.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                    </fields>
+                </register>
+
+                <register>
+                    <name>T0_COUNT</name>
+                    <description>Counter register</description>
+                    <addressOffset>0x0010</addressOffset>
+                    <resetMask>0x0000FFFF</resetMask>
+
+                    <fields>
+                        <field>
+                            <name>COUNT</name>
+                            <description>Counter Value. The counter value is incremented according to the conditions of the clock and the gate signal specified in the Tn_MODE.</description>
+                            <bitRange>[15:0]</bitRange>
+                        </field>
+                    </fields>
+                </register>
+
+                <register>
+                    <name>T0_COMP</name>
+                    <description>Comparison register</description>
+                    <addressOffset>0x0020</addressOffset>
+                    <resetMask>0x0000FFFF</resetMask>
+
+                    <fields>
+                        <field>
+                            <name>COMP</name>
+                            <description>Compare Value. Reference value to be compared with Tn_COUNT.</description>
+                            <bitRange>[15:0]</bitRange>
+                        </field>
+                    </fields>
+                </register>
+
+                <register>
+                    <name>T0_HOLD</name>
+                    <description>Hold register</description>
+                    <addressOffset>0x0030</addressOffset>
+                    <resetMask>0x0000FFFF</resetMask>
+
+                    <fields>
+                        <field>
+                            <name>HOLD</name>
+                            <description>Hold Value. The value of Tn_COUNT is copied when an SBUS interrupt occurs.</description>
+                            <bitRange>[15:0]</bitRange>
+                        </field>
+                    </fields>
+                </register>
+
+                <!-- The following is exactly the ugly hack you think it is. -->
+
+                <register derivedFrom="T0_MODE">
+                    <name>T1_MODE</name>
+                    <description>Register for setting modes and reading status</description>
+                    <addressOffset>0x0800</addressOffset>
+                </register>
+
+                <register derivedFrom="T0_COUNT">
+                    <name>T1_COUNT</name>
+                    <description>Counter register</description>
+                    <addressOffset>0x0810</addressOffset>
+                </register>
+
+                <register derivedFrom="T0_COMP">
+                    <name>T1_COMP</name>
+                    <description>Comparison register</description>
+                    <addressOffset>0x0820</addressOffset>
+                </register>
+
+                <register derivedFrom="T0_HOLD">
+                    <name>T1_HOLD</name>
+                    <description>Hold register</description>
+                    <addressOffset>0x0830</addressOffset>
+                </register>
+
+                <register derivedFrom="T0_MODE">
+                    <name>T2_MODE</name>
+                    <description>Register for setting modes and reading status</description>
+                    <addressOffset>0x1000</addressOffset>
+                </register>
+
+                <register derivedFrom="T0_COUNT">
+                    <name>T2_COUNT</name>
+                    <description>Counter register</description>
+                    <addressOffset>0x1010</addressOffset>
+                </register> 
+
+                <register derivedFrom="T0_COMP">
+                    <name>T2_COMP</name>
+                    <description>Comparison register</description>
+                    <addressOffset>0x0820</addressOffset>
+                </register>
+
+                <register derivedFrom="T0_MODE">
+                    <name>T3_MODE</name>
+                    <description>Register for setting modes and reading status</description>
+                    <addressOffset>0x1800</addressOffset>
+                </register>
+
+                <register derivedFrom="T0_COUNT">
+                    <name>T3_COUNT</name>
+                    <description>Counter register</description>
+                    <addressOffset>0x1810</addressOffset>
+                </register>
+
+                <register derivedFrom="T0_COMP">
+                    <name>T3_COMP</name>
+                    <description>Comparison register</description>
+                    <addressOffset>0x1820</addressOffset>
+                </register>
+            </registers>
+        </peripheral>
+    </peripherals>
+</device>
