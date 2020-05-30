@@ -26,7 +26,7 @@
         <peripheral>
             <name>TIMER</name>
             <version>1</version>
-            <description>Programmable Timers</description>
+            <description>Programmable Timers. See EE User's Manual, Chapter 4.</description>
             <groupName>TIMER</groupName>
             <baseAddress>0xB0000000</baseAddress>
 
@@ -350,5 +350,154 @@
                 </register>
             </registers>
         </peripheral>
+
+        <peripheral>
+            <name>IPU</name>
+            <version>1</version>
+            <description>Image Data Processor</description>
+            <groupName>IPU</groupName>
+            <baseAddress>0xB0002000</baseAddress>
+
+            <registers>
+                <register>
+                    <name>IPU_CMD</name>
+                    <description>IPU command</description>
+                    <addressOffset>0x00</addressOffset>
+                </register>
+
+                <register>
+                    <name>IPU_CTRL</name>
+                    <description>IPU control</description>
+                    <addressOffset>0x10</addressOffset>
+                </register>
+
+                <register>
+                    <name>IPU_BP</name>
+                    <description>IPU input FIFO control</description>
+                    <addressOffset>0x20</addressOffset>
+                </register>
+
+                <register>
+                    <name>IPU_TOP</name>
+                    <description>First data of bit stream</description>
+                    <addressOffset>0x30</addressOffset>
+                </register>
+            </registers>
+        </peripheral>
+
+        <peripheral>
+            <name>GIF</name>
+            <version>1</version>
+            <description>GS Interface</description>
+            <groupName>GIF</groupName>
+            <baseAddress>0xB0003000</baseAddress>
+
+            <registers>
+                <register>
+                    <name>GIF_CTRL</name>
+                    <description>GIF control</description>
+                    <addressOffset>0x00</addressOffset>
+                </register>
+
+                <register>
+                    <name>GIF_MODE</name>
+                    <description>GIF mode setting</description>
+                    <addressOffset>0x10</addressOffset>
+                </register>
+
+                <register>
+                    <name>GIF_STAT</name>
+                    <description>GIF status</description>
+                    <addressOffset>0x20</addressOffset>
+                </register>
+
+                <!-- No register at 0xB0003030 -->
+
+                <register>
+                    <name>GIF_TAG0</name>
+                    <description>GIFtag (bits 31-0) immediately before</description>
+                    <addressOffset>0x40</addressOffset>
+                </register>
+
+                <register>
+                    <name>GIF_TAG1</name>
+                    <description>GIFtag (bits 63-32) immediately before</description>
+                    <addressOffset>0x50</addressOffset>
+                </register>
+
+                <register>
+                    <name>GIF_TAG2</name>
+                    <description>GIFtag (bits 95-64) immediately before</description>
+                    <addressOffset>0x60</addressOffset>
+                </register>
+
+                <register>
+                    <name>GIF_TAG3</name>
+                    <description>GIFtag (bits 127-96) immediately before</description>
+                    <addressOffset>0x70</addressOffset>
+                </register>
+
+                <register>
+                    <name>GIF_CNT</name>
+                    <description>Transfer status counter</description>
+                    <addressOffset>0x80</addressOffset>
+                </register>
+
+                <register>
+                    <name>GIF_P3CNT</name>
+                    <description>PATH3 transfer status counter</description>
+                    <addressOffset>0x90</addressOffset>
+                </register>
+
+                <register>
+                    <name>GIF_P3TAG</name>
+                    <description>PATH3 tag value</description>
+                    <addressOffset>0xA0</addressOffset>
+                </register>
+            </registers>
+        </peripheral>
+
+        <peripheral>
+            <name>VIF</name>
+            <version>1</version>
+            <description>VU Interface</description>
+            <groupName>VIF</groupName>
+            <baseAddress>0xB0003800</baseAddress>
+
+            <!-- VIF0 and VIF1 are merged into this peripheral for deduplication -->           
+        </peripheral>
+
+        <peripheral>
+            <name>FIFO</name>
+            <version>1</version>
+            <description>FIFO</description>
+            <groupName>FIFO</groupName>
+            <baseAddress>0xB0004000</baseAddress>
+        </peripheral>
+
+        <peripheral>
+            <name>DMAC</name>
+            <version>1</version>
+            <description>DMA Controller</description>
+            <groupName>DMAC</groupName>
+            <baseAddress>0xB0008000</baseAddress>
+        </peripheral>
+
+        <peripheral>
+            <name>INTC</name>
+            <version>1</version>
+            <description>Interrupt Controller. See EE User's Manual chapter 3.</description>
+            <groupName>INTC</groupName>
+            <baseAddress>0xB000F000</baseAddress>
+        </peripheral>
+
+        <peripheral>
+            <name>SIF</name>
+            <version>1</version>
+            <description>Subsystem Interface</description>
+            <groupName>SIF</groupName>
+            <baseAddress>0xB000F200</baseAddress>
+        </peripheral>
+        
     </peripherals>
 </device>
