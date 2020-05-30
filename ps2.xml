@@ -489,6 +489,574 @@
             <description>Interrupt Controller. See EE User's Manual chapter 3.</description>
             <groupName>INTC</groupName>
             <baseAddress>0xB000F000</baseAddress>
+
+            <registers>
+                <register>
+                    <name>I_STAT</name>
+                    <description>Interrupt Status</description>
+                    <addressOffset>0x00</addressOffset>
+                    <resetMask>0x00000FFF</resetMask>
+                    <modifiedWriteValues>oneToClear</modifiedWriteValues>
+
+                    <fields>
+                        <field>
+                            <name>INT_GS</name>
+                            <description>Detection of an interrupt from GS</description>
+                            <bitRange>[0:0]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>Clear</name>
+                                    <description>No GS interrupt has occurred.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>Set</name>
+                                    <description>A GS interrupt has occurred.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+
+                        <field>
+                            <name>INT_SBUS</name>
+                            <description>Detection of an interrupt from a peripheral on SBUS</description>
+                            <bitRange>[1:1]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>Clear</name>
+                                    <description>No SBUS interrupt has occurred.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>Set</name>
+                                    <description>An SBUS interrupt has occurred.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+
+                        <field>
+                            <name>INT_VB_ON</name>
+                            <description>Start of V-Blank</description>
+                            <bitRange>[2:2]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>Clear</name>
+                                    <description>No start-of-V-Blank interrupt has occurred.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>Set</name>
+                                    <description>A start-of-V-Blank interrupt has occurred.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+
+                        <field>
+                            <name>INT_VB_OFF</name>
+                            <description>End of V-Blank</description>
+                            <bitRange>[3:3]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>Clear</name>
+                                    <description>No end-of-V-Blank interrupt has occurred.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>Set</name>
+                                    <description>An end-of-V-Blank interrupt has occurred.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+
+                        <field>
+                            <name>INT_VIF0</name>
+                            <description>VIF0's detection of VIFcode with an interrupt bit or an exception, or VIF0 stalls with occurrence of an interrupt.</description>
+                            <bitRange>[4:4]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>Clear</name>
+                                    <description>No VIF0 interrupt has occurred.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>Set</name>
+                                    <description>A VIF0 interrupt has occurred.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+
+                        <field>
+                            <name>INT_VIF1</name>
+                            <description>VIF1's detection of VIFcode with an interrupt bit or an exception, or VIF1 stalls with occurrence of an interrupt.</description>
+                            <bitRange>[5:5]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>Clear</name>
+                                    <description>No VIF1 interrupt has occurred.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>Set</name>
+                                    <description>A VIF1 interrupt has occurred.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+
+                        <field>
+                            <name>INT_VU0</name>
+                            <description>VU0's execution of a microinstruction with an interrupt bit, or VU0 stalls with occurrence of an interrupt.</description>
+                            <bitRange>[6:6]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>Clear</name>
+                                    <description>No VU0 interrupt has occurred.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>Set</name>
+                                    <description>A VU0 interrupt has occurred.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+
+                        <field>
+                            <name>INT_VU1</name>
+                            <description>VU1's execution of a microinstruction with an interrupt bit, or VU1 stalls with occurrence of an interrupt.</description>
+                            <bitRange>[7:7]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>Clear</name>
+                                    <description>No VU1 interrupt has occurred.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>Set</name>
+                                    <description>A VU1 interrupt has occurred.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+
+                        <field>
+                            <name>INT_IPU</name>
+                            <description>IPU's detection of the end of data or an exception IPU stalls with occurrence of an interrupt.</description>
+                            <bitRange>[8:8]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>Clear</name>
+                                    <description>No IPU interrupt has occurred.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>Set</name>
+                                    <description>An IPU interrupt has occurred.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+
+                        <field>
+                            <name>INT_TIMER0</name>
+                            <description>Conditions met in timer settings</description>
+                            <bitRange>[9:9]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>Clear</name>
+                                    <description>No TIMER0 interrupt has occurred.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>Set</name>
+                                    <description>A TIMER0 interrupt has occurred.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+
+                        <field>
+                            <name>INT_TIMER1</name>
+                            <description>Conditions met in timer settings</description>
+                            <bitRange>[10:10]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>Clear</name>
+                                    <description>No TIMER1 interrupt has occurred.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>Set</name>
+                                    <description>A TIMER1 interrupt has occurred.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+
+                        <field>
+                            <name>INT_TIMER2</name>
+                            <description>Conditions met in timer settings</description>
+                            <bitRange>[11:11]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>Clear</name>
+                                    <description>No TIMER2 interrupt has occurred.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>Set</name>
+                                    <description>An TIMER2 interrupt has occurred.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+
+                        <field>
+                            <name>INT_TIMER3</name>
+                            <description>Conditions met in timer settings</description>
+                            <bitRange>[12:12]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>Clear</name>
+                                    <description>No TIMER3 interrupt has occurred.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>Set</name>
+                                    <description>A TIMER3 interrupt has occurred.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+
+                        <field>
+                            <name>INT_SFIFO</name>
+                            <description>Error detection during SFIFO transfer</description>
+                            <bitRange>[13:13]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>Clear</name>
+                                    <description>No SFIFO interrupt has occurred.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>Set</name>
+                                    <description>An SFIFO interrupt has occurred.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+
+                        <field>
+                            <name>INT_VU0WD</name>
+                            <description>VU0 in RUN status for a long time continuously; ForceBreak is sent to VU0.</description>
+                            <bitRange>[14:14]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>Clear</name>
+                                    <description>No VU0 Watchdog interrupt has occurred.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>Set</name>
+                                    <description>A VU0 Watchdog interrupt has occurred.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                    </fields>
+                </register>
+
+                <register>
+                    <name>I_MASK</name>
+                    <description>Interrupt Mask</description>
+                    <addressOffset>0x10</addressOffset>
+
+                    <fields>
+                        <field>
+                            <name>INT_GS</name>
+                            <description>Detection of an interrupt from GS</description>
+                            <bitRange>[0:0]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>Clear</name>
+                                    <description>No GS interrupt has occurred.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>Set</name>
+                                    <description>A GS interrupt has occurred.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+
+                        <field>
+                            <name>INT_SBUS</name>
+                            <description>Detection of an interrupt from a peripheral on SBUS</description>
+                            <bitRange>[1:1]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>Clear</name>
+                                    <description>No SBUS interrupt has occurred.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>Set</name>
+                                    <description>An SBUS interrupt has occurred.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+
+                        <field>
+                            <name>INT_VB_ON</name>
+                            <description>Start of V-Blank</description>
+                            <bitRange>[2:2]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>Clear</name>
+                                    <description>No start-of-V-Blank interrupt has occurred.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>Set</name>
+                                    <description>A start-of-V-Blank interrupt has occurred.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+
+                        <field>
+                            <name>INT_VB_OFF</name>
+                            <description>End of V-Blank</description>
+                            <bitRange>[3:3]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>Clear</name>
+                                    <description>No end-of-V-Blank interrupt has occurred.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>Set</name>
+                                    <description>An end-of-V-Blank interrupt has occurred.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+
+                        <field>
+                            <name>INT_VIF0</name>
+                            <description>VIF0's detection of VIFcode with an interrupt bit or an exception, or VIF0 stalls with occurrence of an interrupt.</description>
+                            <bitRange>[4:4]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>Clear</name>
+                                    <description>No VIF0 interrupt has occurred.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>Set</name>
+                                    <description>A VIF0 interrupt has occurred.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+
+                        <field>
+                            <name>INT_VIF1</name>
+                            <description>VIF1's detection of VIFcode with an interrupt bit or an exception, or VIF1 stalls with occurrence of an interrupt.</description>
+                            <bitRange>[5:5]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>Clear</name>
+                                    <description>No VIF1 interrupt has occurred.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>Set</name>
+                                    <description>A VIF1 interrupt has occurred.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+
+                        <field>
+                            <name>INT_VU0</name>
+                            <description>VU0's execution of a microinstruction with an interrupt bit, or VU0 stalls with occurrence of an interrupt.</description>
+                            <bitRange>[6:6]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>Clear</name>
+                                    <description>No VU0 interrupt has occurred.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>Set</name>
+                                    <description>A VU0 interrupt has occurred.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+
+                        <field>
+                            <name>INT_VU1</name>
+                            <description>VU1's execution of a microinstruction with an interrupt bit, or VU1 stalls with occurrence of an interrupt.</description>
+                            <bitRange>[7:7]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>Clear</name>
+                                    <description>No VU1 interrupt has occurred.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>Set</name>
+                                    <description>A VU1 interrupt has occurred.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+
+                        <field>
+                            <name>INT_IPU</name>
+                            <description>IPU's detection of the end of data or an exception IPU stalls with occurrence of an interrupt.</description>
+                            <bitRange>[8:8]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>Clear</name>
+                                    <description>No IPU interrupt has occurred.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>Set</name>
+                                    <description>An IPU interrupt has occurred.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+
+                        <field>
+                            <name>INT_TIMER0</name>
+                            <description>Conditions met in timer settings</description>
+                            <bitRange>[9:9]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>Clear</name>
+                                    <description>No TIMER0 interrupt has occurred.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>Set</name>
+                                    <description>A TIMER0 interrupt has occurred.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+
+                        <field>
+                            <name>INT_TIMER1</name>
+                            <description>Conditions met in timer settings</description>
+                            <bitRange>[10:10]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>Clear</name>
+                                    <description>No TIMER1 interrupt has occurred.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>Set</name>
+                                    <description>A TIMER1 interrupt has occurred.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+
+                        <field>
+                            <name>INT_TIMER2</name>
+                            <description>Conditions met in timer settings</description>
+                            <bitRange>[11:11]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>Clear</name>
+                                    <description>No TIMER2 interrupt has occurred.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>Set</name>
+                                    <description>An TIMER2 interrupt has occurred.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+
+                        <field>
+                            <name>INT_TIMER3</name>
+                            <description>Conditions met in timer settings</description>
+                            <bitRange>[12:12]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>Clear</name>
+                                    <description>No TIMER3 interrupt has occurred.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>Set</name>
+                                    <description>A TIMER3 interrupt has occurred.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+
+                        <field>
+                            <name>INT_SFIFO</name>
+                            <description>Error detection during SFIFO transfer</description>
+                            <bitRange>[13:13]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>Clear</name>
+                                    <description>No SFIFO interrupt has occurred.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>Set</name>
+                                    <description>An SFIFO interrupt has occurred.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+
+                        <field>
+                            <name>INT_VU0WD</name>
+                            <description>VU0 in RUN status for a long time continuously; ForceBreak is sent to VU0.</description>
+                            <bitRange>[14:14]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>Clear</name>
+                                    <description>No VU0 Watchdog interrupt has occurred.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>Set</name>
+                                    <description>A VU0 Watchdog interrupt has occurred.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                    </fields>
+                </register>
+            </registers>
+        </peripheral>
+
+        <peripheral>
+            <name>SIO</name>
+            <version>1</version>
+            <description>Serial Input/Output</description>
+            <groupName>SIO</groupName>
+            <baseAddress>0xB000F100</baseAddress>
         </peripheral>
 
         <peripheral>
