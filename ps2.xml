@@ -500,7 +500,7 @@
 
                     <fields>
                         <field>
-                            <name>INT_GS</name>
+                            <name>GS</name>
                             <description>Detection of an interrupt from GS</description>
                             <bitRange>[0:0]</bitRange>
                             <enumeratedValues>
@@ -518,7 +518,7 @@
                         </field>
 
                         <field>
-                            <name>INT_SBUS</name>
+                            <name>SBUS</name>
                             <description>Detection of an interrupt from a peripheral on SBUS</description>
                             <bitRange>[1:1]</bitRange>
                             <enumeratedValues>
@@ -536,7 +536,7 @@
                         </field>
 
                         <field>
-                            <name>INT_VB_ON</name>
+                            <name>VBON</name>
                             <description>Start of V-Blank</description>
                             <bitRange>[2:2]</bitRange>
                             <enumeratedValues>
@@ -554,7 +554,7 @@
                         </field>
 
                         <field>
-                            <name>INT_VB_OFF</name>
+                            <name>VBOF</name>
                             <description>End of V-Blank</description>
                             <bitRange>[3:3]</bitRange>
                             <enumeratedValues>
@@ -572,7 +572,7 @@
                         </field>
 
                         <field>
-                            <name>INT_VIF0</name>
+                            <name>VIF0</name>
                             <description>VIF0's detection of VIFcode with an interrupt bit or an exception, or VIF0 stalls with occurrence of an interrupt.</description>
                             <bitRange>[4:4]</bitRange>
                             <enumeratedValues>
@@ -590,7 +590,7 @@
                         </field>
 
                         <field>
-                            <name>INT_VIF1</name>
+                            <name>VIF1</name>
                             <description>VIF1's detection of VIFcode with an interrupt bit or an exception, or VIF1 stalls with occurrence of an interrupt.</description>
                             <bitRange>[5:5]</bitRange>
                             <enumeratedValues>
@@ -608,7 +608,7 @@
                         </field>
 
                         <field>
-                            <name>INT_VU0</name>
+                            <name>VU0</name>
                             <description>VU0's execution of a microinstruction with an interrupt bit, or VU0 stalls with occurrence of an interrupt.</description>
                             <bitRange>[6:6]</bitRange>
                             <enumeratedValues>
@@ -626,7 +626,7 @@
                         </field>
 
                         <field>
-                            <name>INT_VU1</name>
+                            <name>VU1</name>
                             <description>VU1's execution of a microinstruction with an interrupt bit, or VU1 stalls with occurrence of an interrupt.</description>
                             <bitRange>[7:7]</bitRange>
                             <enumeratedValues>
@@ -644,7 +644,7 @@
                         </field>
 
                         <field>
-                            <name>INT_IPU</name>
+                            <name>IPU</name>
                             <description>IPU's detection of the end of data or an exception IPU stalls with occurrence of an interrupt.</description>
                             <bitRange>[8:8]</bitRange>
                             <enumeratedValues>
@@ -662,7 +662,7 @@
                         </field>
 
                         <field>
-                            <name>INT_TIMER0</name>
+                            <name>TIM0</name>
                             <description>Conditions met in timer settings</description>
                             <bitRange>[9:9]</bitRange>
                             <enumeratedValues>
@@ -680,7 +680,7 @@
                         </field>
 
                         <field>
-                            <name>INT_TIMER1</name>
+                            <name>TIM1</name>
                             <description>Conditions met in timer settings</description>
                             <bitRange>[10:10]</bitRange>
                             <enumeratedValues>
@@ -698,7 +698,7 @@
                         </field>
 
                         <field>
-                            <name>INT_TIMER2</name>
+                            <name>TIM2</name>
                             <description>Conditions met in timer settings</description>
                             <bitRange>[11:11]</bitRange>
                             <enumeratedValues>
@@ -716,7 +716,7 @@
                         </field>
 
                         <field>
-                            <name>INT_TIMER3</name>
+                            <name>TIM3</name>
                             <description>Conditions met in timer settings</description>
                             <bitRange>[12:12]</bitRange>
                             <enumeratedValues>
@@ -734,7 +734,7 @@
                         </field>
 
                         <field>
-                            <name>INT_SFIFO</name>
+                            <name>SFIFO</name>
                             <description>Error detection during SFIFO transfer</description>
                             <bitRange>[13:13]</bitRange>
                             <enumeratedValues>
@@ -752,7 +752,7 @@
                         </field>
 
                         <field>
-                            <name>INT_VU0WD</name>
+                            <name>VU0WD</name>
                             <description>VU0 in RUN status for a long time continuously; ForceBreak is sent to VU0.</description>
                             <bitRange>[14:14]</bitRange>
                             <enumeratedValues>
@@ -766,6 +766,24 @@
                                     <description>A VU0 Watchdog interrupt has occurred.</description>
                                     <value>1</value>
                                 </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+
+                        <field>
+                            <name>PGIF</name>
+                            <description>DMA channel from IOP for emulating the PS1 GPU</description>
+                            <bitRange>[15:15]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>Clear</name>
+                                    <description>No PGIF interrupt has occurred.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>Set</name>
+                                    <description>A PGIF interrupt has occurred.</description>
+                                    <value>1</value>
+                                </enumeratedValue> 
                             </enumeratedValues>
                         </field>
                     </fields>
@@ -778,270 +796,288 @@
 
                     <fields>
                         <field>
-                            <name>INT_GS</name>
+                            <name>GS</name>
                             <description>Detection of an interrupt from GS</description>
                             <bitRange>[0:0]</bitRange>
                             <enumeratedValues>
                                 <enumeratedValue>
-                                    <name>Clear</name>
-                                    <description>No GS interrupt has occurred.</description>
+                                    <name>Disabled</name>
+                                    <description>GS interrupts are disabled.</description>
                                     <value>0</value>
                                 </enumeratedValue>
                                 <enumeratedValue>
-                                    <name>Set</name>
-                                    <description>A GS interrupt has occurred.</description>
+                                    <name>Enabled</name>
+                                    <description>GS interrupts are enabled.</description>
                                     <value>1</value>
                                 </enumeratedValue>
                             </enumeratedValues>
                         </field>
 
                         <field>
-                            <name>INT_SBUS</name>
+                            <name>SBUS</name>
                             <description>Detection of an interrupt from a peripheral on SBUS</description>
                             <bitRange>[1:1]</bitRange>
                             <enumeratedValues>
                                 <enumeratedValue>
-                                    <name>Clear</name>
-                                    <description>No SBUS interrupt has occurred.</description>
+                                    <name>Disabled</name>
+                                    <description>SBUS interrupts are disabled.</description>
                                     <value>0</value>
                                 </enumeratedValue>
                                 <enumeratedValue>
-                                    <name>Set</name>
-                                    <description>An SBUS interrupt has occurred.</description>
+                                    <name>Enabled</name>
+                                    <description>SBUS interrupts are enabled.</description>
                                     <value>1</value>
                                 </enumeratedValue>
                             </enumeratedValues>
                         </field>
 
                         <field>
-                            <name>INT_VB_ON</name>
+                            <name>VBON</name>
                             <description>Start of V-Blank</description>
                             <bitRange>[2:2]</bitRange>
                             <enumeratedValues>
                                 <enumeratedValue>
-                                    <name>Clear</name>
-                                    <description>No start-of-V-Blank interrupt has occurred.</description>
+                                    <name>Disabled</name>
+                                    <description>Start of V-Blank interrupts are disabled.</description>
                                     <value>0</value>
                                 </enumeratedValue>
                                 <enumeratedValue>
-                                    <name>Set</name>
-                                    <description>A start-of-V-Blank interrupt has occurred.</description>
+                                    <name>Enabled</name>
+                                    <description>Start of V-Blank interrupts are enabled.</description>
                                     <value>1</value>
                                 </enumeratedValue>
                             </enumeratedValues>
                         </field>
 
                         <field>
-                            <name>INT_VB_OFF</name>
+                            <name>VBOF</name>
                             <description>End of V-Blank</description>
                             <bitRange>[3:3]</bitRange>
                             <enumeratedValues>
                                 <enumeratedValue>
-                                    <name>Clear</name>
-                                    <description>No end-of-V-Blank interrupt has occurred.</description>
+                                    <name>Disabled</name>
+                                    <description>End of V-Blank interrupts are disabled.</description>
                                     <value>0</value>
                                 </enumeratedValue>
                                 <enumeratedValue>
-                                    <name>Set</name>
-                                    <description>An end-of-V-Blank interrupt has occurred.</description>
+                                    <name>Enabled</name>
+                                    <description>End of V-Blank interrupts are enabled.</description>
                                     <value>1</value>
                                 </enumeratedValue>
                             </enumeratedValues>
                         </field>
 
                         <field>
-                            <name>INT_VIF0</name>
+                            <name>VIF0</name>
                             <description>VIF0's detection of VIFcode with an interrupt bit or an exception, or VIF0 stalls with occurrence of an interrupt.</description>
                             <bitRange>[4:4]</bitRange>
                             <enumeratedValues>
                                 <enumeratedValue>
-                                    <name>Clear</name>
-                                    <description>No VIF0 interrupt has occurred.</description>
+                                    <name>Disabled</name>
+                                    <description>VIF0 interrupts are disabled.</description>
                                     <value>0</value>
                                 </enumeratedValue>
                                 <enumeratedValue>
-                                    <name>Set</name>
-                                    <description>A VIF0 interrupt has occurred.</description>
+                                    <name>Enabled</name>
+                                    <description>VIF0 interrupts are enabled.</description>
                                     <value>1</value>
                                 </enumeratedValue>
                             </enumeratedValues>
                         </field>
 
                         <field>
-                            <name>INT_VIF1</name>
+                            <name>VIF1</name>
                             <description>VIF1's detection of VIFcode with an interrupt bit or an exception, or VIF1 stalls with occurrence of an interrupt.</description>
                             <bitRange>[5:5]</bitRange>
                             <enumeratedValues>
                                 <enumeratedValue>
-                                    <name>Clear</name>
-                                    <description>No VIF1 interrupt has occurred.</description>
+                                    <name>Disabled</name>
+                                    <description>VIF1 interrupts are disabled.</description>
                                     <value>0</value>
                                 </enumeratedValue>
                                 <enumeratedValue>
-                                    <name>Set</name>
-                                    <description>A VIF1 interrupt has occurred.</description>
+                                    <name>Enabled</name>
+                                    <description>VIF1 interrupts are enabled.</description>
                                     <value>1</value>
                                 </enumeratedValue>
                             </enumeratedValues>
                         </field>
 
                         <field>
-                            <name>INT_VU0</name>
+                            <name>VU0</name>
                             <description>VU0's execution of a microinstruction with an interrupt bit, or VU0 stalls with occurrence of an interrupt.</description>
                             <bitRange>[6:6]</bitRange>
                             <enumeratedValues>
                                 <enumeratedValue>
-                                    <name>Clear</name>
-                                    <description>No VU0 interrupt has occurred.</description>
+                                    <name>Disabled</name>
+                                    <description>VU0 interrupts are disabled.</description>
                                     <value>0</value>
                                 </enumeratedValue>
                                 <enumeratedValue>
-                                    <name>Set</name>
-                                    <description>A VU0 interrupt has occurred.</description>
+                                    <name>Enabled</name>
+                                    <description>VU0 interrupts are enabled.</description>
                                     <value>1</value>
                                 </enumeratedValue>
                             </enumeratedValues>
                         </field>
 
                         <field>
-                            <name>INT_VU1</name>
+                            <name>VU1</name>
                             <description>VU1's execution of a microinstruction with an interrupt bit, or VU1 stalls with occurrence of an interrupt.</description>
                             <bitRange>[7:7]</bitRange>
                             <enumeratedValues>
                                 <enumeratedValue>
-                                    <name>Clear</name>
-                                    <description>No VU1 interrupt has occurred.</description>
+                                    <name>Disabled</name>
+                                    <description>VU1 interrupts are disabled.</description>
                                     <value>0</value>
                                 </enumeratedValue>
                                 <enumeratedValue>
-                                    <name>Set</name>
-                                    <description>A VU1 interrupt has occurred.</description>
+                                    <name>Enabled</name>
+                                    <description>VU1 interrupts are enabled.</description>
                                     <value>1</value>
                                 </enumeratedValue>
                             </enumeratedValues>
                         </field>
 
                         <field>
-                            <name>INT_IPU</name>
+                            <name>IPU</name>
                             <description>IPU's detection of the end of data or an exception IPU stalls with occurrence of an interrupt.</description>
                             <bitRange>[8:8]</bitRange>
                             <enumeratedValues>
                                 <enumeratedValue>
-                                    <name>Clear</name>
-                                    <description>No IPU interrupt has occurred.</description>
+                                    <name>Disabled</name>
+                                    <description>IPU interrupts are disabled.</description>
                                     <value>0</value>
                                 </enumeratedValue>
                                 <enumeratedValue>
-                                    <name>Set</name>
-                                    <description>An IPU interrupt has occurred.</description>
+                                    <name>Enabled</name>
+                                    <description>IPU interrupts are enabled.</description>
                                     <value>1</value>
                                 </enumeratedValue>
                             </enumeratedValues>
                         </field>
 
                         <field>
-                            <name>INT_TIMER0</name>
-                            <description>Conditions met in timer settings</description>
+                            <name>TIM0</name>
+                            <description>Conditions met in timer 0 settings</description>
                             <bitRange>[9:9]</bitRange>
                             <enumeratedValues>
                                 <enumeratedValue>
-                                    <name>Clear</name>
-                                    <description>No TIMER0 interrupt has occurred.</description>
+                                    <name>Disabled</name>
+                                    <description>TIMER0 interrupts are disabled.</description>
                                     <value>0</value>
                                 </enumeratedValue>
                                 <enumeratedValue>
-                                    <name>Set</name>
-                                    <description>A TIMER0 interrupt has occurred.</description>
+                                    <name>Enabled</name>
+                                    <description>TIMER0 interrupts are enabled.</description>
                                     <value>1</value>
                                 </enumeratedValue>
                             </enumeratedValues>
                         </field>
 
                         <field>
-                            <name>INT_TIMER1</name>
-                            <description>Conditions met in timer settings</description>
+                            <name>TIM1</name>
+                            <description>Conditions met in timer 1 settings</description>
                             <bitRange>[10:10]</bitRange>
                             <enumeratedValues>
                                 <enumeratedValue>
-                                    <name>Clear</name>
-                                    <description>No TIMER1 interrupt has occurred.</description>
+                                    <name>Disabled</name>
+                                    <description>TIMER1 interrupts are disabled.</description>
                                     <value>0</value>
                                 </enumeratedValue>
                                 <enumeratedValue>
-                                    <name>Set</name>
-                                    <description>A TIMER1 interrupt has occurred.</description>
+                                    <name>Enabled</name>
+                                    <description>TIMER1 interrupts are enabled.</description>
                                     <value>1</value>
                                 </enumeratedValue>
                             </enumeratedValues>
                         </field>
 
                         <field>
-                            <name>INT_TIMER2</name>
-                            <description>Conditions met in timer settings</description>
+                            <name>TIM2</name>
+                            <description>Conditions met in timer 2 settings</description>
                             <bitRange>[11:11]</bitRange>
                             <enumeratedValues>
                                 <enumeratedValue>
-                                    <name>Clear</name>
-                                    <description>No TIMER2 interrupt has occurred.</description>
+                                    <name>Disabled</name>
+                                    <description>TIMER2 interrupts are disabled.</description>
                                     <value>0</value>
                                 </enumeratedValue>
                                 <enumeratedValue>
-                                    <name>Set</name>
-                                    <description>An TIMER2 interrupt has occurred.</description>
+                                    <name>Enabled</name>
+                                    <description>TIMER2 interrupts are enabled.</description>
                                     <value>1</value>
                                 </enumeratedValue>
                             </enumeratedValues>
                         </field>
 
                         <field>
-                            <name>INT_TIMER3</name>
-                            <description>Conditions met in timer settings</description>
+                            <name>TIM3</name>
+                            <description>Conditions met in timer 3 settings</description>
                             <bitRange>[12:12]</bitRange>
                             <enumeratedValues>
                                 <enumeratedValue>
-                                    <name>Clear</name>
-                                    <description>No TIMER3 interrupt has occurred.</description>
+                                    <name>Disabled</name>
+                                    <description>TIMER3 interrupts are disabled.</description>
                                     <value>0</value>
                                 </enumeratedValue>
                                 <enumeratedValue>
-                                    <name>Set</name>
-                                    <description>A TIMER3 interrupt has occurred.</description>
+                                    <name>Enabled</name>
+                                    <description>TIMER3 interrupts are enabled.</description>
                                     <value>1</value>
                                 </enumeratedValue>
                             </enumeratedValues>
                         </field>
 
                         <field>
-                            <name>INT_SFIFO</name>
+                            <name>SFIFO</name>
                             <description>Error detection during SFIFO transfer</description>
                             <bitRange>[13:13]</bitRange>
                             <enumeratedValues>
                                 <enumeratedValue>
-                                    <name>Clear</name>
-                                    <description>No SFIFO interrupt has occurred.</description>
+                                    <name>Disabled</name>
+                                    <description>SFIFO interrupts are disabled.</description>
                                     <value>0</value>
                                 </enumeratedValue>
                                 <enumeratedValue>
-                                    <name>Set</name>
-                                    <description>An SFIFO interrupt has occurred.</description>
+                                    <name>Enabled</name>
+                                    <description>SFIFO interrupts are enabled.</description>
                                     <value>1</value>
                                 </enumeratedValue>
                             </enumeratedValues>
                         </field>
 
                         <field>
-                            <name>INT_VU0WD</name>
+                            <name>VU0WD</name>
                             <description>VU0 in RUN status for a long time continuously; ForceBreak is sent to VU0.</description>
                             <bitRange>[14:14]</bitRange>
                             <enumeratedValues>
                                 <enumeratedValue>
-                                    <name>Clear</name>
-                                    <description>No VU0 Watchdog interrupt has occurred.</description>
+                                    <name>Disabled</name>
+                                    <description>VU0 Watchdog interrupts are disabled.</description>
                                     <value>0</value>
                                 </enumeratedValue>
                                 <enumeratedValue>
-                                    <name>Set</name>
-                                    <description>A VU0 Watchdog interrupt has occurred.</description>
+                                    <name>Enabled</name>
+                                    <description>VU0 Watchdog interrupts are enabled.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+
+                        <field>
+                            <name>PGIF</name>
+                            <description>DMA channel from IOP for emulating the PS1 GPU</description>
+                            <bitRange>[15:15]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>Disabled</name>
+                                    <description>PGIF interrupts are disabled.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>Enabled</name>
+                                    <description>PGIF interrupts are enabled.</description>
                                     <value>1</value>
                                 </enumeratedValue>
                             </enumeratedValues>
