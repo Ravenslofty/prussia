@@ -572,7 +572,7 @@
                             <name>VPS</name>
                             <description>VIF Status</description>
                             <bitRange>[1:0]</bitRange>
-                            <access>read</access>
+                            <access>read-only</access>
                             <enumeratedValues>
                                 <enumeratedValue>
                                     <name>IDLE</name>
@@ -591,7 +591,7 @@
                                 </enumeratedValue>
                                 <enumeratedValue>
                                     <name>PROCESSING</name>
-                                    <description>Decompressing/Transferring the data following the VIFcode<description>
+                                    <description>Decompressing/Transferring the data following the VIFcode</description>
                                     <value>3</value>
                                 </enumeratedValue>
                             </enumeratedValues>
@@ -600,7 +600,7 @@
                             <name>VEW</name>
                             <description>VIF E-bit Wait</description>
                             <bitRange>[2:2]</bitRange>
-                            <access>read</access>
+                            <access>read-only</access>
                             <enumeratedValues>
                                 <enumeratedValue>
                                     <name>NOTWAIT</name>
@@ -618,7 +618,7 @@
                             <name>VGW</name>
                             <description>Status waiting for end of GIF transfer</description>
                             <bitRange>[3:3]</bitRange>
-                            <access>read</access>
+                            <access>read-only</access>
                             <enumeratedValues>
                                 <enumeratedValue>
                                     <name>NOTWAIT</name>
@@ -636,7 +636,7 @@
                             <name>MRK</name>
                             <description>VIF MARK detect</description>
                             <bitRange>[6:6]</bitRange>
-                            <access>read</access>
+                            <access>read-only</access>
                             <enumeratedValues>
                                 <enumeratedValue>
                                     <name>NOTDETECT</name>
@@ -654,7 +654,7 @@
                             <name>DBF</name>
                             <description>Double buffer flag. Cleared to 0 by OFFSET and reversed by MSCAL/MSCALF/MSCNT.</description>
                             <bitRange>[7:7]</bitRange>
-                            <access>read</access>
+                            <access>read-only</access>
                             <enumeratedValues>
                                 <enumeratedValue>
                                     <name>BASE</name>
@@ -672,7 +672,7 @@
                             <name>VSS</name>
                             <description>Stop by STOP</description>
                             <bitRange>[8:8]</bitRange>
-                            <access>read</access>
+                            <access>read-only</access>
                             <enumeratedValues>
                                 <enumeratedValue>
                                     <name>NOTSTALL</name>
@@ -690,7 +690,7 @@
                             <name>VFS</name>
                             <description>Stop by ForceBreak</description>
                             <bitRange>[9:9]</bitRange>
-                            <access>read</access>
+                            <access>read-only</access>
                             <enumeratedValues>
                                 <enumeratedValue>
                                     <name>NOTSTALL</name>
@@ -708,7 +708,7 @@
                             <name>VIS</name>
                             <description>VIF interrupt stall</description>
                             <bitRange>[10:10]</bitRange>
-                            <access>read</access>
+                            <access>read-only</access>
                             <enumeratedValues>
                                 <enumeratedValue>
                                     <name>NOTSTALL</name>
@@ -726,7 +726,7 @@
                             <name>INT</name>
                             <description>Interrupt by the i bit</description>
                             <bitRange>[11:11]</bitRange>
-                            <access>read</access>
+                            <access>read-only</access>
                             <enumeratedValues>
                                 <enumeratedValue>
                                     <name>NOTDETECT</name>
@@ -744,7 +744,7 @@
                             <name>ER0</name>
                             <description>DMAtag Mismatch error</description>
                             <bitRange>[12:12]</bitRange>
-                            <access>read</access>
+                            <access>read-only</access>
                             <enumeratedValues>
                                 <enumeratedValue>
                                     <name>NOERROR</name>
@@ -762,7 +762,7 @@
                             <name>ER1</name>
                             <description>VIFcode error</description>
                             <bitRange>[13:13]</bitRange>
-                            <access>read</access>
+                            <access>read-only</access>
                             <enumeratedValues>
                                 <enumeratedValue>
                                     <name>NOTDETECT</name>
@@ -798,23 +798,7 @@
                             <name>FQC</name>
                             <description>Amount of effective data in the VIF-FIFO</description>
                             <bitRange>[28:24]</bitRange>
-                            <access>read</access>
-                            <enumeratedValues>
-                                <enumeratedValue>
-                                    <name>EMPTY</name>
-                                    <description>VIF FIFO is empty</description>
-                                    <value>0</value>
-                                </enumeratedValue>
-                                <enumeratedValue>
-                                    <name>FULL</name>
-                                    <description>VIF FIFO is full</description>
-                                    <value>16</value>
-                                </enumeratedValue>
-                                <enumeratedValue>
-                                    <name>HASDATA</name>
-                                    <description>There is data in the VIF FIFO</description>
-                                    <isDefault>true</isDefault>
-                            </enumeratedValues>
+                            <access>read-only</access>
                         </field>
                     </fields>
                 </register>
