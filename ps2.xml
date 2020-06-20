@@ -780,7 +780,6 @@
                             <name>FDR</name>
                             <description>VIF-FIFO transfer direction</description>
                             <bitRange>[23:23]</bitRange>
-                            <access>read-write</access>
                             <enumeratedValues>
                                 <enumeratedValue>
                                     <name>INTOVIF</name>
@@ -806,6 +805,32 @@
                     <name>VIF1_FBRST</name>
                     <description>Operation control</description>
                     <addressOffset>0x410</addressOffset>
+                    <fields>
+                        <field>
+                            <name>RST</name>
+                            <description>Reset. Resets the whole VIF (including VIF FIFO) when 1 is written.</description>
+                            <bitRange>[0:0]</bitRange>
+                            <modifiedWriteValues>set</modifiedWriteValues>
+                        </field>
+                        <field>
+                            <name>FBK</name>
+                            <description>ForceBreak. Causes a ForceBreak to the VIF when 1 is written. (Stall occurrence)</description>
+                            <bitRange>[1:1]</bitRange>
+                            <modifiedWriteValues>set</modifiedWriteValues>
+                        </field>
+                        <field>
+                            <name>STP</name>
+                            <description>Stop. Stops after end of VIDcode in process when 1 is written. (Stall occurrence)</description>
+                            <bitRange>[2:2]</bitRange>
+                            <modifiedWriteValues>set</modifiedWriteValues>
+                        </field>
+                        <field>
+                            <name>STC</name>
+                            <description>Stall Cancel. Cancels the VIF stall and clears the VSS, VFS, VIS, INT, ER0 and ER1 of the VIF_STAT register to 0 when 1 is written</description>
+                            <bitRange>[3:3]</bitRange>
+                            <modifiedWriteValues>set</modifiedWriteValues>
+                        </field>
+                    </fields>
                 </register>
                 <register>
                     <name>VIF1_ERR</name>
