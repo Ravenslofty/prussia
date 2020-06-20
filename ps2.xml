@@ -799,6 +799,22 @@
                             <description>Amount of effective data in the VIF-FIFO</description>
                             <bitRange>[28:24]</bitRange>
                             <access>read</access>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>EMPTY</name>
+                                    <description>VIF FIFO is empty</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>FULL</name>
+                                    <description>VIF FIFO is full</description>
+                                    <value>16</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>HASDATA</name>
+                                    <description>There is data in the VIF FIFO</description>
+                                    <isDefault>true</isDefault>
+                            </enumeratedValues>
                         </field>
                     </fields>
                 </register>
