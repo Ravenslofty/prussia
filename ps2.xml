@@ -465,6 +465,214 @@
             <baseAddress>0xB0003800</baseAddress>
 
             <!-- VIF0 and VIF1 are merged into this peripheral for deduplication -->           
+            <registers>
+                <register>
+                    <name>VIF0_STAT</name>
+                    <description>Status</description>
+                    <addressOffset>0x00</addressOffset>
+                </register>
+                <register>
+                    <name>VIF0_FBRST</name>
+                    <description>Operation control</description>
+                    <addressOffset>0x10</addressOffset>
+                </register>
+                <register>
+                    <name>VIF0_ERR</name>
+                    <description>Error status</description>
+                    <addressOffset>0x20</addressOffset>
+                </register>
+                <register>
+                    <name>VIF0_MARK</name>
+                    <description>Mark value</description>
+                    <addressOffset>0x30</addressOffset>
+                </register>
+                <register>
+                    <name>VIF0_CYCLE</name>
+                    <description>Data write cycle</description>
+                    <addressOffset>0x40</addressOffset>
+                </register>
+                <register>
+                    <name>VIF0_MODE</name>
+                    <description>ADD mode</description>
+                    <addressOffset>0x50</addressOffset>
+                </register>
+                <register>
+                    <name>VIF0_NUM</name>
+                    <description>Amount of non-transferred data</description>
+                    <addressOffset>0x60</addressOffset>
+                </register>
+                <register>
+                    <name>VIF0_MASK</name>
+                    <description>Write mask pattern</description>
+                    <addressOffset>0x70</addressOffset>
+                </register>
+                <register>
+                    <name>VIF0_CODE</name>
+                    <description>Last processed VIFcode</description>
+                    <addressOffset>0x80</addressOffset>
+                </register>
+                <register>
+                    <name>VIF0_ITOPS</name>
+                    <description>Next ITOP value</description>
+                    <addressOffset>0x90</addressOffset>
+                </register>
+                <register>
+                    <name>VIF0_ITOP</name>
+                    <description>ITOP value</description>
+                    <addressOffset>0xD0</addressOffset>
+                </register>
+                <register>
+                    <name>VIF0_R0</name>
+                    <description>Filling data R0 (Row register)</description>
+                    <addressOffset>0x100</addressOffset>
+                </register>
+                <register>
+                    <name>VIF0_R1</name>
+                    <description>Filling data R1 (Row register)</description>
+                    <addressOffset>0x110</addressOffset>
+                </register>
+                <register>
+                    <name>VIF0_R2</name>
+                    <description>Filling data R2 (Row register)</description>
+                    <addressOffset>0x120</addressOffset>
+                </register>
+                <register>
+                    <name>VIF0_R3</name>
+                    <description>Filling data R3 (Row register)</description>
+                    <addressOffset>0x130</addressOffset>
+                </register>
+                <register>
+                    <name>VIF0_C0</name>
+                    <description>Filling data C0 (Col register)</description>
+                    <addressOffset>0x140</addressOffset>
+                </register>
+                <register>
+                    <name>VIF0_C1</name>
+                    <description>Filling data C1 (Col register)</description>
+                    <addressOffset>0x150</addressOffset>
+                </register>
+                <register>
+                    <name>VIF0_C2</name>
+                    <description>Filling data C2 (Col register)</description>
+                    <addressOffset>0x160</addressOffset>
+                </register>
+                <register>
+                    <name>VIF0_C3</name>
+                    <description>Filling data C3 (Col register)</description>
+                    <addressOffset>0x170</addressOffset>
+                </register>
+
+                <register derivedFrom="VIF0_STAT">
+                    <name>VIF1_STAT</name>
+                    <description>Status</description>
+                    <addressOffset>0x400</addressOffset>
+                </register>
+                <register derivedFrom="VIF0_FBRST">
+                    <name>VIF1_FBRST</name>
+                    <description>Operation control</description>
+                    <addressOffset>0x410</addressOffset>
+                </register>
+                <register derivedFrom="VIF0_ERR">
+                    <name>VIF1_ERR</name>
+                    <description>Error status</description>
+                    <addressOffset>0x420</addressOffset>
+                </register>
+                <register derivedFrom="VIF0_MARK">
+                    <name>VIF1_MARK</name>
+                    <description>Mark value</description>
+                    <addressOffset>0x430</addressOffset>
+                </register>
+                <register derivedFrom="VIF0_CYCLE">
+                    <name>VIF1_CYCLE</name>
+                    <description>Data write cycle</description>
+                    <addressOffset>0x440</addressOffset>
+                </register>
+                <register derivedFrom="VIF0_MODE">
+                    <name>VIF1_MODE</name>
+                    <description>ADD mode</description>
+                    <addressOffset>0x450</addressOffset>
+                </register>
+                <register derivedFrom="VIF0_NUM">
+                    <name>VIF1_NUM</name>
+                    <description>Amount of non-transferred data</description>
+                    <addressOffset>0x460</addressOffset>
+                </register>
+                <register derivedFrom="VIF0_MASK">
+                    <name>VIF1_MASK</name>
+                    <description>Write mask pattern</description>
+                    <addressOffset>0x470</addressOffset>
+                </register>
+                <register derivedFrom="VIF0_CODE">
+                    <name>VIF1_CODE</name>
+                    <description>Last processed VIFcode</description>
+                    <addressOffset>0x480</addressOffset>
+                </register>
+                <register derivedFrom="VIF0_ITOPS">
+                    <name>VIF1_ITOPS</name>
+                    <description>Next ITOP value</description>
+                    <addressOffset>0x490</addressOffset>
+                </register>
+                <register>
+                    <name>VIF1_BASE</name>
+                    <description>Base address of double buffer</description>
+                    <addressOffset>0x4A0</addressOffset>
+                </register>
+                <register>
+                    <name>VIF1_OFST</name>
+                    <description>Offset of double buffer</description>
+                    <addressOffset>0x4B0</addressOffset>
+                </register>
+                <register>
+                    <name>VIF1_TOPS</name>
+                    <description>Next TOP value/data write address</description>
+                    <addressOffset>0x4C0</addressOffset>
+                </register>
+                <register derivedFrom="VIF0_ITOP">
+                    <name>VIF1_ITOP</name>
+                    <description>ITOP value</description>
+                    <addressOffset>0x4D0</addressOffset>
+                </register>
+                <register derivedFrom="VIF0_R0">
+                    <name>VIF1_R0</name>
+                    <description>Filling data R0 (Row register)</description>
+                    <addressOffset>0x500</addressOffset>
+                </register>
+                <register derivedFrom="VIF0_R1">
+                    <name>VIF1_R1</name>
+                    <description>Filling data R1 (Row register)</description>
+                    <addressOffset>0x510</addressOffset>
+                </register>
+                <register derivedFrom="VIF0_R2">
+                    <name>VIF1_R2</name>
+                    <description>Filling data R2 (Row register)</description>
+                    <addressOffset>0x520</addressOffset>
+                </register>
+                <register derivedFrom="VIF0_R3">
+                    <name>VIF1_R3</name>
+                    <description>Filling data R3 (Row register)</description>
+                    <addressOffset>0x530</addressOffset>
+                </register>
+                <register derivedFrom="VIF0_C0">
+                    <name>VIF1_C0</name>
+                    <description>Filling data C0 (Col register)</description>
+                    <addressOffset>0x540</addressOffset>
+                </register>
+                <register derivedFrom="VIF0_C1">
+                    <name>VIF1_C1</name>
+                    <description>Filling data C1 (Col register)</description>
+                    <addressOffset>0x550</addressOffset>
+                </register>
+                <register derivedFrom="VIF0_C2">
+                    <name>VIF1_C2</name>
+                    <description>Filling data C2 (Col register)</description>
+                    <addressOffset>0x560</addressOffset>
+                </register>
+                <register derivedFrom="VIF0_C3">
+                    <name>VIF1_C3</name>
+                    <description>Filling data C3 (Col register)</description>
+                    <addressOffset>0x570</addressOffset>
+                </register>
+            </registers>
         </peripheral>
 
         <peripheral>
