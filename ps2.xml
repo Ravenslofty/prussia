@@ -466,148 +466,383 @@
 
             <!-- VIF0 and VIF1 are merged into this peripheral for deduplication -->           
             <registers>
-                <register>
+                <register derivedFrom="VIF1_STAT">
                     <name>VIF0_STAT</name>
                     <description>Status</description>
                     <addressOffset>0x00</addressOffset>
                 </register>
-                <register>
+                <register derivedFrom="VIF1_FBRST">
                     <name>VIF0_FBRST</name>
                     <description>Operation control</description>
                     <addressOffset>0x10</addressOffset>
                 </register>
-                <register>
+                <register derivedFrom="VIF1_ERR">
                     <name>VIF0_ERR</name>
                     <description>Error status</description>
                     <addressOffset>0x20</addressOffset>
                 </register>
-                <register>
+                <register derivedFrom="VIF1_MARK">
                     <name>VIF0_MARK</name>
                     <description>Mark value</description>
                     <addressOffset>0x30</addressOffset>
                 </register>
-                <register>
+                <register derivedFrom="VIF1_CYCLE">
                     <name>VIF0_CYCLE</name>
                     <description>Data write cycle</description>
                     <addressOffset>0x40</addressOffset>
                 </register>
-                <register>
+                <register derivedFrom="VIF1_MODE">
                     <name>VIF0_MODE</name>
                     <description>ADD mode</description>
                     <addressOffset>0x50</addressOffset>
                 </register>
-                <register>
+                <register derivedFrom="VIF1_NUM">
                     <name>VIF0_NUM</name>
                     <description>Amount of non-transferred data</description>
                     <addressOffset>0x60</addressOffset>
                 </register>
-                <register>
+                <register derivedFrom="VIF1_MASK">
                     <name>VIF0_MASK</name>
                     <description>Write mask pattern</description>
                     <addressOffset>0x70</addressOffset>
                 </register>
-                <register>
+                <register derivedFrom="VIF1_CODE">
                     <name>VIF0_CODE</name>
                     <description>Last processed VIFcode</description>
                     <addressOffset>0x80</addressOffset>
                 </register>
-                <register>
+                <register derivedFrom="VIF1_ITOPS">
                     <name>VIF0_ITOPS</name>
                     <description>Next ITOP value</description>
                     <addressOffset>0x90</addressOffset>
                 </register>
-                <register>
+                <register derivedFrom="VIF1_ITOP">
                     <name>VIF0_ITOP</name>
                     <description>ITOP value</description>
                     <addressOffset>0xD0</addressOffset>
                 </register>
-                <register>
+                <register derivedFrom="VIF1_R0">
                     <name>VIF0_R0</name>
                     <description>Filling data R0 (Row register)</description>
                     <addressOffset>0x100</addressOffset>
                 </register>
-                <register>
+                <register derivedFrom="VIF1_R1">
                     <name>VIF0_R1</name>
                     <description>Filling data R1 (Row register)</description>
                     <addressOffset>0x110</addressOffset>
                 </register>
-                <register>
+                <register derivedFrom="VIF1_R2">
                     <name>VIF0_R2</name>
                     <description>Filling data R2 (Row register)</description>
                     <addressOffset>0x120</addressOffset>
                 </register>
-                <register>
+                <register derivedFrom="VIF1_R3">
                     <name>VIF0_R3</name>
                     <description>Filling data R3 (Row register)</description>
                     <addressOffset>0x130</addressOffset>
                 </register>
-                <register>
+                <register derivedFrom="VIF1_C0">
                     <name>VIF0_C0</name>
                     <description>Filling data C0 (Col register)</description>
                     <addressOffset>0x140</addressOffset>
                 </register>
-                <register>
+                <register derivedFrom="VIF1_C1">
                     <name>VIF0_C1</name>
                     <description>Filling data C1 (Col register)</description>
                     <addressOffset>0x150</addressOffset>
                 </register>
-                <register>
+                <register derivedFrom="VIF1_C2">
                     <name>VIF0_C2</name>
                     <description>Filling data C2 (Col register)</description>
                     <addressOffset>0x160</addressOffset>
                 </register>
-                <register>
+                <register derivedFrom="VIF1_C3">
                     <name>VIF0_C3</name>
                     <description>Filling data C3 (Col register)</description>
                     <addressOffset>0x170</addressOffset>
                 </register>
 
-                <register derivedFrom="VIF0_STAT">
+                <register>
                     <name>VIF1_STAT</name>
                     <description>Status</description>
                     <addressOffset>0x400</addressOffset>
+
+                    <fields>
+                        <field>
+                            <name>VPS</name>
+                            <description>VIF Status</description>
+                            <bitRange>[1:0]</bitRange>
+                            <access>read</access>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>IDLE</name>
+                                    <description>Idle</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>Waiting</name>
+                                    <description>Waits for data following the VIFcode</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>DECODING</name>
+                                    <description>Decoding the VIFcode</description>
+                                    <value>2</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>PROCESSING</name>
+                                    <description>Decompressing/Transferring the data following the VIFcode<description>
+                                    <value>3</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>VEW</name>
+                            <description>VIF E-bit Wait</description>
+                            <bitRange>[2:2]</bitRange>
+                            <access>read</access>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>NOTWAIT</name>
+                                    <description>Not-wait</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>WAIT</name>
+                                    <description>Wait (VU is executing a microprogram)</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>VGW</name>
+                            <description>Status waiting for end of GIF transfer</description>
+                            <bitRange>[3:3]</bitRange>
+                            <access>read</access>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>NOTWAIT</name>
+                                    <description>Not-wait</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>WAIT</name>
+                                    <description>Wait (Stopped status with one of FLUSH/FLUSHA, DIRECT/DIRECTHL and MSCALF commands when GIF != idle.)</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>MRK</name>
+                            <description>VIF MARK detect</description>
+                            <bitRange>[6:6]</bitRange>
+                            <access>read</access>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>NOTDETECT</name>
+                                    <description>Not-detect</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>DETECT</name>
+                                    <description>Detect</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>DBF</name>
+                            <description>Double buffer flag. Cleared to 0 by OFFSET and reversed by MSCAL/MSCALF/MSCNT.</description>
+                            <bitRange>[7:7]</bitRange>
+                            <access>read</access>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>BASE</name>
+                                    <description>TOPS=BASE</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>BASEPLUSOFFSET</name>
+                                    <description>TOPS=BASE+OFFSET</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>VSS</name>
+                            <description>Stop by STOP</description>
+                            <bitRange>[8:8]</bitRange>
+                            <access>read</access>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>NOTSTALL</name>
+                                    <description>Not-stall</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>STALL</name>
+                                    <description>Stall</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>VFS</name>
+                            <description>Stop by ForceBreak</description>
+                            <bitRange>[9:9]</bitRange>
+                            <access>read</access>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>NOTSTALL</name>
+                                    <description>Not-stall</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>STALL</name>
+                                    <description>Stall</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>VIS</name>
+                            <description>VIF interrupt stall</description>
+                            <bitRange>[10:10]</bitRange>
+                            <access>read</access>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>NOTSTALL</name>
+                                    <description>Not-stall</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>STALL</name>
+                                    <description>Stall</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>INT</name>
+                            <description>Interrupt by the i bit</description>
+                            <bitRange>[11:11]</bitRange>
+                            <access>read</access>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>NOTDETECT</name>
+                                    <description>Not-detect</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>DETECT</name>
+                                    <description>Detect</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>ER0</name>
+                            <description>DMAtag Mismatch error</description>
+                            <bitRange>[12:12]</bitRange>
+                            <access>read</access>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>NOERROR</name>
+                                    <description>No error</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ERROR</name>
+                                    <description>Error (DMAtag has been detected in the VIF packet.)</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>ER1</name>
+                            <description>VIFcode error</description>
+                            <bitRange>[13:13]</bitRange>
+                            <access>read</access>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>NOTDETECT</name>
+                                    <description>Not-detect</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>DETECT</name>
+                                    <description>Detect (Undefined VIFcode has been detected.)</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>FDR</name>
+                            <description>VIF-FIFO transfer direction</description>
+                            <bitRange>[23:23]</bitRange>
+                            <access>read-write</access>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>INTOVIF</name>
+                                    <description>Main memory/SPRAM -> VIF</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>FROMVIF</name>
+                                    <description>VIF -> Main memory/SPRAM</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>FQC</name>
+                            <description>Amount of effective data in the VIF-FIFO</description>
+                            <bitRange>[28:24]</bitRange>
+                            <access>read</access>
+                        </field>
+                    </fields>
                 </register>
-                <register derivedFrom="VIF0_FBRST">
+                <register>
                     <name>VIF1_FBRST</name>
                     <description>Operation control</description>
                     <addressOffset>0x410</addressOffset>
                 </register>
-                <register derivedFrom="VIF0_ERR">
+                <register>
                     <name>VIF1_ERR</name>
                     <description>Error status</description>
                     <addressOffset>0x420</addressOffset>
                 </register>
-                <register derivedFrom="VIF0_MARK">
+                <register>
                     <name>VIF1_MARK</name>
                     <description>Mark value</description>
                     <addressOffset>0x430</addressOffset>
                 </register>
-                <register derivedFrom="VIF0_CYCLE">
+                <register>
                     <name>VIF1_CYCLE</name>
                     <description>Data write cycle</description>
                     <addressOffset>0x440</addressOffset>
                 </register>
-                <register derivedFrom="VIF0_MODE">
+                <register>
                     <name>VIF1_MODE</name>
                     <description>ADD mode</description>
                     <addressOffset>0x450</addressOffset>
                 </register>
-                <register derivedFrom="VIF0_NUM">
+                <register>
                     <name>VIF1_NUM</name>
                     <description>Amount of non-transferred data</description>
                     <addressOffset>0x460</addressOffset>
                 </register>
-                <register derivedFrom="VIF0_MASK">
+                <register>
                     <name>VIF1_MASK</name>
                     <description>Write mask pattern</description>
                     <addressOffset>0x470</addressOffset>
                 </register>
-                <register derivedFrom="VIF0_CODE">
+                <register>
                     <name>VIF1_CODE</name>
                     <description>Last processed VIFcode</description>
                     <addressOffset>0x480</addressOffset>
                 </register>
-                <register derivedFrom="VIF0_ITOPS">
+                <register>
                     <name>VIF1_ITOPS</name>
                     <description>Next ITOP value</description>
                     <addressOffset>0x490</addressOffset>
@@ -627,47 +862,47 @@
                     <description>Next TOP value/data write address</description>
                     <addressOffset>0x4C0</addressOffset>
                 </register>
-                <register derivedFrom="VIF0_ITOP">
+                <register>
                     <name>VIF1_ITOP</name>
                     <description>ITOP value</description>
                     <addressOffset>0x4D0</addressOffset>
                 </register>
-                <register derivedFrom="VIF0_R0">
+                <register>
                     <name>VIF1_R0</name>
                     <description>Filling data R0 (Row register)</description>
                     <addressOffset>0x500</addressOffset>
                 </register>
-                <register derivedFrom="VIF0_R1">
+                <register>
                     <name>VIF1_R1</name>
                     <description>Filling data R1 (Row register)</description>
                     <addressOffset>0x510</addressOffset>
                 </register>
-                <register derivedFrom="VIF0_R2">
+                <register>
                     <name>VIF1_R2</name>
                     <description>Filling data R2 (Row register)</description>
                     <addressOffset>0x520</addressOffset>
                 </register>
-                <register derivedFrom="VIF0_R3">
+                <register>
                     <name>VIF1_R3</name>
                     <description>Filling data R3 (Row register)</description>
                     <addressOffset>0x530</addressOffset>
                 </register>
-                <register derivedFrom="VIF0_C0">
+                <register>
                     <name>VIF1_C0</name>
                     <description>Filling data C0 (Col register)</description>
                     <addressOffset>0x540</addressOffset>
                 </register>
-                <register derivedFrom="VIF0_C1">
+                <register>
                     <name>VIF1_C1</name>
                     <description>Filling data C1 (Col register)</description>
                     <addressOffset>0x550</addressOffset>
                 </register>
-                <register derivedFrom="VIF0_C2">
+                <register>
                     <name>VIF1_C2</name>
                     <description>Filling data C2 (Col register)</description>
                     <addressOffset>0x560</addressOffset>
                 </register>
-                <register derivedFrom="VIF0_C3">
+                <register>
                     <name>VIF1_C3</name>
                     <description>Filling data C3 (Col register)</description>
                     <addressOffset>0x570</addressOffset>
