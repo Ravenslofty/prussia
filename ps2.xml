@@ -1086,6 +1086,18 @@
                     <name>VIF1_CYCLE</name>
                     <description>Data write cycle</description>
                     <addressOffset>0x440</addressOffset>
+                    <fields>
+                        <field>
+                            <name>CL</name>
+                            <description>Cycle length, cycle/block size</description>
+                            <bitRange>[7:0]</bitRange>
+                        </field>
+                        <field>
+                            <name>WL</name>
+                            <description>Write cycle length, Block size/cycle</description>
+                            <bitRange>[15:8]</bitRange>
+                        </field>
+                    </fields>
                 </register>
                 <register>
                     <name>VIF1_MODE</name>
