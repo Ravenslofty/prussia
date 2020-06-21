@@ -2052,6 +2052,365 @@
                     <name>D_PCR</name>
                     <description>DMAC priority control</description>
                     <addressOffset>0x6020</addressOffset>
+                    <fields>
+                        <field>
+                            <name>CPC0</name>
+                            <description>COP control (ch-0)</description>
+                            <bitRange>[0:0]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>OFF</name>
+                                    <description>Does not output applicable channel status to CPCOND[0]</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ON</name>
+                                    <description>Outputs applicable channel status to CPCOND[0]</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>CPC1</name>
+                            <description>COP control (ch-1)</description>
+                            <bitRange>[1:1]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>OFF</name>
+                                    <description>Does not output applicable channel status to CPCOND[0]</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ON</name>
+                                    <description>Outputs applicable channel status to CPCOND[0]</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>CPC2</name>
+                            <description>COP control (ch-2)</description>
+                            <bitRange>[2:2]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>OFF</name>
+                                    <description>Does not output applicable channel status to CPCOND[0]</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ON</name>
+                                    <description>Outputs applicable channel status to CPCOND[0]</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>CPC3</name>
+                            <description>COP control (ch-3)</description>
+                            <bitRange>[3:3]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>OFF</name>
+                                    <description>Does not output applicable channel status to CPCOND[0]</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ON</name>
+                                    <description>Outputs applicable channel status to CPCOND[0]</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>CPC4</name>
+                            <description>COP control (ch-4)</description>
+                            <bitRange>[4:4]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>OFF</name>
+                                    <description>Does not output applicable channel status to CPCOND[0]</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ON</name>
+                                    <description>Outputs applicable channel status to CPCOND[0]</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>CPC5</name>
+                            <description>COP control (ch-5)</description>
+                            <bitRange>[5:5]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>OFF</name>
+                                    <description>Does not output applicable channel status to CPCOND[0]</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ON</name>
+                                    <description>Outputs applicable channel status to CPCOND[0]</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>CPC6</name>
+                            <description>COP control (ch-6)</description>
+                            <bitRange>[6:6]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>OFF</name>
+                                    <description>Does not output applicable channel status to CPCOND[0]</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ON</name>
+                                    <description>Outputs applicable channel status to CPCOND[0]</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>CPC7</name>
+                            <description>COP control (ch-7)</description>
+                            <bitRange>[7:7]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>OFF</name>
+                                    <description>Does not output applicable channel status to CPCOND[0]</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ON</name>
+                                    <description>Outputs applicable channel status to CPCOND[0]</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>CPC8</name>
+                            <description>COP control (ch-8)</description>
+                            <bitRange>[8:8]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>OFF</name>
+                                    <description>Does not output applicable channel status to CPCOND[0]</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ON</name>
+                                    <description>Outputs applicable channel status to CPCOND[0]</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>CPC9</name>
+                            <description>COP control (ch-9)</description>
+                            <bitRange>[9:9]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>OFF</name>
+                                    <description>Does not output applicable channel status to CPCOND[0]</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ON</name>
+                                    <description>Outputs applicable channel status to CPCOND[0]</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>CDE0</name>
+                            <description>Channel DMA enable (ch-0)</description>
+                            <bitRange>[16:16]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>DISABLE</name>
+                                    <description>Disable (low priority)</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ENABLE</name>
+                                    <description>Enable</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>CDE1</name>
+                            <description>Channel DMA enable (ch-1)</description>
+                            <bitRange>[17:17]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>DISABLE</name>
+                                    <description>Disable (low priority)</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ENABLE</name>
+                                    <description>Enable</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>CDE2</name>
+                            <description>Channel DMA enable (ch-2)</description>
+                            <bitRange>[18:18]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>DISABLE</name>
+                                    <description>Disable (low priority)</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ENABLE</name>
+                                    <description>Enable</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>CDE3</name>
+                            <description>Channel DMA enable (ch-3)</description>
+                            <bitRange>[19:19]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>DISABLE</name>
+                                    <description>Disable (low priority)</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ENABLE</name>
+                                    <description>Enable</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>CDE4</name>
+                            <description>Channel DMA enable (ch-4)</description>
+                            <bitRange>[20:20]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>DISABLE</name>
+                                    <description>Disable (low priority)</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ENABLE</name>
+                                    <description>Enable</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>CDE5</name>
+                            <description>Channel DMA enable (ch-5)</description>
+                            <bitRange>[21:21]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>DISABLE</name>
+                                    <description>Disable (low priority)</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ENABLE</name>
+                                    <description>Enable</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>CDE6</name>
+                            <description>Channel DMA enable (ch-6)</description>
+                            <bitRange>[22:22]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>DISABLE</name>
+                                    <description>Disable (low priority)</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ENABLE</name>
+                                    <description>Enable</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>CDE7</name>
+                            <description>Channel DMA enable (ch-7)</description>
+                            <bitRange>[23:23]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>DISABLE</name>
+                                    <description>Disable (low priority)</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ENABLE</name>
+                                    <description>Enable</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>CDE8</name>
+                            <description>Channel DMA enable (ch-0)</description>
+                            <bitRange>[24:24]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>DISABLE</name>
+                                    <description>Disable (low priority)</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ENABLE</name>
+                                    <description>Enable</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>CDE9</name>
+                            <description>Channel DMA enable (ch-0)</description>
+                            <bitRange>[25:25]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>DISABLE</name>
+                                    <description>Disable (low priority)</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ENABLE</name>
+                                    <description>Enable</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>PCE</name>
+                            <description>Priority control enable</description>
+                            <bitRange>[31:31]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>DISABLE</name>
+                                    <description>CDEn bit disable (regarded as 1)</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ENABLE</name>
+                                    <description>CDEn bit enable</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                    </fields>
                 </register>
                 <register>
                     <name>D_SQWC</name>
