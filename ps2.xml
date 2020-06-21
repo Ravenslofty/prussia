@@ -1103,6 +1103,31 @@
                     <name>VIF1_MODE</name>
                     <description>ADD mode</description>
                     <addressOffset>0x450</addressOffset>
+                    <fields>
+                        <field>
+                            <name>MOD</name>
+                            <description>Addition mode</description>
+                            <bitRange>[1:0]</bitRange>
+                            <access>read-only</access>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>NOADDITION</name>
+                                    <description>No addition processing</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>OFFSET</name>
+                                    <description>Offset mode (Row+dV -> VU Mem)</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>DIFFERENCE</name>
+                                    <description>Difference mode (Row+dV -> Row -> VU Mem)</description>
+                                    <value>2</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                    </fields>
                 </register>
                 <register>
                     <name>VIF1_NUM</name>
