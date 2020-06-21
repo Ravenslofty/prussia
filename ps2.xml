@@ -1763,6 +1763,290 @@
                     <name>D_STAT</name>
                     <description>DMAC status</description>
                     <addressOffset>0x6010</addressOffset>
+                    <fields>
+                        <field>
+                            <name>CIS0</name>
+                            <description>Channel interrupt status (ch-0)</description>
+                            <modifiedWriteValues>oneToClear</modifiedWriteValues>
+                            <bitRange>[0:0]</bitRange>
+                        </field>
+                        <field>
+                            <name>CIS1</name>
+                            <description>Channel interrupt status (ch-1)</description>
+                            <modifiedWriteValues>oneToClear</modifiedWriteValues>
+                            <bitRange>[1:1]</bitRange>
+                        </field>
+                        <field>
+                            <name>CIS2</name>
+                            <description>Channel interrupt status (ch-2)</description>
+                            <modifiedWriteValues>oneToClear</modifiedWriteValues>
+                            <bitRange>[2:2]</bitRange>
+                        </field>
+                        <field>
+                            <name>CIS3</name>
+                            <description>Channel interrupt status (ch-3)</description>
+                            <modifiedWriteValues>oneToClear</modifiedWriteValues>
+                            <bitRange>[3:3]</bitRange>
+                        </field>
+                        <field>
+                            <name>CIS4</name>
+                            <description>Channel interrupt status (ch-4)</description>
+                            <modifiedWriteValues>oneToClear</modifiedWriteValues>
+                            <bitRange>[4:4]</bitRange>
+                        </field>
+                        <field>
+                            <name>CIS5</name>
+                            <description>Channel interrupt status (ch-5)</description>
+                            <modifiedWriteValues>oneToClear</modifiedWriteValues>
+                            <bitRange>[5:5]</bitRange>
+                        </field>
+                        <field>
+                            <name>CIS6</name>
+                            <description>Channel interrupt status (ch-6)</description>
+                            <modifiedWriteValues>oneToClear</modifiedWriteValues>
+                            <bitRange>[6:6]</bitRange>
+                        </field>
+                        <field>
+                            <name>CIS7</name>
+                            <description>Channel interrupt status (ch-7)</description>
+                            <modifiedWriteValues>oneToClear</modifiedWriteValues>
+                            <bitRange>[7:7]</bitRange>
+                        </field>
+                        <field>
+                            <name>CIS8</name>
+                            <description>Channel interrupt status (ch-8)</description>
+                            <modifiedWriteValues>oneToClear</modifiedWriteValues>
+                            <bitRange>[8:8]</bitRange>
+                        </field>
+                        <field>
+                            <name>CIS9</name>
+                            <description>Channel interrupt status (ch-9)</description>
+                            <modifiedWriteValues>oneToClear</modifiedWriteValues>
+                            <bitRange>[9:9]</bitRange>
+                        </field>
+                        <field>
+                            <name>SIS</name>
+                            <description>DMA Stall interrupt status</description>
+                            <modifiedWriteValues>oneToClear</modifiedWriteValues>
+                            <bitRange>[13:13]</bitRange>
+                        </field>
+                        <field>
+                            <name>MEIS</name>
+                            <description>MFIFO empty interrupt status</description>
+                            <modifiedWriteValues>oneToClear</modifiedWriteValues>
+                            <bitRange>[14:14]</bitRange>
+                        </field>
+                        <field>
+                            <name>BEIS</name>
+                            <description>BUSERR interrupt status</description>
+                            <modifiedWriteValues>oneToClear</modifiedWriteValues>
+                            <bitRange>[15:15]</bitRange>
+                        </field>
+                        <field>
+                            <name>CIM0</name>
+                            <description>Channel interrupt mask (ch-0)</description>
+                            <bitRange>[16:16]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>DISABLE</name>
+                                    <description>Disable</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ENABLE</name>
+                                    <description>Enable</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>CIM1</name>
+                            <description>Channel interrupt mask (ch-1)</description>
+                            <bitRange>[17:17]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>DISABLE</name>
+                                    <description>Disable</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ENABLE</name>
+                                    <description>Enable</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>CIM2</name>
+                            <description>Channel interrupt mask (ch-2)</description>
+                            <bitRange>[18:18]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>DISABLE</name>
+                                    <description>Disable</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ENABLE</name>
+                                    <description>Enable</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>CIM3</name>
+                            <description>Channel interrupt mask (ch-3)</description>
+                            <bitRange>[19:19]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>DISABLE</name>
+                                    <description>Disable</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ENABLE</name>
+                                    <description>Enable</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>CIM4</name>
+                            <description>Channel interrupt mask (ch-4)</description>
+                            <bitRange>[20:20]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>DISABLE</name>
+                                    <description>Disable</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ENABLE</name>
+                                    <description>Enable</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>CIM5</name>
+                            <description>Channel interrupt mask (ch-5)</description>
+                            <bitRange>[21:21]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>DISABLE</name>
+                                    <description>Disable</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ENABLE</name>
+                                    <description>Enable</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>CIM6</name>
+                            <description>Channel interrupt mask (ch-6)</description>
+                            <bitRange>[22:22]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>DISABLE</name>
+                                    <description>Disable</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ENABLE</name>
+                                    <description>Enable</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>CIM7</name>
+                            <description>Channel interrupt mask (ch-7)</description>
+                            <bitRange>[23:23]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>DISABLE</name>
+                                    <description>Disable</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ENABLE</name>
+                                    <description>Enable</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>CIM8</name>
+                            <description>Channel interrupt mask (ch-8)</description>
+                            <bitRange>[24:24]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>DISABLE</name>
+                                    <description>Disable</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ENABLE</name>
+                                    <description>Enable</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>CIM9</name>
+                            <description>Channel interrupt mask (ch-9)</description>
+                            <bitRange>[25:25]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>DISABLE</name>
+                                    <description>Disable</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ENABLE</name>
+                                    <description>Enable</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>SIM</name>
+                            <description>DMA stall interrupt mask</description>
+                            <bitRange>[29:29]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>DISABLE</name>
+                                    <description>Disable</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ENABLE</name>
+                                    <description>Enable</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>MEIM</name>
+                            <description>MFIFO empty interrupt mask</description>
+                            <bitRange>[30:30]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>DISABLE</name>
+                                    <description>Disable</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ENABLE</name>
+                                    <description>Enable</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                    </fields>
                 </register>
                 <register>
                     <name>D_PCR</name>
