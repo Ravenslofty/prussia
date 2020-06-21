@@ -1108,7 +1108,6 @@
                             <name>MOD</name>
                             <description>Addition mode</description>
                             <bitRange>[1:0]</bitRange>
-                            <access>read-only</access>
                             <enumeratedValues>
                                 <enumeratedValue>
                                     <name>NOADDITION</name>
@@ -1133,6 +1132,13 @@
                     <name>VIF1_NUM</name>
                     <description>Amount of non-transferred data</description>
                     <addressOffset>0x460</addressOffset>
+                    <fields>
+                        <field>
+                            <name>NUM</name>
+                            <description>Amount of untransferred data</description>
+                            <bitRange>[7:0]</bitRange>
+                        </field>
+                    </fields>
                 </register>
                 <register>
                     <name>VIF1_MASK</name>
