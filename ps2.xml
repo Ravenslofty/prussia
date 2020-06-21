@@ -2433,11 +2433,25 @@
                     <name>D_RBSR</name>
                     <description>DMAC ring buffer size</description>
                     <addressOffset>0x6040</addressOffset>
+                    <fields>
+                        <field>
+                            <name>RMSK</name>
+                            <description>Ring buffer size mask</description>
+                            <bitRange>[30:4]</bitRange>
+                        </field>
+                    </fields>
                 </register>
                 <register>
                     <name>D_RBOR</name>
                     <description>DMAC ring buffer offset</description>
                     <addressOffset>0x6050</addressOffset>
+                    <fields>
+                        <field>
+                            <name>ADDR</name>
+                            <description>Ring buffer offset address (qword alignment)</description>
+                            <bitRange>[30:0]</bitRange>
+                        </field>
+                    </fields>
                 </register>
                 <register>
                     <name>D_STADR</name>
