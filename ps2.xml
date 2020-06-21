@@ -1074,6 +1074,13 @@
                     <name>VIF1_MARK</name>
                     <description>Mark value</description>
                     <addressOffset>0x430</addressOffset>
+                    <fields>
+                        <field>
+                            <name>MARK</name>
+                            <description>Mark value most recently set</description>
+                            <bitRange>[15:0]</bitRange>
+                        </field>
+                    </fields>
                 </register>
                 <register>
                     <name>VIF1_CYCLE</name>
