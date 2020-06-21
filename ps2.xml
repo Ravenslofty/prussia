@@ -2416,6 +2416,18 @@
                     <name>D_SQWC</name>
                     <description>DMAC skip quad word</description>
                     <addressOffset>0x6030</addressOffset>
+                    <fields>
+                        <field>
+                            <name>SQWC</name>
+                            <description>Skip quadword counter. Size of the part not transferred (qword)</description>
+                            <bitRange>[7:0]</bitRange>
+                        </field>
+                        <field>
+                            <name>TQWC</name>
+                            <description>Transfer quadword counter. Size of the part transferred (qword)</description>
+                            <bitRange>[23:16]</bitRange>
+                        </field>
+                    </fields>
                 </register>
                 <register>
                     <name>D_RBSR</name>
