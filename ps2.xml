@@ -1609,6 +1609,155 @@
                     <name>D_CTRL</name>
                     <description>DMAC control</description>
                     <addressOffset>0x6000</addressOffset>
+                    <fields>
+                        <field>
+                            <name>DMAE</name>
+                            <description>DMA Enable</description>
+                            <bitRange>[0:0]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>DISABLE</name>
+                                    <description>Disables all DMAs</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ENABLE</name>
+                                    <description>Enables all DMAs</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>RELE</name>
+                            <description>Release signal enable</description>
+                            <bitRange>[1:1]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>OFF</name>
+                                    <description>Cycle stealing off</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ON</name>
+                                    <description>Cycle stealing on</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>MFD</name>
+                            <description>Memory FIFO drain channel</description>
+                            <bitRange>[3:2]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>OFF</name>
+                                    <description>Does not use MFIFO function.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>VIF1</name>
+                                    <description>VIF1 channel (ch-1)</description>
+                                    <value>2</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>GIF</name>
+                                    <description>GIF channel (ch-2)</description>
+                                    <value>3</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>STS</name>
+                            <description>Stall Control source channel</description>
+                            <bitRange>[5:4]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>NONE</name>
+                                    <description>Non-specified (Does not update D_STADR)</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>SIF0</name>
+                                    <description>SIF0 channel (ch-5)</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>FROM_SPR</name>
+                                    <description>fromSPR channel (ch-8)</description>
+                                    <value>2</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>FROM_IPU</name>
+                                    <description>fromIPU channel (ch-3)</description>
+                                    <value>3</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>STD</name>
+                            <description>Stall Control drain channel</description>
+                            <bitRange>[7:6]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>OFF</name>
+                                    <description>Does not perform stall control</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>VIF1</name>
+                                    <description>VIF1 channel (ch-1)</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>GIF</name>
+                                    <description>GIF channel (ch-2)</description>
+                                    <value>2</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>SIF1</name>
+                                    <description>SIF1 channel (ch-6)</description>
+                                    <value>3</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>RCYC</name>
+                            <description>Release cycle</description>
+                            <bitRange>[10:8]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>CYCLE_8</name>
+                                    <description>Number of cycles to release the bbus to EE core when Cycle Stealing is on</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>CYCLE_16</name>
+                                    <description>Number of cycles to release the bbus to EE core when Cycle Stealing is on</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>CYCLE_32</name>
+                                    <description>Number of cycles to release the bbus to EE core when Cycle Stealing is on</description>
+                                    <value>2</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>CYCLE_64</name>
+                                    <description>Number of cycles to release the bbus to EE core when Cycle Stealing is on</description>
+                                    <value>3</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>CYCLE_128</name>
+                                    <description>Number of cycles to release the bbus to EE core when Cycle Stealing is on</description>
+                                    <value>4</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>CYCLE_256</name>
+                                    <description>Number of cycles to release the bbus to EE core when Cycle Stealing is on</description>
+                                    <value>5</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                    </fields>
                 </register>
                 <register>
                     <name>D_STAT</name>
