@@ -1228,6 +1228,23 @@
                     <description>Last processed VIFcode</description>
                     <addressOffset>0x480</addressOffset>
                     <access>read-only</access>
+                    <fields>
+                        <field>
+                            <name>IMMEDIATE</name>
+                            <description>VIFcode IMMEDIATE processed most recently</description>
+                            <bitRange>[15:0]</bitRange>
+                        </field>
+                        <field>
+                            <name>NUM</name>
+                            <description>VIFcode NUM processed most recently</description>
+                            <bitRange>[23:16]</bitRange>
+                        </field>
+                        <field>
+                            <name>CMD</name>
+                            <description>VIFcode CMD processed most recently</description>
+                            <bitRange>[31:24]</bitRange>
+                        </field>
+                    </fields>
                 </register>
                 <register>
                     <name>VIF1_ITOPS</name>
