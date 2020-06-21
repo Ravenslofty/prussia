@@ -1389,6 +1389,268 @@
             <description>DMA Controller</description>
             <groupName>DMAC</groupName>
             <baseAddress>0xB0008000</baseAddress>
+            <registers>
+                <register>
+                    <name>D0_CHCR</name>
+                    <description>Ch0 channel control</description>
+                    <addressOffset>0x0000</addressOffset>
+                </register>
+                <register>
+                    <name>D0_MADR</name>
+                    <description>Ch0 memory address</description>
+                    <addressOffset>0x0010</addressOffset>
+                </register>
+                <register>
+                    <name>D0_QWC</name>
+                    <description>Ch0 quad word count</description>
+                    <addressOffset>0x0020</addressOffset>
+                </register>
+                <register>
+                    <name>D0_TADR</name>
+                    <description>Ch0 tag address</description>
+                    <addressOffset>0x0030</addressOffset>
+                </register>
+                <register>
+                    <name>D0_ASR0</name>
+                    <description>Ch0 address stack 0</description>
+                    <addressOffset>0x0040</addressOffset>
+                </register>
+                <register>
+                    <name>D0_ASR1</name>
+                    <description>Ch0 address stack 1</description>
+                    <addressOffset>0x0050</addressOffset>
+                </register>
+                <register>
+                    <name>D1_CHCR</name>
+                    <description>Ch1 channel control</description>
+                    <addressOffset>0x1000</addressOffset>
+                </register>
+                <register>
+                    <name>D1_MADR</name>
+                    <description>Ch1 memory address</description>
+                    <addressOffset>0x1010</addressOffset>
+                </register>
+                <register>
+                    <name>D1_QWC</name>
+                    <description>Ch1 quad word count</description>
+                    <addressOffset>0x1020</addressOffset>
+                </register>
+                <register>
+                    <name>D1_TADR</name>
+                    <description>Ch1 tag address</description>
+                    <addressOffset>0x1030</addressOffset>
+                </register>
+                <register>
+                    <name>D1_ASR0</name>
+                    <description>Ch1 address stack 0</description>
+                    <addressOffset>0x1040</addressOffset>
+                </register>
+                <register>
+                    <name>D1_ASR1</name>
+                    <description>Ch1 address stack 1</description>
+                    <addressOffset>0x1050</addressOffset>
+                </register>
+                <register>
+                    <name>D2_CHCR</name>
+                    <description>Ch2 channel control</description>
+                    <addressOffset>0x2000</addressOffset>
+                </register>
+                <register>
+                    <name>D2_MADR</name>
+                    <description>Ch2 memory address</description>
+                    <addressOffset>0x2010</addressOffset>
+                </register>
+                <register>
+                    <name>D2_QWC</name>
+                    <description>Ch2 quad word count</description>
+                    <addressOffset>0x2020</addressOffset>
+                </register>
+                <register>
+                    <name>D2_TADR</name>
+                    <description>Ch2 tag address</description>
+                    <addressOffset>0x2030</addressOffset>
+                </register>
+                <register>
+                    <name>D2_ASR0</name>
+                    <description>Ch2 address stack 0</description>
+                    <addressOffset>0x2040</addressOffset>
+                </register>
+                <register>
+                    <name>D2_ASR1</name>
+                    <description>Ch2 address stack 1</description>
+                    <addressOffset>0x2050</addressOffset>
+                </register>
+                <register>
+                    <name>D3_CHCR</name>
+                    <description>Ch3 channel control</description>
+                    <addressOffset>0x3000</addressOffset>
+                </register>
+                <register>
+                    <name>D3_MADR</name>
+                    <description>Ch3 memory address</description>
+                    <addressOffset>0x3010</addressOffset>
+                </register>
+                <register>
+                    <name>D3_QWC</name>
+                    <description>Ch3 quad word count</description>
+                    <addressOffset>0x3020</addressOffset>
+                </register>
+                <register>
+                    <name>D4_CHCR</name>
+                    <description>Ch4 channel control</description>
+                    <addressOffset>0x3400</addressOffset>
+                </register>
+                <register>
+                    <name>D4_MADR</name>
+                    <description>Ch4 memory address</description>
+                    <addressOffset>0x3410</addressOffset>
+                </register>
+                <register>
+                    <name>D4_QWC</name>
+                    <description>Ch4 quad word count</description>
+                    <addressOffset>0x3420</addressOffset>
+                </register>
+                <register>
+                    <name>D4_TADR</name>
+                    <description>Ch4 tag address</description>
+                    <addressOffset>0x3430</addressOffset>
+                </register>
+                <register>
+                    <name>D5_CHCR</name>
+                    <description>Ch5 channel control</description>
+                    <addressOffset>0x4000</addressOffset>
+                </register>
+                <register>
+                    <name>D5_MADR</name>
+                    <description>Ch5 memory address</description>
+                    <addressOffset>0x4010</addressOffset>
+                </register>
+                <register>
+                    <name>D5_QWC</name>
+                    <description>Ch5 quad word count</description>
+                    <addressOffset>0x4020</addressOffset>
+                </register>
+                <register>
+                    <name>D6_CHCR</name>
+                    <description>Ch6 channel control</description>
+                    <addressOffset>0x4400</addressOffset>
+                </register>
+                <register>
+                    <name>D6_MADR</name>
+                    <description>Ch6 memory address</description>
+                    <addressOffset>0x4410</addressOffset>
+                </register>
+                <register>
+                    <name>D6_QWC</name>
+                    <description>Ch6 quad word count</description>
+                    <addressOffset>0x4420</addressOffset>
+                </register>
+                <register>
+                    <name>D6_TADR</name>
+                    <description>Ch6 tag address</description>
+                    <addressOffset>0x4430</addressOffset>
+                </register>
+                <register>
+                    <name>D7_CHCR</name>
+                    <description>Ch7 channel control</description>
+                    <addressOffset>0x4800</addressOffset>
+                </register>
+                <register>
+                    <name>D7_MADR</name>
+                    <description>Ch7 memory address</description>
+                    <addressOffset>0x4810</addressOffset>
+                </register>
+                <register>
+                    <name>D7_QWC</name>
+                    <description>Ch7 quad word count</description>
+                    <addressOffset>0x4820</addressOffset>
+                </register>
+                <register>
+                    <name>D8_CHCR</name>
+                    <description>Ch8 channel control</description>
+                    <addressOffset>0x5000</addressOffset>
+                </register>
+                <register>
+                    <name>D8_MADR</name>
+                    <description>Ch8 memory address</description>
+                    <addressOffset>0x5010</addressOffset>
+                </register>
+                <register>
+                    <name>D8_QWC</name>
+                    <description>Ch8 quad word count</description>
+                    <addressOffset>0x5020</addressOffset>
+                </register>
+                <register>
+                    <name>D8_SADR</name>
+                    <description>Ch8 SPR address</description>
+                    <addressOffset>0x5080</addressOffset>
+                </register>
+                <register>
+                    <name>D9_CHCR</name>
+                    <description>Ch9 channel control</description>
+                    <addressOffset>0x5400</addressOffset>
+                </register>
+                <register>
+                    <name>D9_MADR</name>
+                    <description>Ch9 memory address</description>
+                    <addressOffset>0x5410</addressOffset>
+                </register>
+                <register>
+                    <name>D9_QWC</name>
+                    <description>Ch9 quad word count</description>
+                    <addressOffset>0x5420</addressOffset>
+                </register>
+                <register>
+                    <name>D9_SADR</name>
+                    <description>Ch9 SPR address</description>
+                    <addressOffset>0x5480</addressOffset>
+                </register>
+                <register>
+                    <name>D_CTRL</name>
+                    <description>DMAC control</description>
+                    <addressOffset>0x6000</addressOffset>
+                </register>
+                <register>
+                    <name>D_STAT</name>
+                    <description>DMAC status</description>
+                    <addressOffset>0x6010</addressOffset>
+                </register>
+                <register>
+                    <name>D_PCR</name>
+                    <description>DMAC priority control</description>
+                    <addressOffset>0x6020</addressOffset>
+                </register>
+                <register>
+                    <name>D_SQWC</name>
+                    <description>DMAC skip quad word</description>
+                    <addressOffset>0x6030</addressOffset>
+                </register>
+                <register>
+                    <name>D_RBSR</name>
+                    <description>DMAC ring buffer size</description>
+                    <addressOffset>0x6040</addressOffset>
+                </register>
+                <register>
+                    <name>D_RBOR</name>
+                    <description>DMAC ring buffer offset</description>
+                    <addressOffset>0x6050</addressOffset>
+                </register>
+                <register>
+                    <name>D_STADR</name>
+                    <description>DMAC stall address</description>
+                    <addressOffset>0x6060</addressOffset>
+                </register>
+                <register>
+                    <name>D_ENABLER</name>
+                    <description>Acquistion of DMA suspend status</description>
+                    <addressOffset>0x7520</addressOffset>
+                </register>
+                <register>
+                    <name>D_ENABLEW</name>
+                    <description>DMA suspend control</description>
+                    <addressOffset>0x7590</addressOffset>
+                </register>
+            </registers>
         </peripheral>
 
         <peripheral>
