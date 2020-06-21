@@ -2457,6 +2457,13 @@
                     <name>D_STADR</name>
                     <description>DMAC stall address</description>
                     <addressOffset>0x6060</addressOffset>
+                    <fields>
+                        <field>
+                            <name>ADDR</name>
+                            <description>Stall address (qword alignment)</description>
+                            <bitRange>[30:0]</bitRange>
+                        </field>
+                    </fields>
                 </register>
                 <register>
                     <name>D_ENABLER</name>
