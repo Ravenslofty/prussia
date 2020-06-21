@@ -836,6 +836,59 @@
                     <name>VIF1_ERR</name>
                     <description>Error status</description>
                     <addressOffset>0x420</addressOffset>
+                    <fields>
+                        <field>
+                            <name>MII</name>
+                            <description>Masks an interrupt by the i bit of the VIFcode</description>
+                            <bitRange>[0:0]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>UNMASK</name>
+                                    <description>Unmask (i bit interrupt enable)</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>MASK</name>
+                                    <description>Mask (i bit interrupt disable)</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>ME0</name>
+                            <description>DNAtag Mismatch error mask</description>
+                            <bitRange>[1:1]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>UNMASK</name>
+                                    <description>Unmask (stalls when an error occurs.)</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>MASK</name>
+                                    <description>Mask (ignores a DMAtag Mismatch error.)</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>ME1</name>
+                            <description>VIFcode error mask</description>
+                            <bitRange>[2:2]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>UNMASK</name>
+                                    <description>Unmask (stalls when an error occurs.)</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>MASK</name>
+                                    <description>Mask (considered as VIFcode NOP)</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                    </fields>
                 </register>
                 <register>
                     <name>VIF1_MARK</name>
