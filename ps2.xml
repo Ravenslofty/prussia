@@ -1316,20 +1316,27 @@
                     <description>Filling data R0 (Row register)</description>
                     <addressOffset>0x500</addressOffset>
                     <access>read-only</access>
+                    <fields>
+                        <field>
+                            <name>R</name>
+                            <description>Row data for filling when decompressing</description>
+                            <bitRange>[31:0]</bitRange>
+                        </field>
+                    </fields>
                 </register>
-                <register>
+                <register derivedFrom="VIF1_R0">
                     <name>VIF1_R1</name>
                     <description>Filling data R1 (Row register)</description>
                     <addressOffset>0x510</addressOffset>
                     <access>read-only</access>
                 </register>
-                <register>
+                <register derivedFrom="VIF1_R0">
                     <name>VIF1_R2</name>
                     <description>Filling data R2 (Row register)</description>
                     <addressOffset>0x520</addressOffset>
                     <access>read-only</access>
                 </register>
-                <register>
+                <register derivedFrom="VIF1_R0">
                     <name>VIF1_R3</name>
                     <description>Filling data R3 (Row register)</description>
                     <addressOffset>0x530</addressOffset>
@@ -1339,20 +1346,27 @@
                     <name>VIF1_C0</name>
                     <description>Filling data C0 (Col register)</description>
                     <addressOffset>0x540</addressOffset>
+                    <fields>
+                        <field>
+                            <name>C</name>
+                            <description>Column data for filling when decompressing</description>
+                            <bitRange>[31:0]</bitRange>
+                        </field>
+                    </fields>
                 </register>
-                <register>
+                <register derivedFrom="VIF1_C0">
                     <name>VIF1_C1</name>
                     <description>Filling data C1 (Col register)</description>
                     <addressOffset>0x550</addressOffset>
                     <access>read-only</access>
                 </register>
-                <register>
+                <register derivedFrom="VIF1_C0">
                     <name>VIF1_C2</name>
                     <description>Filling data C2 (Col register)</description>
                     <addressOffset>0x560</addressOffset>
                     <access>read-only</access>
                 </register>
-                <register>
+                <register derivedFrom="VIF1_C0">
                     <name>VIF1_C3</name>
                     <description>Filling data C3 (Col register)</description>
                     <addressOffset>0x570</addressOffset>
