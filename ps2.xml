@@ -466,10 +466,190 @@
 
             <!-- VIF0 and VIF1 are merged into this peripheral for deduplication -->           
             <registers>
-                <register derivedFrom="VIF1_STAT">
+                <register>
                     <name>VIF0_STAT</name>
                     <description>Status</description>
                     <addressOffset>0x00</addressOffset>
+                    <fields>
+                        <field>
+                            <name>VPS</name>
+                            <description>VIF Status</description>
+                            <bitRange>[1:0]</bitRange>
+                            <access>read-only</access>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>IDLE</name>
+                                    <description>Idle</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>Waiting</name>
+                                    <description>Waits for data following the VIFcode</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>DECODING</name>
+                                    <description>Decoding the VIFcode</description>
+                                    <value>2</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>PROCESSING</name>
+                                    <description>Decompressing/Transferring the data following the VIFcode</description>
+                                    <value>3</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>VEW</name>
+                            <description>VIF E-bit Wait</description>
+                            <bitRange>[2:2]</bitRange>
+                            <access>read-only</access>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>NOTWAIT</name>
+                                    <description>Not-wait</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>WAIT</name>
+                                    <description>Wait (VU is executing a microprogram)</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>MRK</name>
+                            <description>VIF MARK detect</description>
+                            <bitRange>[6:6]</bitRange>
+                            <access>read-only</access>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>NOTDETECT</name>
+                                    <description>Not-detect</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>DETECT</name>
+                                    <description>Detect</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>VSS</name>
+                            <description>Stop by STOP</description>
+                            <bitRange>[8:8]</bitRange>
+                            <access>read-only</access>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>NOTSTALL</name>
+                                    <description>Not-stall</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>STALL</name>
+                                    <description>Stall</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>VFS</name>
+                            <description>Stop by ForceBreak</description>
+                            <bitRange>[9:9]</bitRange>
+                            <access>read-only</access>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>NOTSTALL</name>
+                                    <description>Not-stall</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>STALL</name>
+                                    <description>Stall</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>VIS</name>
+                            <description>VIF interrupt stall</description>
+                            <bitRange>[10:10]</bitRange>
+                            <access>read-only</access>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>NOTSTALL</name>
+                                    <description>Not-stall</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>STALL</name>
+                                    <description>Stall</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>INT</name>
+                            <description>Interrupt by the i bit</description>
+                            <bitRange>[11:11]</bitRange>
+                            <access>read-only</access>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>NOTDETECT</name>
+                                    <description>Not-detect</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>DETECT</name>
+                                    <description>Detect</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>ER0</name>
+                            <description>DMAtag Mismatch error</description>
+                            <bitRange>[12:12]</bitRange>
+                            <access>read-only</access>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>NOERROR</name>
+                                    <description>No error</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ERROR</name>
+                                    <description>Error (DMAtag has been detected in the VIF packet.)</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>ER1</name>
+                            <description>VIFcode error</description>
+                            <bitRange>[13:13]</bitRange>
+                            <access>read-only</access>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>NOTDETECT</name>
+                                    <description>Not-detect</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>DETECT</name>
+                                    <description>Detect (Undefined VIFcode has been detected.)</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>FQC</name>
+                            <description>Amount of effective data in the VIF-FIFO</description>
+                            <bitRange>[27:24]</bitRange>
+                            <access>read-only</access>
+                        </field>
+                    </fields>
                 </register>
                 <register derivedFrom="VIF1_FBRST">
                     <name>VIF0_FBRST</name>
