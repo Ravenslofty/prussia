@@ -1290,12 +1290,26 @@
                     <description>Next TOP value/data write address</description>
                     <addressOffset>0x4C0</addressOffset>
                     <access>read-only</access>
+                    <fields>
+                        <field>
+                            <name>TOPS</name>
+                            <description>Data decompression buffer address</description>
+                            <bitRange>[9:0]</bitRange>
+                        </field>
+                    </fields>
                 </register>
                 <register>
                     <name>VIF1_ITOP</name>
                     <description>ITOP value</description>
                     <addressOffset>0x4D0</addressOffset>
                     <access>read-only</access>
+                    <fields>
+                        <field>
+                            <name>ITOP</name>
+                            <description>ITOP value</description>
+                            <bitRange>[9:0]</bitRange>
+                        </field>
+                    </fields>
                 </register>
                 <register>
                     <name>VIF1_R0</name>
