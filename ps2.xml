@@ -2469,11 +2469,51 @@
                     <name>D_ENABLER</name>
                     <description>Acquistion of DMA suspend status</description>
                     <addressOffset>0x7520</addressOffset>
+                    <access>read-only</access>
+                    <fields>
+                        <field>
+                            <name>CPND</name>
+                            <description>DMA transfer hold state</description>
+                            <bitRange>[16:16]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>ENABLE</name>
+                                    <description>All channel transfer enabled</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>DISABLE</name>
+                                    <description>All channel transfer being held (suspended)</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                    </fields>
                 </register>
                 <register>
                     <name>D_ENABLEW</name>
                     <description>DMA suspend control</description>
                     <addressOffset>0x7590</addressOffset>
+                    <access>write-only</access>
+                    <fields>
+                        <field>
+                            <name>CPND</name>
+                            <description>DMA transfer is held</description>
+                            <bitRange>[16:16]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>ENABLE</name>
+                                    <description>Enables all channel transfer (restarts)</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>DISABLE</name>
+                                    <description>Holds all channel transfer (suspends)</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                    </fields>
                 </register>
             </registers>
         </peripheral>
