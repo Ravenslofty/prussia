@@ -1277,6 +1277,13 @@
                     <description>Offset of double buffer</description>
                     <addressOffset>0x4B0</addressOffset>
                     <access>read-only</access>
+                    <fields>
+                        <field>
+                            <name>OFFSET</name>
+                            <description>Data buffer offset</description>
+                            <bitRange>[9:0]</bitRange>
+                        </field>
+                    </fields>
                 </register>
                 <register>
                     <name>VIF1_TOPS</name>
