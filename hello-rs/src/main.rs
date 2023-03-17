@@ -1,6 +1,5 @@
 #![no_std]
 #![no_main]
-#![feature(llvm_asm)]
 
 extern crate panic_halt;
 extern crate prussia_bios as bios;
