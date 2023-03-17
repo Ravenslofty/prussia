@@ -140,7 +140,6 @@ impl KernelThreadState {
 
 extern "C" {
     /// ABI adapter for init_main_thread_rust
-    #[no_mangle]
     pub fn init_main_thread(
         gp: usize,
         stack_ptr: *mut u8,
