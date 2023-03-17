@@ -1,4 +1,4 @@
-use core::mem;
+use core::{mem, arch::global_asm};
 
 global_asm!(include_str!("glue.S"));
 
