@@ -10,7 +10,7 @@
 
 #![no_std]
 #![deny(missing_docs)]
-#![feature(llvm_asm)]
+#![feature(asm_experimental_arch)]
 
 pub mod atomic;
 pub mod cop0;
