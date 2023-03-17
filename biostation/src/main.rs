@@ -8,7 +8,7 @@
     trivial_casts,
     trivial_numeric_casts
 )]
-#![feature(llvm_asm)]
+#![feature(asm_experimental_arch)]
 #![feature(global_asm)]
 #![feature(naked_functions)]
 #![feature(core_intrinsics)]
