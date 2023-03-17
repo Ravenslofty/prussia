@@ -1,3 +1,5 @@
+use core::arch::global_asm;
+
 use prussia_rt::cop0;
 
 mod syscall;
