@@ -16,7 +16,7 @@ extern "C" {
 #[no_mangle]
 extern "C" fn unimplemented_syscall_handler() {
     let syscall_num: u32;
-    unsafe { asm!("move {}, $v1", out(reg) syscall_num) };
+    unsafe { asm!(".set noat; move {}, $v1", out(reg) syscall_num) };
     unimplemented!("Handler for syscall {:x}", syscall_num);
 }
 
