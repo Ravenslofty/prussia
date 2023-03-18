@@ -14,11 +14,11 @@ I can be found in the Freenode IRC channel #psugnd, or in the EmuDev discord (ht
 
 You will need a memory card that has Free MCBoot to load unsigned code (memory cards with Free MCBoot installed can be found cheaply on eBay), and a *high-loading* (`LOADHIGH = 1` in the Makefile) version of [PS2Link](https://github.com/ps2dev/ps2link) on the PS2 memory card.
 
-On your computer, you will need Linux (On Windows, a Linux VM may work, but WSL currently does not; macOS is untested), [PS2Client](https://github.com/ps2dev/ps2client), [binutils for MIPS](https://ftp.gnu.org/gnu/binutils/) and [cargo-xbuild](https://github.com/rust-osdev/cargo-xbuild). 
+On your computer, you will need Linux (On Windows, a Linux VM may work, but WSL currently does not; macOS is untested), [PS2Client](https://github.com/ps2dev/ps2client), [binutils for MIPS](https://ftp.gnu.org/gnu/binutils/) and [nightly Rust](https://doc.rust-lang.org/book/appendix-07-nightly-rust.html#rustup-and-the-role-of-rust-nightly).
 
 ### Prerequisites: PC
 
-You will need a *legal* PS2 BIOS dump, plus [PCSX2](https://pcsx2.net), [binutils for MIPS](https://ftp.gnu.org/gnu/binutils/) and [cargo-xbuild](https://github.com/rust-osdev/cargo-xbuild).
+You will need a *legal* PS2 BIOS dump, plus [PCSX2](https://pcsx2.net), [binutils for MIPS](https://ftp.gnu.org/gnu/binutils/) and [nightly Rust](https://doc.rust-lang.org/book/appendix-07-nightly-rust.html#rustup-and-the-role-of-rust-nightly).
 
 The PCSX2 first-time wizard will let you select your BIOS.
 
@@ -60,15 +60,20 @@ panic = "abort"
 
 [profile.release]
 panic = "abort"
+```
+And `.cargo/config.toml`:
+```toml
+[build]
+target = "./ps2.json"
 
-[package.metadata.cargo-xbuild]
-memcpy = true
-sysroot_path = "target/sysroot"
+[unstable]
+build-std = ["core", "compiler_builtins"]
+build-std-features = ["compiler-builtins-mem"]
 ```
 
 ### Building your project
 
-To build your project, run `cargo xbuild --target ps2.json` from the root directory of your crate. `cargo-xbuild` will then build and configure the Rust core library to be used in your crate.
+To build your project, run `cargo build` from the root directory of your crate.
 
 ### Running your project: PS2: PS2Link
 
