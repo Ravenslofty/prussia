@@ -51,7 +51,7 @@ impl Status {
     /// value of Status.
     pub fn load() -> Self {
         let status;
-        unsafe { asm!("mfc0 {}, $12", out(reg) status) };
+        unsafe { asm!(".set noat; mfc0 {}, $12", out(reg) status) };
 
         Status { bits: status }
     }
@@ -89,7 +89,7 @@ impl Cause {
     /// value of Cause.
     pub fn load() -> Self {
         let cause;
-        unsafe { asm!("mfc0 {}, $13", out(reg) cause) };
+        unsafe { asm!(".set noat; mfc0 {}, $13", out(reg) cause) };
 
         Cause { bits: cause }
     }
