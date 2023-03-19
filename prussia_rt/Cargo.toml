@@ -8,7 +8,3 @@ edition = "2018"
 [dependencies]
 bitflags = "1.0.4"
 r0 = "0.2.2"
-
-[features]
-default = []
-kernel-linkfile = []

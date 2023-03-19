@@ -8,8 +8,5 @@ edition = "2018"
 prussia_debug = { path = "../prussia_debug" }
 prussia_dma = { path = "../prussia_dma" }
 prussia_intc = { path = "../prussia_intc" }
+prussia_rt = { path = "../prussia_rt" }
 xmas-elf = "0.6.2"
-
-[dependencies.prussia_rt]
-path = "../prussia_rt"
-features = ["kernel-linkfile"]
