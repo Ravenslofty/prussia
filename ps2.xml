@@ -699,7 +699,7 @@
 
                 <register>
                     <name>GIF_TAG0</name>
-                    <description>GIFtag (bits 31-16) immediately before. Only accessible when GIF_CTRL PSE is set to 1. </description>
+                    <description>GIFtag (bits 31-16) immediately before. Only accessible when GIF_CTRL PSE is set to 1.</description>
                     <addressOffset>0x40</addressOffset>
                     <access>read-only</access>
 
@@ -716,7 +716,7 @@
                         </field>
                         <field>
                             <name>TAG</name>
-                            <description>(Undefined) Values from bit 31 to bit 16 among most recently read GIFtag values.</description>
+                            <description>(Undefined) Values from bit 31 to bit 16 among the most recently read GIFtag values.</description>
                             <bitRange>[31:16]</bitRange>
                         </field>
                     </fields>
@@ -724,8 +724,37 @@
 
                 <register>
                     <name>GIF_TAG1</name>
-                    <description>GIFtag (bits 63-32) immediately before</description>
+                    <description>GIFtag (bits 45-32) immediately before. Only accessible when GIF_CTRL PSE is set to 1.</description>
                     <addressOffset>0x50</addressOffset>
+                    <access>read-only</access>
+
+                    <fields>
+                        <field>
+                            <name>TAG</name>
+                            <description>(Undefined) Values from bit 45 to bit 32 among the most recently read GIFtag values.</description>
+                            <bitRange>[13:0]</bitRange>
+                        </field>
+                        <field>
+                            <name>PRE</name>
+                            <description>Most recently read PRE flag of GIFtag.</description>
+                            <bitRange>[14:14]</bitRange>
+                        </field>
+                        <field>
+                            <name>PRIM</name>
+                            <description>Most recently read PRIM field of GIFtag.</description>
+                            <bitRange>[25:15]</bitRange>
+                        </field>
+                        <field>
+                            <name>FLG</name>
+                            <description>Most recently read FLG field of GIFtag.</description>
+                            <bitRange>[27:26]</bitRange>
+                        </field>
+                        <field>
+                            <name>NREG</name>
+                            <description>Most recently read NREG field of GIFtag.</description>
+                            <bitRange>[31:28]</bitRange>
+                        </field>
+                    </fields>
                 </register>
 
                 <register>
