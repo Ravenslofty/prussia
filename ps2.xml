@@ -31,10 +31,26 @@
             <baseAddress>0xB0000000</baseAddress>
 
             <registers>
+
+                <register>
+                    <name>T0_COUNT</name>
+                    <description>Counter register</description>
+                    <addressOffset>0x0000</addressOffset>
+                    <resetMask>0x0000FFFF</resetMask>
+
+                    <fields>
+                        <field>
+                            <name>COUNT</name>
+                            <description>Counter Value. The counter value is incremented according to the conditions of the clock and the gate signal specified in the Tn_MODE.</description>
+                            <bitRange>[15:0]</bitRange>
+                        </field>
+                    </fields>
+                </register>
+
                 <register>
                     <name>T0_MODE</name>
                     <description>Register for setting modes and reading status</description>
-                    <addressOffset>0x0000</addressOffset>
+                    <addressOffset>0x0010</addressOffset>
                     <resetMask>0x00000FFF</resetMask>
 
                     <fields>
@@ -243,21 +259,6 @@
                 </register>
 
                 <register>
-                    <name>T0_COUNT</name>
-                    <description>Counter register</description>
-                    <addressOffset>0x0010</addressOffset>
-                    <resetMask>0x0000FFFF</resetMask>
-
-                    <fields>
-                        <field>
-                            <name>COUNT</name>
-                            <description>Counter Value. The counter value is incremented according to the conditions of the clock and the gate signal specified in the Tn_MODE.</description>
-                            <bitRange>[15:0]</bitRange>
-                        </field>
-                    </fields>
-                </register>
-
-                <register>
                     <name>T0_COMP</name>
                     <description>Comparison register</description>
                     <addressOffset>0x0020</addressOffset>
@@ -289,15 +290,15 @@
 
                 <!-- The following is exactly the ugly hack you think it is. -->
 
-                <register derivedFrom="T0_MODE">
-                    <name>T1_MODE</name>
-                    <description>Register for setting modes and reading status</description>
-                    <addressOffset>0x0800</addressOffset>
-                </register>
-
                 <register derivedFrom="T0_COUNT">
                     <name>T1_COUNT</name>
                     <description>Counter register</description>
+                    <addressOffset>0x0800</addressOffset>
+                </register>
+
+                <register derivedFrom="T0_MODE">
+                    <name>T1_MODE</name>
+                    <description>Register for setting modes and reading status</description>
                     <addressOffset>0x0810</addressOffset>
                 </register>
 
@@ -313,17 +314,17 @@
                     <addressOffset>0x0830</addressOffset>
                 </register>
 
-                <register derivedFrom="T0_MODE">
-                    <name>T2_MODE</name>
-                    <description>Register for setting modes and reading status</description>
-                    <addressOffset>0x1000</addressOffset>
-                </register>
-
                 <register derivedFrom="T0_COUNT">
                     <name>T2_COUNT</name>
                     <description>Counter register</description>
+                    <addressOffset>0x1000</addressOffset>
+                </register>
+
+                <register derivedFrom="T0_MODE">
+                    <name>T2_MODE</name>
+                    <description>Register for setting modes and reading status</description>
                     <addressOffset>0x1010</addressOffset>
-                </register> 
+                </register>
 
                 <register derivedFrom="T0_COMP">
                     <name>T2_COMP</name>
@@ -331,15 +332,15 @@
                     <addressOffset>0x0820</addressOffset>
                 </register>
 
-                <register derivedFrom="T0_MODE">
-                    <name>T3_MODE</name>
-                    <description>Register for setting modes and reading status</description>
-                    <addressOffset>0x1800</addressOffset>
-                </register>
-
                 <register derivedFrom="T0_COUNT">
                     <name>T3_COUNT</name>
                     <description>Counter register</description>
+                    <addressOffset>0x1800</addressOffset>
+                </register>
+
+                <register derivedFrom="T0_MODE">
+                    <name>T3_MODE</name>
+                    <description>Register for setting modes and reading status</description>
                     <addressOffset>0x1810</addressOffset>
                 </register>
 
@@ -464,7 +465,7 @@
             <groupName>VIF</groupName>
             <baseAddress>0xB0003800</baseAddress>
 
-            <!-- VIF0 and VIF1 are merged into this peripheral for deduplication -->           
+            <!-- VIF0 and VIF1 are merged into this peripheral for deduplication -->
             <registers>
                 <register>
                     <name>VIF0_STAT</name>
@@ -2824,7 +2825,7 @@
                                     <name>Set</name>
                                     <description>A PGIF interrupt has occurred.</description>
                                     <value>1</value>
-                                </enumeratedValue> 
+                                </enumeratedValue>
                             </enumeratedValues>
                         </field>
                     </fields>
@@ -3143,6 +3144,6 @@
             <groupName>SIF</groupName>
             <baseAddress>0xB000F200</baseAddress>
         </peripheral>
-        
+
     </peripherals>
 </device>
