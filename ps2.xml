@@ -484,6 +484,212 @@
                     <name>GIF_STAT</name>
                     <description>GIF status</description>
                     <addressOffset>0x20</addressOffset>
+
+                    <fields>
+                        <field>
+                            <name>M3R</name>
+                            <description>PATH3 mask status.</description>
+                            <bitRange>[0:0]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>ENABLE</name>
+                                    <description>(Initial value) Enabled.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>DISABLE</name>
+                                    <description>Disabled (Masked by the MR3 flag of the GIF_MODE register.)</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>M3P</name>
+                            <description>PATH3 VIF mask status.</description>
+                            <bitRange>[1:1]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>ENABLE</name>
+                                    <description>(Initial value) Enabled.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>DISABLE</name>
+                                    <description>Disabled (Masked by the VIF MASKP3 register.)</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>IMT</name>
+                            <description>PATH3 IMT status.</description>
+                            <bitRange>[2:2]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>CONTINUOUS_TRANSFER_MODE</name>
+                                    <description>(Initial value) Continuous transfer mode.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>INTERMITTENT_TRANSFER_MODE</name>
+                                    <description>Intermittent transfer mode.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>PSE</name>
+                            <description>Temporary transfer stop.</description>
+                            <bitRange>[3:3]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>NORMAL</name>
+                                    <description>(Initial value) Normal.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>TEMP_STOP</name>
+                                    <description>Temporary stop state triggered by PSE flag of GIF_CTRL register.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <!-- Bit 4 is unused. -->
+                        <field>
+                            <name>IP3</name>
+                            <description>Interrupted PATH3.</description>
+                            <bitRange>[5:5]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>NO_INTERRUPT</name>
+                                    <description>(Initial value) No interrupted transfer via PATH3.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>INTERRUPT</name>
+                                    <description>Interrupted transfer via PATH3.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>P3Q</name>
+                            <description>PATH3 in queue.</description>
+                            <bitRange>[6:6]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>NO_REQUEST</name>
+                                    <description>(Initial value) No request to wait for processing in PATH3.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>REQUEST</name>
+                                    <description>Request to wait for processing in PATH3.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>P2Q</name>
+                            <description>PATH2 in queue.</description>
+                            <bitRange>[7:7]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>NO_REQUEST</name>
+                                    <description>(Initial value) No request to wait for processing in PATH2.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>REQUEST</name>
+                                    <description>Request to wait for processing in PATH2.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>P1Q</name>
+                            <description>PATH1 in queue.</description>
+                            <bitRange>[8:8]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>NO_REQUEST</name>
+                                    <description>(Initial value) No request to wait for processing in PATH1.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>REQUEST</name>
+                                    <description>Request to wait for processing in PATH1.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>OPH</name>
+                            <description>Output path.</description>
+                            <bitRange>[9:9]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>IDLE</name>
+                                    <description>(Initial value) Idle state.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>OUTPUTTING</name>
+                                    <description>Outputting data.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>APATH</name>
+                            <description>Data path transferring data.</description>
+                            <bitRange>[11:10]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>IDLE</name>
+                                    <description>(Initial value) Idle state.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>PATH1</name>
+                                    <description>Transferring data via PATH1.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>PATH2</name>
+                                    <description>Transferring data via PATH2.</description>
+                                    <value>2</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>PATH3</name>
+                                    <description>Transferring data via PATH3.</description>
+                                    <value>3</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>DIR</name>
+                            <description>Transfer direction.</description>
+                            <bitRange>[12:12]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>EE_TO_GS</name>
+                                    <description>(Initial value) EE to GS.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>GS_TO_EE</name>
+                                    <description>GS to EE.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>FQC</name>
+                            <description>Effective data count in GIF-FIFO (0-16: in qword units).</description>
+                            <bitRange>[28:24]</bitRange>
+                        </field>
+                    </fields>
                 </register>
 
                 <!-- No register at 0xB0003030 -->
