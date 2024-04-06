@@ -821,8 +821,18 @@
 
                 <register>
                     <name>GIF_P3CNT</name>
-                    <description>PATH3 transfer status counter</description>
+                    <description>PATH3 transfer status counter. Only accessible when GIF_CTRL PSE is set to 1.</description>
                     <addressOffset>0x90</addressOffset>
+                    <access>read-only</access>
+
+                    <fields>
+                        <field>
+                            <name>P3CNT</name>
+                            <description>The LOOPCNT field value of the GIF_CNT register when transfer via PATH3 is interrupted. This is not updated in the event of a transfer restart.</description>
+                            <bitRange>[14:0]</bitRange>
+                        </field>
+                        <!-- Bits 31-15 are unused. -->
+                    </fields>
                 </register>
 
                 <register>
