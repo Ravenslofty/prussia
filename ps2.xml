@@ -398,6 +398,26 @@
                     <name>GIF_CTRL</name>
                     <description>GIF control</description>
                     <addressOffset>0x00</addressOffset>
+
+                    <fields>
+                        <field>
+                            <name>RST</name>
+                            <description>GIF reset</description>
+                            <bitRange>[0:0]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>NO_RESET</name>
+                                    <description>Does nothing.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>RESET</name>
+                                    <description>When set, the GIF is reset and the internal register returns to the initial value.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                    </fields>
                 </register>
 
                 <register>
