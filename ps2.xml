@@ -837,8 +837,22 @@
 
                 <register>
                     <name>GIF_P3TAG</name>
-                    <description>PATH3 tag value</description>
+                    <description>PATH3 tag value. Only accessible when GIF_CTRL PSE is set to 1 and when PATH3 is transferring data in IMAGE mode.</description>
                     <addressOffset>0xA0</addressOffset>
+                    <access>read-only</access>
+
+                    <fields>
+                        <field>
+                            <name>LOOPCNT</name>
+                            <description>The NLOOP field value of the GIFtag read via PATH3 at the end.</description>
+                            <bitRange>[14:0]</bitRange>
+                        </field>
+                        <field>
+                            <name>EOP</name>
+                            <description>The EOP flag value of the GIFtag read via PATH 3 at the end.</description>
+                            <bitRange>[15:15]</bitRange>
+                        </field>
+                    </fields>
                 </register>
             </registers>
         </peripheral>
