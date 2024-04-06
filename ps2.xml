@@ -398,6 +398,7 @@
                     <name>GIF_CTRL</name>
                     <description>GIF control</description>
                     <addressOffset>0x00</addressOffset>
+                    <access>write-only</access>
 
                     <fields>
                         <field>
@@ -441,6 +442,7 @@
                     <name>GIF_MODE</name>
                     <description>GIF mode setting</description>
                     <addressOffset>0x10</addressOffset>
+                    <access>write-only</access>
 
                     <fields>
                         <field>
@@ -484,6 +486,7 @@
                     <name>GIF_STAT</name>
                     <description>GIF status</description>
                     <addressOffset>0x20</addressOffset>
+                    <access>read-only</access>
 
                     <fields>
                         <field>
@@ -696,8 +699,27 @@
 
                 <register>
                     <name>GIF_TAG0</name>
-                    <description>GIFtag (bits 31-0) immediately before</description>
+                    <description>GIFtag (bits 31-16) immediately before. Only accessible when GIF_CTRL PSE is set to 1. </description>
                     <addressOffset>0x40</addressOffset>
+                    <access>read-only</access>
+
+                    <fields>
+                        <field>
+                            <name>NLOOP</name>
+                            <description>Most recently read NLOOP field of GIFtag.</description>
+                            <bitRange>[14:0]</bitRange>
+                        </field>
+                        <field>
+                            <name>EOP</name>
+                            <description>Most recently read EOP flag of GIFtag.</description>
+                            <bitRange>[15:15]</bitRange>
+                        </field>
+                        <field>
+                            <name>TAG</name>
+                            <description>(Undefined) Values from bit 31 to bit 16 among most recently read GIFtag values.</description>
+                            <bitRange>[31:16]</bitRange>
+                        </field>
+                    </fields>
                 </register>
 
                 <register>
