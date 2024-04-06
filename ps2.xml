@@ -417,6 +417,23 @@
                                 </enumeratedValue>
                             </enumeratedValues>
                         </field>
+                        <field>
+                            <name>PSE</name>
+                            <description>Temporary transfer stop</description>
+                            <bitRange>[3:3]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>TRANSFER_RESTART</name>
+                                    <description>Restarts transfer processing. When set, the other GIF registers can no longer be read.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>TEMP_STOP</name>
+                                    <description>Temporarily stops transfer processing. When set, allows reading the other GIF registers for debugging.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
                     </fields>
                 </register>
 
@@ -424,6 +441,43 @@
                     <name>GIF_MODE</name>
                     <description>GIF mode setting</description>
                     <addressOffset>0x10</addressOffset>
+
+                    <fields>
+                        <field>
+                            <name>M3R</name>
+                            <description>PATH3 MASK</description>
+                            <bitRange>[0:0]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>MASK_CANCEL</name>
+                                    <description>Mask cancel(Initial value)</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>MASK</name>
+                                    <description>Enables the PATH3 mask. If set during a transmission, the mask is enabled after the end of transmission.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>IMT</name>
+                            <description>PATH3 transfer mode specification</description>
+                            <bitRange>[2:2]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>CONTINUOUS_TRANSFER</name>
+                                    <description>(Initial value) Continuous transfer mode</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>INTERMITTENT_TRANSFER_MODE</name>
+                                    <description>Intermittent transfer mode in every 8 qwords.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                    </fields>
                 </register>
 
                 <register>
