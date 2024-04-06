@@ -774,8 +774,17 @@
 
                 <register>
                     <name>GIF_TAG3</name>
-                    <description>GIFtag (bits 127-96) immediately before</description>
+                    <description>GIFtag (bits 127-96) immediately before. Only accessible when GIF_CTRL PSE is set to 1.</description>
                     <addressOffset>0x70</addressOffset>
+                    <access>read-only</access>
+
+                    <fields>
+                        <field>
+                            <name>REGS</name>
+                            <description>Values from bit 127 to bit 96 among most recently read GIFtag values (Lower part of REGS field.)</description>
+                            <bitRange>[31:0]</bitRange>
+                        </field>
+                    </fields>
                 </register>
 
                 <register>
