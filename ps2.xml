@@ -789,8 +789,34 @@
 
                 <register>
                     <name>GIF_CNT</name>
-                    <description>Transfer status counter</description>
+                    <description>Transfer status counter. Only accessible when GIF_CTRL PSE is set to 1.</description>
                     <addressOffset>0x80</addressOffset>
+                    <access>read-only</access>
+
+                    <fields>
+                        <field>
+                            <name>LOOPCNT</name>
+                            <description>Value of current loop counter (backward counter from GIF_TAG0 NLOOP field). Decremented when starting processing of the GIF_TAG1 NREGSth register descriptor.</description>
+                            <bitRange>[14:0]</bitRange>
+                        </field>
+                        <field>
+                            <name>REGCNT</name>
+                            <description>
+                                Register descriptor number (0-15) currently in process (Becomes indeterminate in IMAGE mode).
+                                * 1 - Lowest significant register descriptor of REGS field.
+                                * 2 - 2nd lowest significant register descriptor of REGS field.
+                                  ..
+                                * 15 - 15th lowest significant register descriptor of REGS field.
+                                * 0 - Most significant register descriptor of REGS field.
+                            </description>
+                            <bitRange>[19-16]</bitRange>
+                        </field>
+                        <field>
+                            <name>VUADDR</name>
+                            <description>Address of VU memory under transfer.</description>
+                            <bitRange>[29:20]</bitRange>
+                        </field>
+                    </fields>
                 </register>
 
                 <register>
