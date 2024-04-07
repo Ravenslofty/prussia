@@ -651,6 +651,27 @@
                     <name>IPU_BP</name>
                     <description>IPU input FIFO control</description>
                     <addressOffset>0x20</addressOffset>
+                    <access>read-only</access>
+
+                    <fields>
+                        <field>
+                            <name>BP</name>
+                            <description>Bit stream pointer to bit position in first 128-bit data to start decoding.</description>
+                            <bitRange>[6:0]</bitRange>
+                        </field>
+                        <!-- Bit 7 is unused. -->
+                        <field>
+                            <name>IFC</name>
+                            <description>Input FIFO counter. Equal to number of qwords in IPU_in_FIFO.</description>
+                            <bitRange>[11:8]</bitRange>
+                        </field>
+                        <field>
+                            <name>FP</name>
+                            <description>FIFO pointer. Equal to number of qwords remaining in IPU except IPU_in_FIFO.</description>
+                            <bitRange>[17:16]</bitRange>
+                        </field>
+                        <!-- Bits 17-31 are unused. -->
+                    </fields>
                 </register>
 
                 <register>
