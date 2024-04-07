@@ -362,8 +362,49 @@
             <registers>
                 <register>
                     <name>IPU_CMD</name>
-                    <description>IPU command</description>
+                    <description>IPU Decoded-code read register / command register</description>
                     <addressOffset>0x00</addressOffset>
+                    <access>read-write</access>
+
+                    <fields>
+                        <field>
+                            <name>OPTION</name>
+                            <description>Command Option. Contents differ depending on executed command.</description>
+                            <bitRange>[27:0]</bitRange>
+                            <access>write-only</access>
+                        </field>
+                        <field>
+                            <name>CODE</name>
+                            <description>Command code.</description>
+                            <bitRange>[31:28]</bitRange>
+                            <access>write-only</access>
+                        </field>
+                        <field>
+                            <name>DATA</name>
+                            <description>VDEC / FDEC decoded value.</description>
+                            <bitRange>[31:0]</bitRange>
+                            <access>read-only</access>
+                        </field>
+                        <field>
+                            <name>BUSY</name>
+                            <description>VDEC / FDEC command busy</description>
+                            <bitRange>[63:63]</bitRange>
+                            <access>read-only</access>
+
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>ENABLE</name>
+                                    <description>DATA field enabled (available to read.)</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>DISABLE</name>
+                                    <description>DATA field disabled (VDEC / FDEC still in execution.)</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                    </fields>
                 </register>
 
                 <register>
