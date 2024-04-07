@@ -1185,7 +1185,7 @@
         <peripheral>
             <name>GS_PRIVILEGED</name>
             <version>1</version>
-            <description>Privileged GS registers. These are accessed via mapped EE addressed, but the GIF is responsible for accessing the relevant registers on the GS.</description>
+            <description>Privileged GS registers. Some are accessible via mapped EE addressed, but some require the GIF for accessing the relevant registers on the GS.</description>
             <groupName>GS_PRIVILEGED</groupName>
             <baseAddress>0xB2000000</baseAddress>
             <size>64</size>
@@ -1193,8 +1193,68 @@
             <registers>
                 <register>
                     <name>PMODE</name>
-                    <description>Various PCRTC controls.</description>
+                    <description>Various PCRTC controls. Accessible via EE.</description>
                     <addressOffset>0x00</addressOffset>
+                    <access>read-write</access>
+
+                    <fields>
+                        <field>
+                            <name>EN1</name>
+                            <description></description>
+                            <bitRange>[0:0]</bitRange>
+                        </field>
+                        <field>
+                            <name>EN2</name>
+                            <description></description>
+                            <bitRange>[1:1]</bitRange>
+                        </field>
+                        <field>
+                            <name>CRTMD</name>
+                            <description></description>
+                            <bitRange>[4:2]</bitRange>
+                        </field>
+                        <field>
+                            <name>MMOD</name>
+                            <description></description>
+                            <bitRange>[5:5]</bitRange>
+                        </field>
+                        <field>
+                            <name>AMOD</name>
+                            <description></description>
+                            <bitRange>[6:6]</bitRange>
+                        </field>
+                        <field>
+                            <name>SLBG</name>
+                            <description></description>
+                            <bitRange>[7:7]</bitRange>
+                        </field>
+                        <field>
+                            <name>ALP</name>
+                            <description>Alpha blending</description>
+                            <bitRange>[8:8]</bitRange>
+                        </field>
+                        <!-- Bits 9-15 are unused. -->
+                        <field>
+                            <name>NFLD</name>
+                            <description></description>
+                            <bitRange>[16:16]</bitRange>
+                        </field>
+                        <field>
+                            <name>EXVWINS</name>
+                            <description></description>
+                            <bitRange>[41:32]</bitRange>
+                        </field>
+                        <field>
+                            <name>EXVWINE</name>
+                            <description></description>
+                            <bitRange>[51:42]</bitRange>
+                        </field>
+                        <field>
+                            <name>EVSYNCMD</name>
+                            <description></description>
+                            <bitRange>[64:52]</bitRange>
+                        </field>
+                    </fields>
                 </register>
 
                 <register>
