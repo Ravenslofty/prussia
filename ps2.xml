@@ -1183,6 +1183,30 @@
         </peripheral>
 
         <peripheral>
+            <name>GS_PRIVILEGED</name>
+            <version>1</version>
+            <description>Privileged GS registers. These are accessed via mapped EE addressed, but the GIF is responsible for accessing the relevant registers on the GS.</description>
+            <groupName>GS_PRIVILEGED</groupName>
+            <baseAddress>0xB2000000</baseAddress>
+            <size>64</size>
+
+            <registers>
+                <register>
+                    <name>PMODE</name>
+                    <description>Various PCRTC controls.</description>
+                    <addressOffset>0x00</addressOffset>
+                </register>
+
+                <register>
+                    <name>SMODE1</name>
+                    <description>Sync parameters for the PCRTC.</description>
+                    <addressOffset>0x10</addressOffset>
+                    <access>read-write</access>
+                </register>
+            </registers>
+        </peripheral>
+
+        <peripheral>
             <name>VIF</name>
             <version>1</version>
             <description>VU Interface. See EE User's Manual, Chapter 6.</description>
