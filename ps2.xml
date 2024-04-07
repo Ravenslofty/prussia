@@ -355,7 +355,7 @@
         <peripheral>
             <name>IPU</name>
             <version>1</version>
-            <description>Image Data Processor</description>
+            <description>Image Data Processor. See EE User's Manual, Chapter 8.</description>
             <groupName>IPU</groupName>
             <baseAddress>0xB0002000</baseAddress>
 
@@ -650,7 +650,7 @@
 
                 <register>
                     <name>IPU_BP</name>
-                    <description>IPU input FIFO control</description>
+                    <description>IPU input FIFO control.</description>
                     <addressOffset>0x20</addressOffset>
                     <access>read-only</access>
 
@@ -714,7 +714,7 @@
         <peripheral>
             <name>GIF</name>
             <version>1</version>
-            <description>GS Interface</description>
+            <description>GS Interface. See EE User's Manual, Chapter 7.</description>
             <groupName>GIF</groupName>
             <baseAddress>0xB0003000</baseAddress>
 
@@ -1185,7 +1185,7 @@
         <peripheral>
             <name>VIF</name>
             <version>1</version>
-            <description>VU Interface</description>
+            <description>VU Interface. See EE User's Manual, Chapter 6.</description>
             <groupName>VIF</groupName>
             <baseAddress>0xB0003800</baseAddress>
 
@@ -2111,7 +2111,7 @@
         <peripheral>
             <name>DMAC</name>
             <version>1</version>
-            <description>DMA Controller</description>
+            <description>DMA Controller. See EE User's Manual, Chapter 5.</description>
             <groupName>DMAC</groupName>
             <baseAddress>0xB0008000</baseAddress>
             <registers>
@@ -3252,7 +3252,7 @@
         <peripheral>
             <name>INTC</name>
             <version>1</version>
-            <description>Interrupt Controller. See EE User's Manual chapter 3.</description>
+            <description>Interrupt Controller. See EE User's Manual, Chapter 3.</description>
             <groupName>INTC</groupName>
             <baseAddress>0xB000F000</baseAddress>
 
