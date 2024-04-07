@@ -809,7 +809,7 @@
                                 * 15 - 15th lowest significant register descriptor of REGS field.
                                 * 0 - Most significant register descriptor of REGS field.
                             </description>
-                            <bitRange>[19-16]</bitRange>
+                            <bitRange>[19:16]</bitRange>
                         </field>
                         <field>
                             <name>VUADDR</name>
