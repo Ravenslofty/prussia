@@ -411,6 +411,240 @@
                     <name>IPU_CTRL</name>
                     <description>IPU control</description>
                     <addressOffset>0x10</addressOffset>
+                    <access>read-write</access>
+
+                    <fields>
+                        <field>
+                            <name>IFC</name>
+                            <description>Input FIFO counter. Same as IPU_BP IFC field.</description>
+                            <bitRange>[3:0]</bitRange>
+                            <access>read-only</access>
+                        </field>
+                        <field>
+                            <name>OFC</name>
+                            <description>Output FIFO counter.</description>
+                            <bitRange>[7:4]</bitRange>
+                            <access>read-only</access>
+                        </field>
+                        <field>
+                            <name>CBP</name>
+                            <description>Coded block pattern.</description>
+                            <bitRange>[13:8]</bitRange>
+                            <access>read-only</access>
+                        </field>
+                        <field>
+                            <name>ECD</name>
+                            <description>Error code detection. Set to 0 when a new command is issued, then set to 1 if an error is encountered.</description>
+                            <bitRange>[14:14]</bitRange>
+                            <access>read-only</access>
+
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>NOT_DETECTED</name>
+                                    <description>Not detected.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>DETECTED</name>
+                                    <description>Detected.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>SCD</name>
+                            <description>Start code detection. Set to 0 when a new command is issued, then set to 1 if a start code is encountered.</description>
+                            <bitRange>[15:15]</bitRange>
+                            <access>read-only</access>
+
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>NOT_DETECTED</name>
+                                    <description>Not detected.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>DETECTED</name>
+                                    <description>Detected.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>IDP</name>
+                            <description>Intra DC presition.</description>
+                            <bitRange>[17:16]</bitRange>
+                            <access>read-write</access>
+
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>BITS8</name>
+                                    <description>8 bits.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>BITS9</name>
+                                    <description>9 bits.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>BITS10</name>
+                                    <description>10 bits.</description>
+                                    <value>2</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>RESERVED</name>
+                                    <description>Reserved.</description>
+                                    <value>3</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <!-- Bits 18-19 are unused. -->
+                        <field>
+                            <name>AS</name>
+                            <description>Alternate scan.</description>
+                            <bitRange>[20:20]</bitRange>
+                            <access>read-write</access>
+
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>ZIGZAG</name>
+                                    <description>Zigzag scanning.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ALTERNATE</name>
+                                    <description>Alternate scanning.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>IVF</name>
+                            <description>Intra VLC format.</description>
+                            <bitRange>[21:21]</bitRange>
+                            <access>read-write</access>
+
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>MPEG1_COMPATIBLE</name>
+                                    <description>MPEG1-compatible 2-dimensional VLC table.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>INTRA_MACRO_BLOCK</name>
+                                    <description>2-dimensional VLC table specially for intra macro block.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>QST</name>
+                            <description>Q scale step.</description>
+                            <bitRange>[22:22]</bitRange>
+                            <access>read-write</access>
+
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>LINEAR</name>
+                                    <description>Linear step.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>NON_LINEAR</name>
+                                    <description>Non-linear step.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>MP1</name>
+                            <description>Bit stream MPEG version.</description>
+                            <bitRange>[23:23]</bitRange>
+                            <access>read-write</access>
+
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>MPEG2</name>
+                                    <description>MPEG2 bit stream.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>MPEG1</name>
+                                    <description>MPEG1 bit stream.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>PCT</name>
+                            <description>Picture type.</description>
+                            <bitRange>[26:24]</bitRange>
+                            <access>read-write</access>
+
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>RESERVED</name>
+                                    <description>Reserved.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>I_PICTURE</name>
+                                    <description>I-PICTURE.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>P_PICTURE</name>
+                                    <description>P-PICTURE.</description>
+                                    <value>2</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>B_PICTURE</name>
+                                    <description>B-PICTURE.</description>
+                                    <value>3</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>D_PICTURE</name>
+                                    <description>D-PICTURE.</description>
+                                    <value>4</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <!-- Bits 27-29 are unused. -->
+                        <field>
+                            <name>RST</name>
+                            <description>Reset. Writing 1 will force-abandon the current command and data, and reset the IPU.</description>
+                            <bitRange>[30:30]</bitRange>
+                            <access>write-only</access>
+
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>RESET</name>
+                                    <description>Trigger Reset.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>BUSY</name>
+                            <description>IPU BUSY status.</description>
+                            <bitRange>[31:31]</bitRange>
+                            <access>read-only</access>
+
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>READY</name>
+                                    <description>IPU ready (idle).</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>BUSY</name>
+                                    <description>IPU busy (executing a command.)</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                    </fields>
                 </register>
 
                 <register>
