@@ -421,8 +421,35 @@
 
                 <register>
                     <name>IPU_TOP</name>
-                    <description>First data of bit stream</description>
+                    <description>Reads the first 32 bits of the bit stream after execution of a BDEC / IDEC / VDEC / FDEC command completes.</description>
                     <addressOffset>0x30</addressOffset>
+                    <access>read-only</access>
+
+                    <fields>
+                        <field>
+                            <name>BSTOP</name>
+                            <description>Top 32 bits of the bit stream data.</description>
+                            <bitRange>[31:0]</bitRange>
+                        </field>
+                        <field>
+                            <name>BUSY</name>
+                            <description>Command busy status.</description>
+                            <bitRange>[63:63]</bitRange>
+
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>ENABLE</name>
+                                    <description>BSTOP field is enabled (ready to read.)</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>DISABLE</name>
+                                    <description>BSTOP field is disabled (decoding still in execution.)</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                    </fields>
                 </register>
             </registers>
         </peripheral>
