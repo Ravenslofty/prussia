@@ -1397,13 +1397,39 @@
                         </field>
                         <field>
                             <name>PRST</name>
-                            <description>Trigger a reset on the Phase Lock Loop (PLL) circuit.</description>
+                            <description>Reset the PCRTC circuit. A special procedure should be followed to use properly (see GS Mode Selector app documentation.)</description>
                             <bitRange>[16:16]</bitRange>
+
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>NOTHING</name>
+                                    <description>(Initial value) Does not trigger a reset.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>RESET</name>
+                                    <description>Trigger a reset.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
                         </field>
                         <field>
                             <name>SINT</name>
-                            <description>UNKNOWN. Related to the Phase Lock Loop (PLL) circuit.</description>
+                            <description>Activate / Deactivate the Phase Lock Loop (PLL) circuit. A special procedure should be followed to use properly (see GS Mode Selector app documentation.)</description>
                             <bitRange>[17:17]</bitRange>
+
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>OFF</name>
+                                    <description>Turn off the PLL.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ON</name>
+                                    <description>Turn on the PLL.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
                         </field>
                         <field>
                             <name>XPCK</name>
