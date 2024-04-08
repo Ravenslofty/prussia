@@ -1224,12 +1224,12 @@
                             <enumeratedValues>
                                 <enumeratedValue>
                                     <name>DISABLE</name>
-                                    <description>Disable Read Circuit 1.</description>
+                                    <description>Disable Read Circuit 2.</description>
                                     <value>0</value>
                                 </enumeratedValue>
                                 <enumeratedValue>
                                     <name>ENABLE</name>
-                                    <description>Enable Read Circuit 1.</description>
+                                    <description>Enable Read Circuit 2.</description>
                                     <value>1</value>
                                 </enumeratedValue>
                             </enumeratedValues>
@@ -1241,7 +1241,7 @@
 
                             <enumeratedValues>
                                 <enumeratedValue>
-                                    <name>DEFAULT</name>
+                                    <name>OUT1</name>
                                     <description>Only (known) valid value.</description>
                                     <value>1</value>
                                 </enumeratedValue>
@@ -1267,7 +1267,7 @@
                         </field>
                         <field>
                             <name>AMOD</name>
-                            <description>OUT1 alpha output.</description>
+                            <description>Alpha source to CRTMD chosen output.</description>
                             <bitRange>[6:6]</bitRange>
 
                             <enumeratedValues>
@@ -1277,7 +1277,7 @@
                                     <value>0</value>
                                 </enumeratedValue>
                                 <enumeratedValue>
-                                    <name>ALPHA_FROM_RC2</name>
+                                    <name>RC2</name>
                                     <description>Alpha value from Read Circuit 2 for output selection.</description>
                                     <value>1</value>
                                 </enumeratedValue>
@@ -1308,22 +1308,22 @@
                         </field>
                         <field>
                             <name>NFLD</name>
-                            <description></description>
+                            <description>(Uses EXTBUF external digital in)</description>
                             <bitRange>[16:16]</bitRange>
                         </field>
                         <field>
                             <name>EXVWINS</name>
-                            <description></description>
+                            <description>(Uses EXTBUF external digital in)</description>
                             <bitRange>[41:32]</bitRange>
                         </field>
                         <field>
                             <name>EXVWINE</name>
-                            <description></description>
+                            <description>(Uses EXTBUF external digital in)</description>
                             <bitRange>[51:42]</bitRange>
                         </field>
                         <field>
                             <name>EVSYNCMD</name>
-                            <description></description>
+                            <description>(Uses EXTBUF external digital in)</description>
                             <bitRange>[64:52]</bitRange>
                         </field>
                     </fields>
