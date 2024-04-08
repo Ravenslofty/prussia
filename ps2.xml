@@ -1331,9 +1331,178 @@
 
                 <register>
                     <name>SMODE1</name>
-                    <description>Sync parameters for the PCRTC.</description>
+                    <description>Video signal settings. Sync parameters for the PCRTC.</description>
                     <addressOffset>0x10</addressOffset>
-                    <access>read-write</access>
+                    <access>write-only</access>
+
+                    <!-- Refer to https://github.com/jur/linux-2.2.1-ps2/blob/98cdeb6f28e401ef9ac3a750c1f8912ec7967681/drivers/video/ps2gs.c#L73 for reference values. -->
+                    <!-- To calculate video clock: video clock VCK = (13500000 * @lc) / ((@t1248 + 1) * @spml * @rc) -->
+                    <fields>
+                        <field>
+                            <name>RC</name>
+                            <description>Phase Lock Loop (PLL) reference divider.</description>
+                            <bitRange>[2:0]</bitRange>
+                        </field>
+                        <field>
+                            <name>LC</name>
+                            <description>Phase Lock Loop (PLL) loop divider.</description>
+                            <bitRange>[9:3]</bitRange>
+                        </field>
+                        <field>
+                            <name>T128</name>
+                            <description>Phase Lock Loop (PLL) output divider.</description>
+                            <bitRange>[11:10]</bitRange>
+                        </field>
+                        <field>
+                            <name>SLCK</name>
+                            <description>UNKNOWN. Appears to always be set to 0.</description>
+                            <bitRange>[12:12]</bitRange>
+
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>DEFAULT</name>
+                                    <description>Only ever seen set to 0.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>CMOD</name>
+                            <description>Subcarrier frequency (display mode.)</description>
+                            <bitRange>[14:13]</bitRange>
+
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>VESA</name>
+                                    <description>Output a VESA signal.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <!-- Value 1 is reserved. -->
+                                <enumeratedValue>
+                                    <name>NTSC</name>
+                                    <description>Output an NTSC signal.</description>
+                                    <value>2</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>PAL</name>
+                                    <description>Output a PAL signal.</description>
+                                    <value>3</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>EX</name>
+                            <description>UNKNOWN.</description>
+                            <bitRange>[15:15]</bitRange>
+                        </field>
+                        <field>
+                            <name>PRST</name>
+                            <description>Trigger a reset on the Phase Lock Loop (PLL) circuit.</description>
+                            <bitRange>[16:16]</bitRange>
+                        </field>
+                        <field>
+                            <name>SINT</name>
+                            <description>UNKNOWN. Related to the Phase Lock Loop (PLL) circuit.</description>
+                            <bitRange>[16:16]</bitRange>
+                        </field>
+                        <field>
+                            <name>XPCK</name>
+                            <description>UNKNOWN.</description>
+                            <bitRange>[17:17]</bitRange>
+                        </field>
+                        <field>
+                            <name>XPCK</name>
+                            <description>UNKNOWN.</description>
+                            <bitRange>[18:18]</bitRange>
+                        </field>
+                        <field>
+                            <name>PCK2</name>
+                            <description>UNKNOWN.</description>
+                            <bitRange>[20:19]</bitRange>
+                        </field>
+                        <field>
+                            <name>SPML</name>
+                            <description>Sub-pixel magnification level.</description>
+                            <bitRange>[24:21]</bitRange>
+                        </field>
+                        <field>
+                            <name>GCONT</name>
+                            <description>Output colour format.</description>
+                            <bitRange>[25:25]</bitRange>
+
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>RGBYC</name>
+                                    <description>RGBYc format.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>YCRCB</name>
+                                    <description>YCrCb format.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>PHS</name>
+                            <description>UNKNOWN. Related to HSync output.</description>
+                            <bitRange>[26:26]</bitRange>
+                        </field>
+                        <field>
+                            <name>PVS</name>
+                            <description>UNKNOWN. Related to VSync output.</description>
+                            <bitRange>[27:27]</bitRange>
+                        </field>
+                        <field>
+                            <name>PEHS</name>
+                            <description>UNKNOWN.</description>
+                            <bitRange>[28:28]</bitRange>
+                        </field>
+                        <field>
+                            <name>PEVS</name>
+                            <description>UNKNOWN.</description>
+                            <bitRange>[29:29]</bitRange>
+                        </field>
+                        <field>
+                            <name>CLKSEL</name>
+                            <description>UNKNOWN.</description>
+                            <bitRange>[31:30]</bitRange>
+                        </field>
+                        <field>
+                            <name>NVCK</name>
+                            <description>UNKNOWN.</description>
+                            <bitRange>[32:32]</bitRange>
+                        </field>
+                        <field>
+                            <name>SLCK2</name>
+                            <description>UNKNOWN.</description>
+                            <bitRange>[33:33]</bitRange>
+                        </field>
+                        <field>
+                            <name>VCKSEL</name>
+                            <description>UNKNOWN.</description>
+                            <bitRange>[35:34]</bitRange>
+                        </field>
+                        <field>
+                            <name>VHP</name>
+                            <description>Scan mode.</description>
+                            <bitRange>[36:36]</bitRange>
+
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>INTERLACED</name>
+                                    <description>Interlace mode.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>PROGRESSIVE</name>
+                                    <description>Progressive mode.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <!-- Bits 37-63 are unused. -->
+                    </fields>
                 </register>
             </registers>
         </peripheral>
