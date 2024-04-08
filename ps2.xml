@@ -1195,45 +1195,117 @@
                     <name>PMODE</name>
                     <description>Various PCRTC controls. Accessible via EE.</description>
                     <addressOffset>0x00</addressOffset>
-                    <access>read-write</access>
+                    <access>write-only</access>
 
                     <fields>
                         <field>
                             <name>EN1</name>
-                            <description></description>
+                            <description>Enable / disable Read Circuit 1.</description>
                             <bitRange>[0:0]</bitRange>
+
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>DISABLE</name>
+                                    <description>Disable Read Circuit 1.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ENABLE</name>
+                                    <description>Enable Read Circuit 1.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
                         </field>
                         <field>
                             <name>EN2</name>
-                            <description></description>
+                            <description>Enable / disable Read Circuit 2.</description>
                             <bitRange>[1:1]</bitRange>
+
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>DISABLE</name>
+                                    <description>Disable Read Circuit 1.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ENABLE</name>
+                                    <description>Enable Read Circuit 1.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
                         </field>
                         <field>
                             <name>CRTMD</name>
-                            <description></description>
+                            <description>CRT output switching. Always set to 1.</description>
                             <bitRange>[4:2]</bitRange>
+
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>DEFAULT</name>
+                                    <description>Only (known) valid value.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
                         </field>
                         <field>
                             <name>MMOD</name>
-                            <description></description>
+                            <description>Alpha blending value source.</description>
                             <bitRange>[5:5]</bitRange>
+
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>BLEND_ALP</name>
+                                    <description>Get alpha from ALP field.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>BLEND_RC1</name>
+                                    <description>Get alpha from output of Read Circuit 1.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
                         </field>
                         <field>
                             <name>AMOD</name>
-                            <description></description>
+                            <description>OUT1 alpha output.</description>
                             <bitRange>[6:6]</bitRange>
+
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>RC1</name>
+                                    <description>Alpha value from Read Circuit 1 for output selection.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ALPHA_FROM_RC2</name>
+                                    <description>Alpha value from Read Circuit 2 for output selection.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
                         </field>
                         <field>
                             <name>SLBG</name>
-                            <description></description>
+                            <description>Alpha blending method.</description>
                             <bitRange>[7:7]</bitRange>
+
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>CIRCUIT2</name>
+                                    <description>Blend alpha with output of Read Circuit 2.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>BGCOLOR</name>
+                                    <description>Use background color.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
                         </field>
                         <field>
                             <name>ALP</name>
-                            <description>Alpha blending</description>
-                            <bitRange>[8:8]</bitRange>
+                            <description>Alpha blending value.</description>
+                            <bitRange>[15:8]</bitRange>
                         </field>
-                        <!-- Bits 9-15 are unused. -->
                         <field>
                             <name>NFLD</name>
                             <description></description>
