@@ -1403,11 +1403,6 @@
                         <field>
                             <name>SINT</name>
                             <description>UNKNOWN. Related to the Phase Lock Loop (PLL) circuit.</description>
-                            <bitRange>[16:16]</bitRange>
-                        </field>
-                        <field>
-                            <name>XPCK</name>
-                            <description>UNKNOWN.</description>
                             <bitRange>[17:17]</bitRange>
                         </field>
                         <field>
