@@ -1749,7 +1749,7 @@
 
                 <register>
                     <name>DISPLAY1</name>
-                    <description>FIXME: Unknown description.</description>
+                    <description>Rectangular viewport from output of Read Circuit 1.</description>
                     <addressOffset>0x80</addressOffset>
                     <access>write-only</access>
 
@@ -1793,10 +1793,134 @@
                     <addressOffset>0x90</addressOffset>
                 </register>
 
-                <register>
+                <register derivedFrom="DISPLAY1">
                     <name>DISPLAY2</name>
-                    <description>FIXME: Unknown description.</description>
+                    <description>Rectangular viewport from output of Read Circuit 1.</description>
                     <addressOffset>0xA0</addressOffset>
+                </register>
+
+                <register>
+                    <name>EXTBUF</name>
+                    <description>FIXME: Unknown description.</description>
+                    <addressOffset>0xB0</addressOffset>
+                    <access>write-only</access>
+
+                    <fields>
+                        <field>
+                            <name>EXBP</name>
+                            <description>Buffer base pointer / 64.</description>
+                            <bitRange>[13:0]</bitRange>
+                        </field>
+                        <field>
+                            <name>EXBW</name>
+                            <description>Width of buffer / 64.</description>
+                            <bitRange>[19:14]</bitRange>
+                        </field>
+                        <field>
+                            <name>FBIN</name>
+                            <description>Input source selection.</description>
+                            <bitRange>[21:20]</bitRange>
+
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>OUT1</name>
+                                    <description>Output from Read Circuit 1.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>OUT2</name>
+                                    <description>Output from Read Circuit 2.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>WFFMD</name>
+                            <description>Interlace mode</description>
+                            <bitRange>[22:22]</bitRange>
+
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>FIELD</name>
+                                    <description>Write to every other raster.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>FRAME</name>
+                                    <description>Write to every raster.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>EMODA</name>
+                            <description>Processing of input alpha.</description>
+                            <bitRange>[24:23]</bitRange>
+
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>ALPHA</name>
+                                    <description>Write input alpha as-is from alpha channel.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>Y</name>
+                                    <description>Write input alpha as-is from Y colour channel.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>Y_HALF</name>
+                                    <description>Write input alpha as half of Y colour channel.</description>
+                                    <value>2</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ZERO</name>
+                                    <description>Alpha is fixed at zero.</description>
+                                    <value>3</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>EMODC</name>
+                            <description>Processing of input colour.</description>
+                            <bitRange>[26:25]</bitRange>
+
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>RGB</name>
+                                    <description>Read colour from RGB channels.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>Y</name>
+                                    <description>Read colour as Y channel.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>YCBCR</name>
+                                    <description>Read color from YcBcR channels.</description>
+                                    <value>2</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ALPHA</name>
+                                    <description>Read color from alpha channel.</description>
+                                    <value>3</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+
+                        <!-- Bits 27-31 are unused. -->
+                        <field>
+                            <name>WDX</name>
+                            <description>Upper left X position.</description>
+                            <bitRange>[42:32]</bitRange>
+                        </field>
+                        <field>
+                            <name>WDY</name>
+                            <description>Upper left Y position.</description>
+                            <bitRange>[53:43]</bitRange>
+                        </field>
+                    </fields>
                 </register>
             </registers>
         </peripheral>
