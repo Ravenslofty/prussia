@@ -1671,6 +1671,46 @@
                         </field>
                     </fields>
                 </register>
+
+                <register>
+                    <name>SYNCV</name>
+                    <description>FIXME: Unknown description.</description>
+                    <addressOffset>0x60</addressOffset>
+                    <access>write-only</access>
+
+                    <fields>
+                        <field>
+                            <name>VFP</name>
+                            <description>Vertical front porch. Halflines with colour burst after video data.</description>
+                            <bitRange>[9:0]</bitRange>
+                        </field>
+                        <field>
+                            <name>VFPE</name>
+                            <description>Halflines without colour burst after VFP.</description>
+                            <bitRange>[19:10]</bitRange>
+                        </field>
+                        <field>
+                            <name>VBP</name>
+                            <description>Vertical back porch. Halflines with colour burst after VBPE.</description>
+                            <bitRange>[31:20]</bitRange>
+                        </field>
+                        <field>
+                            <name>VBPE</name>
+                            <description>Halflines without colour burst after VS.</description>
+                            <bitRange>[41:32]</bitRange>
+                        </field>
+                        <field>
+                            <name>VDP</name>
+                            <description>Halflines with video data.</description>
+                            <bitRange>[42:42]</bitRange>
+                        </field>
+                        <field>
+                            <name>VS</name>
+                            <description>Halflines with VSYNC.</description>
+                            <bitRange>[63:53]</bitRange>
+                        </field>
+                    </fields>
+                </register>
             </registers>
         </peripheral>
 
