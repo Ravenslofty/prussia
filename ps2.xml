@@ -1525,6 +1525,82 @@
                         <!-- Bits 37-63 are unused. -->
                     </fields>
                 </register>
+
+                <register>
+                    <name>SMODE2</name>
+                    <description>Video mode settings for synchronisation.</description>
+                    <addressOffset>0x20</addressOffset>
+                    <access>write-only</access>
+
+                    <fields>
+                        <field>
+                            <name>INT</name>
+                            <description>Interlace mode.</description>
+                            <bitRange>[0:0]</bitRange>
+
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>PROGRESSIVE</name>
+                                    <description>Progressive (noninterlace) mode.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>INTERLACE</name>
+                                    <description>Interlace mode.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+
+                        <field>
+                            <name>FFMD</name>
+                            <description>Field or Frame mode.</description>
+                            <bitRange>[1:1]</bitRange>
+
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>FIELD</name>
+                                    <description>Field mode (every other line is read.)</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>FRAME</name>
+                                    <description>Frame mode (every line is read.)</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+
+                        <field>
+                            <name>DPMS</name>
+                            <description>VESA display power management signalling.</description>
+                            <bitRange>[3:2]</bitRange>
+
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>ON</name>
+                                    <description>In use.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>STANDBY</name>
+                                    <description>Blanked, low power.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>SUSPEND</name>
+                                    <description>Blanked, lower power.</description>
+                                    <value>2</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>OFF</name>
+                                    <description>Shut off, awaiting activity.</description>
+                                    <value>3</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                    </fields>
+                </register>
             </registers>
         </peripheral>
 
