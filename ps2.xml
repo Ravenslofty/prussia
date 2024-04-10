@@ -1801,7 +1801,7 @@
 
                 <register>
                     <name>EXTBUF</name>
-                    <description>FIXME: Unknown description.</description>
+                    <description>Feedback write buffer.</description>
                     <addressOffset>0xB0</addressOffset>
                     <access>write-only</access>
 
@@ -1919,6 +1919,47 @@
                             <name>WDY</name>
                             <description>Upper left Y position.</description>
                             <bitRange>[53:43]</bitRange>
+                        </field>
+                    </fields>
+                </register>
+
+                <register>
+                    <name>EXTDATA</name>
+                    <description>Feedback write setting.</description>
+                    <addressOffset>0xC0</addressOffset>
+                    <access>write-only</access>
+
+                    <fields>
+                        <field>
+                            <name>SX</name>
+                            <description>Upper left X position (VCK).</description>
+                            <bitRange>[11:0]</bitRange>
+                        </field>
+                        <field>
+                            <name>SY</name>
+                            <description>Upper left Y position (VCK).</description>
+                            <bitRange>[22:12]</bitRange>
+                        </field>
+                        <field>
+                            <name>SMPH</name>
+                            <description>Horizontal sampling rate interval (VCK).</description>
+                            <bitRange>[26:23]</bitRange>
+                        </field>
+                        <field>
+                            <name>SMPV</name>
+                            <description>Vertical sampling rate interval (VCK).</description>
+                            <bitRange>[28:27]</bitRange>
+                        </field>
+                        <!-- Bits 29-31 are unused. -->
+                        <field>
+                            <name>WW</name>
+                            <description>Rectangular area width - 1.</description>
+                            <bitRange>[43:32]</bitRange>
+                        </field>
+                        <field>
+                            <name>WH</name>
+                            <description>Rectangular area height - 1.</description>
+                            <bitRange>[54:44]</bitRange>
                         </field>
                     </fields>
                 </register>
