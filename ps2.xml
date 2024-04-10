@@ -1601,6 +1601,21 @@
                         </field>
                     </fields>
                 </register>
+
+                <register>
+                    <name>SRFSH</name>
+                    <description>DRAM refresh rate.</description>
+                    <addressOffset>0x30</addressOffset>
+                    <access>write-only</access>
+
+                    <fields>
+                        <field>
+                            <name>RFSH</name>
+                            <description>DRAM refresh rate.</description>
+                            <bitRange>[3:0]</bitRange>
+                        </field>
+                    </fields>
+                </register>
             </registers>
         </peripheral>
 
