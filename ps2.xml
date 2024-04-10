@@ -1963,6 +1963,35 @@
                         </field>
                     </fields>
                 </register>
+
+                <register>
+                    <name>EXTWRITE</name>
+                    <description>Feedback write function control.</description>
+                    <addressOffset>0xD0</addressOffset>
+                    <access>write-only</access>
+
+                    <fields>
+                        <field>
+                            <name>WRITE</name>
+                            <description>Enable feedback write.</description>
+                            <bitRange>[0:0]</bitRange>
+
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>COMPLETE_CURRENT</name>
+                                    <description>FIXME: Unknown description.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>START_NEXT</name>
+                                    <description>FIXME: Unknown description.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <!-- Bits 1-63 are unused. -->
+                    </fields>
+                </register>
             </registers>
         </peripheral>
 
