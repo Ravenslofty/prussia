@@ -1992,6 +1992,31 @@
                         <!-- Bits 1-63 are unused. -->
                     </fields>
                 </register>
+
+                <register>
+                    <name>BGCOLOR</name>
+                    <description>Background colour.</description>
+                    <addressOffset>0xE0</addressOffset>
+                    <access>write-only</access>
+
+                    <fields>
+                        <field>
+                            <name>R</name>
+                            <description>Red channel.</description>
+                            <bitRange>[7:0]</bitRange>
+                        </field>
+                        <field>
+                            <name>G</name>
+                            <description>Green channel.</description>
+                            <bitRange>[15:8]</bitRange>
+                        </field>
+                        <field>
+                            <name>B</name>
+                            <description>Blue channel.</description>
+                            <bitRange>[23:16]</bitRange>
+                        </field>
+                    </fields>
+                </register>
             </registers>
         </peripheral>
 
