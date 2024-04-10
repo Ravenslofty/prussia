@@ -1616,6 +1616,41 @@
                         </field>
                     </fields>
                 </register>
+
+                <register>
+                    <name>SYNCH1</name>
+                    <description>FIXME: Unknown description.</description>
+                    <addressOffset>0x40</addressOffset>
+                    <access>write-only</access>
+
+                    <fields>
+                        <field>
+                            <name>HFP</name>
+                            <description>Horizonal front porch.</description>
+                            <bitRange>[10:0]</bitRange>
+                        </field>
+                        <field>
+                            <name>HBP</name>
+                            <description>Horizonal back porch.</description>
+                            <bitRange>[21:11]</bitRange>
+                        </field>
+                        <field>
+                            <name>HSEQ</name>
+                            <description>UNKNOWN.</description>
+                            <bitRange>[31:22]</bitRange>
+                        </field>
+                        <field>
+                            <name>HSVS</name>
+                            <description>UNKNOWN.</description>
+                            <bitRange>[42:32]</bitRange>
+                        </field>
+                        <field>
+                            <name>HS</name>
+                            <description>UNKNOWN.</description>
+                            <bitRange>[63:43]</bitRange>
+                        </field>
+                    </fields>
+                </register>
             </registers>
         </peripheral>
 
