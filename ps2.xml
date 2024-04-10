@@ -1711,6 +1711,47 @@
                         </field>
                     </fields>
                 </register>
+
+                <register>
+                    <name>DISPFB1</name>
+                    <description>Framebuffer register for Output Circuit 1.</description>
+                    <addressOffset>0x70</addressOffset>
+                    <access>write-only</access>
+
+                    <fields>
+                        <field>
+                            <name>FBP</name>
+                            <description>Base pointer address / 2048.</description>
+                            <bitRange>[8:0]</bitRange>
+                        </field>
+                        <field>
+                            <name>FBW</name>
+                            <description>Buffer width / 64.</description>
+                            <bitRange>[14:9]</bitRange>
+                        </field>
+                        <field>
+                            <name>PSM</name>
+                            <description>Pixel storage format.</description>
+                            <bitRange>[19:15]</bitRange>
+                        </field>
+                        <field>
+                            <name>DBX</name>
+                            <description>Upper left x position.</description>
+                            <bitRange>[31:20]</bitRange>
+                        </field>
+                        <field>
+                            <name>DBY</name>
+                            <description>Upper left y position.</description>
+                            <bitRange>[43:32]</bitRange>
+                        </field>
+                    </fields>
+                </register>
+
+                <register derivedFrom="DISPFB1">
+                    <name>DISPFB2</name>
+                    <description>Framebuffer register for Output Circuit 2.</description>
+                    <addressOffset>0x90</addressOffset>
+                </register>
             </registers>
         </peripheral>
 
