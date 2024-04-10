@@ -1651,6 +1651,26 @@
                         </field>
                     </fields>
                 </register>
+
+                <register>
+                    <name>SYNCH2</name>
+                    <description>FIXME: Unknown description.</description>
+                    <addressOffset>0x50</addressOffset>
+                    <access>write-only</access>
+
+                    <fields>
+                        <field>
+                            <name>HF</name>
+                            <description>UNKNOWN.</description>
+                            <bitRange>[10:0]</bitRange>
+                        </field>
+                        <field>
+                            <name>HB</name>
+                            <description>UNKNOWN.</description>
+                            <bitRange>[21:11]</bitRange>
+                        </field>
+                    </fields>
+                </register>
             </registers>
         </peripheral>
 
