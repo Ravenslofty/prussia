@@ -1736,13 +1736,53 @@
                         </field>
                         <field>
                             <name>DBX</name>
-                            <description>Upper left x position.</description>
+                            <description>Upper left X position.</description>
                             <bitRange>[31:20]</bitRange>
                         </field>
                         <field>
                             <name>DBY</name>
-                            <description>Upper left y position.</description>
+                            <description>Upper left Y position.</description>
                             <bitRange>[43:32]</bitRange>
+                        </field>
+                    </fields>
+                </register>
+
+                <register>
+                    <name>DISPLAY1</name>
+                    <description>FIXME: Unknown description.</description>
+                    <addressOffset>0x80</addressOffset>
+                    <access>write-only</access>
+
+                    <fields>
+                        <field>
+                            <name>DX</name>
+                            <description>Display X position (VCK).</description>
+                            <bitRange>[11:10]</bitRange>
+                        </field>
+                        <field>
+                            <name>DY</name>
+                            <description>Display Y position (px).</description>
+                            <bitRange>[22:12]</bitRange>
+                        </field>
+                        <field>
+                            <name>MAGH</name>
+                            <description>Horizontal magnification. Magnification = factor -1 (0 = 1x, 1 = 2x, etc.)</description>
+                            <bitRange>[24:23]</bitRange>
+                        </field>
+                        <field>
+                            <name>MAGV</name>
+                            <description>Vertical magnification. Magnification = factor -1 (0 = 1x, 1 = 2x, etc.)</description>
+                            <bitRange>[38:27]</bitRange>
+                        </field>
+                        <field>
+                            <name>DW</name>
+                            <description>Display area width - 1 (VCK).</description>
+                            <bitRange>[43:32]</bitRange>
+                        </field>
+                        <field>
+                            <name>DH</name>
+                            <description>Display area height - 1 (px).</description>
+                            <bitRange>[54:44]</bitRange>
                         </field>
                     </fields>
                 </register>
@@ -1751,6 +1791,12 @@
                     <name>DISPFB2</name>
                     <description>Framebuffer register for Output Circuit 2.</description>
                     <addressOffset>0x90</addressOffset>
+                </register>
+
+                <register>
+                    <name>DISPLAY2</name>
+                    <description>FIXME: Unknown description.</description>
+                    <addressOffset>0xA0</addressOffset>
                 </register>
             </registers>
         </peripheral>
