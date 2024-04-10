@@ -1324,7 +1324,7 @@
                         <field>
                             <name>EVSYNCMD</name>
                             <description>(Uses EXTBUF external digital in)</description>
-                            <bitRange>[64:52]</bitRange>
+                            <bitRange>[60:52]</bitRange>
                         </field>
                     </fields>
                 </register>
