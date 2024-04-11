@@ -2017,345 +2017,372 @@
                         </field>
                     </fields>
                 </register>
+
+                <register>
+                    <name>CSR</name>
+                    <description>GS system status and control registers.</description>
+                    <addressOffset>0x1000</addressOffset>
+                    <access>read-write</access>
+
+                    <fields>
+                        <field>
+                            <name>SIGNAL</name>
+                            <description>SIGNAL event control.</description>
+                            <bitRange>[0:0]</bitRange>
+
+                            <enumeratedValues>
+                                <usage>write</usage>
+                                <enumeratedValue>
+                                    <name>NO_ACTION</name>
+                                    <description>No action.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ENABLE</name>
+                                    <description>Clear old event and enable new eent.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+
+                            <enumeratedValues>
+                                <usage>read</usage>
+                                <enumeratedValue>
+                                    <name>NO_SIGNAL</name>
+                                    <description>No SIGNAL pending.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>SIGNAL_GENERATED</name>
+                                    <description>SIGNAL generated.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>FINISH</name>
+                            <description>FINISH event control.</description>
+                            <bitRange>[1:1]</bitRange>
+
+                            <enumeratedValues>
+                                <usage>write</usage>
+                                <enumeratedValue>
+                                    <name>NO_ACTION</name>
+                                    <description>No action.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ENABLE</name>
+                                    <description>FINISH event is enabled.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+
+                            <enumeratedValues>
+                                <usage>read</usage>
+                                <enumeratedValue>
+                                    <name>NO_FINISH</name>
+                                    <description>No FINISH pending.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>FINISH_GENERATED</name>
+                                    <description>FINISH generated.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>HSINT</name>
+                            <description>HSync interrupt control.</description>
+                            <bitRange>[2:2]</bitRange>
+
+                            <enumeratedValues>
+                                <usage>write</usage>
+                                <enumeratedValue>
+                                    <name>NO_ACTION</name>
+                                    <description>No action.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ENABLE</name>
+                                    <description>HSync interrupt is enabled.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+
+                            <enumeratedValues>
+                                <usage>read</usage>
+                                <enumeratedValue>
+                                    <name>NO_HSYNC.</name>
+                                    <description>No Hsync interrupt pending.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>HSYNC_GENERATED.</name>
+                                    <description>Hsync interrupt has been generated.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>VSINT</name>
+                            <description>VSync interrupt control.</description>
+                            <bitRange>[3:3]</bitRange>
+
+                            <enumeratedValues>
+                                <usage>write</usage>
+                                <enumeratedValue>
+                                    <name>NO_ACTION</name>
+                                    <description>No action.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ENABLE</name>
+                                    <description>VSync interrupt is enabled.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+
+                            <enumeratedValues>
+                                <usage>read</usage>
+                                <enumeratedValue>
+                                    <name>NO_VSYNC.</name>
+                                    <description>No Vsync interrupt pending.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>VSYNC_GENERATED.</name>
+                                    <description>Vsync interrupt has been generated.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>EDWINT</name>
+                            <description>Rectangular area write termination interrupt control.</description>
+                            <bitRange>[4:4]</bitRange>
+
+                            <enumeratedValues>
+                                <usage>write</usage>
+                                <enumeratedValue>
+                                    <name>NO_ACTION</name>
+                                    <description>No action.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ENABLE</name>
+                                    <description>Rectangular area write interrupt is enabled.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+
+                            <enumeratedValues>
+                                <usage>read</usage>
+                                <enumeratedValue>
+                                    <name>NO_HSYNC.</name>
+                                    <description>No rectangular area write interrupt pending.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>RAWRITE_GENERATED.</name>
+                                    <description>Rectangular area write interrupt has been generated.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>ZERO</name>
+                            <description>Must always be zero.</description>
+                            <bitRange>[6:5]</bitRange>
+
+                            <writeConstraint>
+                                <range>
+                                    <minimum>0</minimum>
+                                    <maximum>0</maximum>
+                                </range>
+                            </writeConstraint>
+                        </field>
+                        <field>
+                            <name>FLUSH</name>
+                            <description>Drawing suspend and FIFO clear (enabled during data write).</description>
+                            <bitRange>[8:8]</bitRange>
+                            <access>write-only</access>
+
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>RESUME</name>
+                                    <description>Resume drawing if suspended (?)</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>FLUSH</name>
+                                    <description>Flush the GS FIFO and suspend drawing.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>RESET</name>
+                            <description>GS reset..</description>
+                            <bitRange>[9:9]</bitRange>
+
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>DO_NOTHING</name>
+                                    <description>Do nothing.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>RESET</name>
+                                    <description>GS soft system reset. Clears FIFOs and resets IMR to all 1's.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>NFIELD</name>
+                            <description>VSync sampled FIELD.</description>
+                            <bitRange>[12:12]</bitRange>
+                        </field>
+                        <field>
+                            <name>FIELD</name>
+                            <description>Current Field of display [page-flipping].</description>
+                            <bitRange>[13:13]</bitRange>
+                            <access>read-only</access>
+
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>EVEN</name>
+                                    <description>Even display buffer.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ODD</name>
+                                    <description>Odd display buffer.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>FIFO</name>
+                            <description>GS FIFO status.</description>
+                            <bitRange>[15:14]</bitRange>
+                            <access>read-only</access>
+
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>BETWEEN</name>
+                                    <description>Not empty but not near-full.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>EMPTY</name>
+                                    <description>FIFO is empty.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ALMOST_FULL</name>
+                                    <description>Almost full.</description>
+                                    <value>2</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>UNUSED</name>
+                                    <description>Reserved.</description>
+                                    <value>3</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>REV</name>
+                            <description>GS revision number.</description>
+                            <bitRange>[23:16]</bitRange>
+                            <access>read-only</access>
+                        </field>
+                        <field>
+                            <name>ID</name>
+                            <description>GS Id.</description>
+                            <bitRange>[31:24]</bitRange>
+                            <access>read-only</access>
+                        </field>
+                        <!-- Bits 32-63 are unused. -->
+                    </fields>
+                </register>
+
+                <register>
+                    <name>IMR</name>
+                    <description>Interrupt mask control.</description>
+                    <addressOffset>0x1010</addressOffset>
+                    <access>read-only</access>
+
+                    <fields>
+                        <!-- Bits 0-7 are unused. -->
+                        <field>
+                            <name>SIGMSK</name>
+                            <description>Signal event interrupt mask.</description>
+                            <bitRange>[8:8]</bitRange>
+                        </field>
+                        <field>
+                            <name>FINISHMSK</name>
+                            <description>Finish event interrupt mask.</description>
+                            <bitRange>[9:9]</bitRange>
+                        </field>
+                        <field>
+                            <name>HSMSK</name>
+                            <description>HSync interrupt mask.</description>
+                            <bitRange>[10:10]</bitRange>
+                        </field>
+                        <field>
+                            <name>VSMSK</name>
+                            <description>VSync interrupt mask.</description>
+                            <bitRange>[11:11]</bitRange>
+                        </field>
+                        <field>
+                            <name>EDWMSK</name>
+                            <description>Rectangle write termination interrupt mask.</description>
+                            <bitRange>[12:12]</bitRange>
+                        </field>
+                        <field>
+                            <name>HSMSK</name>
+                            <description>HSync interrupt mask.</description>
+                            <bitRange>[10:10]</bitRange>
+                        </field>
+                        <field>
+                            <name>ONES</name>
+                            <description>FIXME: Unknown description.</description>
+                            <bitRange>[12:11]</bitRange>
+                            <access>read-only</access>
+                        </field>
+                        <!-- Bits 13-63 are unused. -->
+                    </fields>
+                </register>
+
+                <register>
+                    <name>BUSDIR</name>
+                    <description>GS bus direction.</description>
+                    <addressOffset>0x1040</addressOffset>
+                    <access>read-only</access>
+
+                    <fields>
+                        <field>
+                            <name>DIR</name>
+                            <description>Host to local direction, or vice versa.</description>
+
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>HOST_TO_LOCAL</name>
+                                    <description>Host to local bus transfer.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>LOCAL_TO_HOST</name>
+                                    <description>Local to host bus transfer.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                    </fields>
+                </register>
             </registers>
-
-            <register>
-                <name>CSR</name>
-                <description>GS system status and control registers.</description>
-                <addressOffset>0x1000</addressOffset>
-                <access>read-write</access>
-
-                <fields>
-                    <field>
-                        <name>SIGNAL</name>
-                        <description>SIGNAL event control.</description>
-                        <bitRange>[0:0]</bitRange>
-
-                        <enumeratedValues>
-                            <usage>write</usage>
-                            <enumeratedValue>
-                                <name>NO_ACTION</name>
-                                <description>No action.</description>
-                                <value>0</value>
-                            </enumeratedValue>
-                            <enumeratedValue>
-                                <name>ENABLE</name>
-                                <description>Clear old event and enable new eent.</description>
-                                <value>1</value>
-                            </enumeratedValue>
-                        </enumeratedValues>
-
-                        <enumeratedValues>
-                            <usage>read</usage>
-                            <enumeratedValue>
-                                <name>NO_SIGNAL</name>
-                                <description>No SIGNAL pending.</description>
-                                <value>0</value>
-                            </enumeratedValue>
-                            <enumeratedValue>
-                                <name>SIGNAL_GENERATED</name>
-                                <description>SIGNAL generated.</description>
-                                <value>1</value>
-                            </enumeratedValue>
-                        </enumeratedValues>
-                    </field>
-                    <field>
-                        <name>FINISH</name>
-                        <description>FINISH event control.</description>
-                        <bitRange>[1:1]</bitRange>
-
-                        <enumeratedValues>
-                            <usage>write</usage>
-                            <enumeratedValue>
-                                <name>NO_ACTION</name>
-                                <description>No action.</description>
-                                <value>0</value>
-                            </enumeratedValue>
-                            <enumeratedValue>
-                                <name>ENABLE</name>
-                                <description>FINISH event is enabled.</description>
-                                <value>1</value>
-                            </enumeratedValue>
-                        </enumeratedValues>
-
-                        <enumeratedValues>
-                            <usage>read</usage>
-                            <enumeratedValue>
-                                <name>NO_FINISH</name>
-                                <description>No FINISH pending.</description>
-                                <value>0</value>
-                            </enumeratedValue>
-                            <enumeratedValue>
-                                <name>FINISH_GENERATED</name>
-                                <description>FINISH generated.</description>
-                                <value>1</value>
-                            </enumeratedValue>
-                        </enumeratedValues>
-                    </field>
-                    <field>
-                        <name>HSINT</name>
-                        <description>HSync interrupt control.</description>
-                        <bitRange>[2:2]</bitRange>
-
-                        <enumeratedValues>
-                            <usage>write</usage>
-                            <enumeratedValue>
-                                <name>NO_ACTION</name>
-                                <description>No action.</description>
-                                <value>0</value>
-                            </enumeratedValue>
-                            <enumeratedValue>
-                                <name>ENABLE</name>
-                                <description>HSync interrupt is enabled.</description>
-                                <value>1</value>
-                            </enumeratedValue>
-                        </enumeratedValues>
-
-                        <enumeratedValues>
-                            <usage>read</usage>
-                            <enumeratedValue>
-                                <name>NO_HSYNC.</name>
-                                <description>No Hsync interrupt pending.</description>
-                                <value>0</value>
-                            </enumeratedValue>
-                            <enumeratedValue>
-                                <name>HSYNC_GENERATED.</name>
-                                <description>Hsync interrupt has been generated.</description>
-                                <value>1</value>
-                            </enumeratedValue>
-                        </enumeratedValues>
-                    </field>
-                    <field>
-                        <name>VSINT</name>
-                        <description>VSync interrupt control.</description>
-                        <bitRange>[3:3]</bitRange>
-
-                        <enumeratedValues>
-                            <usage>write</usage>
-                            <enumeratedValue>
-                                <name>NO_ACTION</name>
-                                <description>No action.</description>
-                                <value>0</value>
-                            </enumeratedValue>
-                            <enumeratedValue>
-                                <name>ENABLE</name>
-                                <description>VSync interrupt is enabled.</description>
-                                <value>1</value>
-                            </enumeratedValue>
-                        </enumeratedValues>
-
-                        <enumeratedValues>
-                            <usage>read</usage>
-                            <enumeratedValue>
-                                <name>NO_VSYNC.</name>
-                                <description>No Vsync interrupt pending.</description>
-                                <value>0</value>
-                            </enumeratedValue>
-                            <enumeratedValue>
-                                <name>VSYNC_GENERATED.</name>
-                                <description>Vsync interrupt has been generated.</description>
-                                <value>1</value>
-                            </enumeratedValue>
-                        </enumeratedValues>
-                    </field>
-                    <field>
-                        <name>EDWINT</name>
-                        <description>Rectangular area write termination interrupt control.</description>
-                        <bitRange>[4:4]</bitRange>
-
-                        <enumeratedValues>
-                            <usage>write</usage>
-                            <enumeratedValue>
-                                <name>NO_ACTION</name>
-                                <description>No action.</description>
-                                <value>0</value>
-                            </enumeratedValue>
-                            <enumeratedValue>
-                                <name>ENABLE</name>
-                                <description>Rectangular area write interrupt is enabled.</description>
-                                <value>1</value>
-                            </enumeratedValue>
-                        </enumeratedValues>
-
-                        <enumeratedValues>
-                            <usage>read</usage>
-                            <enumeratedValue>
-                                <name>NO_HSYNC.</name>
-                                <description>No rectangular area write interrupt pending.</description>
-                                <value>0</value>
-                            </enumeratedValue>
-                            <enumeratedValue>
-                                <name>RAWRITE_GENERATED.</name>
-                                <description>Rectangular area write interrupt has been generated.</description>
-                                <value>1</value>
-                            </enumeratedValue>
-                        </enumeratedValues>
-                    </field>
-                    <field>
-                        <name>ZERO</name>
-                        <description>Must always be zero.</description>
-                        <bitRange>[6:5]</bitRange>
-
-                        <writeConstraint>
-                            <range>
-                                <minimum>0</minimum>
-                                <maximum>0</maximum>
-                            </range>
-                        </writeConstraint>
-                    </field>
-                    <field>
-                        <name>FLUSH</name>
-                        <description>Drawing suspend and FIFO clear (enabled during data write).</description>
-                        <bitRange>[8:8]</bitRange>
-                        <access>write-only</access>
-
-                        <enumeratedValues>
-                            <enumeratedValue>
-                                <name>RESUME</name>
-                                <description>Resume drawing if suspended (?)</description>
-                                <value>0</value>
-                            </enumeratedValue>
-                            <enumeratedValue>
-                                <name>FLUSH</name>
-                                <description>Flush the GS FIFO and suspend drawing.</description>
-                                <value>1</value>
-                            </enumeratedValue>
-                        </enumeratedValues>
-                    </field>
-                    <field>
-                        <name>RESET</name>
-                        <description>GS reset..</description>
-                        <bitRange>[9:9]</bitRange>
-
-                        <enumeratedValues>
-                            <enumeratedValue>
-                                <name>DO_NOTHING</name>
-                                <description>Do nothing.</description>
-                                <value>0</value>
-                            </enumeratedValue>
-                            <enumeratedValue>
-                                <name>RESET</name>
-                                <description>GS soft system reset. Clears FIFOs and resets IMR to all 1's.</description>
-                                <value>1</value>
-                            </enumeratedValue>
-                        </enumeratedValues>
-                    </field>
-                    <field>
-                        <name>NFIELD</name>
-                        <description>VSync sampled FIELD.</description>
-                        <bitRange>[12:12]</bitRange>
-                    </field>
-                    <field>
-                        <name>FIELD</name>
-                        <description>Current Field of display [page-flipping].</description>
-                        <bitRange>[13:13]</bitRange>
-                        <access>read-only</access>
-
-                        <enumeratedValues>
-                            <enumeratedValue>
-                                <name>EVEN</name>
-                                <description>Even display buffer.</description>
-                                <value>0</value>
-                            </enumeratedValue>
-                            <enumeratedValue>
-                                <name>ODD</name>
-                                <description>Odd display buffer.</description>
-                                <value>1</value>
-                            </enumeratedValue>
-                        </enumeratedValues>
-                    </field>
-                    <field>
-                        <name>FIFO</name>
-                        <description>GS FIFO status.</description>
-                        <bitRange>[15:14]</bitRange>
-                        <access>read-only</access>
-
-                        <enumeratedValues>
-                            <enumeratedValue>
-                                <name>BETWEEN</name>
-                                <description>Not empty but not near-full.</description>
-                                <value>0</value>
-                            </enumeratedValue>
-                            <enumeratedValue>
-                                <name>EMPTY</name>
-                                <description>FIFO is empty.</description>
-                                <value>1</value>
-                            </enumeratedValue>
-                            <enumeratedValue>
-                                <name>ALMOST_FULL</name>
-                                <description>Almost full.</description>
-                                <value>2</value>
-                            </enumeratedValue>
-                            <enumeratedValue>
-                                <name>UNUSED</name>
-                                <description>Reserved.</description>
-                                <value>3</value>
-                            </enumeratedValue>
-                        </enumeratedValues>
-                    </field>
-                    <field>
-                        <name>REV</name>
-                        <description>GS revision number.</description>
-                        <bitRange>[23:16]</bitRange>
-                        <access>read-only</access>
-                    </field>
-                    <field>
-                        <name>ID</name>
-                        <description>GS Id.</description>
-                        <bitRange>[31:24]</bitRange>
-                        <access>read-only</access>
-                    </field>
-                    <!-- Bits 32-63 are unused. -->
-                </fields>
-            </register>
-
-            <register>
-                <name>IMR</name>
-                <description>Interrupt mask control.</description>
-                <addressOffset>0x1010</addressOffset>
-                <access>read-only</access>
-
-                <fields>
-                    <!-- Bits 0-7 are unused. -->
-                    <field>
-                        <name>SIGMSK</name>
-                        <description>Signal event interrupt mask.</description>
-                        <bitRange>[8:8]</bitRange>
-                    </field>
-                    <field>
-                        <name>FINISHMSK</name>
-                        <description>Finish event interrupt mask.</description>
-                        <bitRange>[9:9]</bitRange>
-                    </field>
-                    <field>
-                        <name>HSMSK</name>
-                        <description>HSync interrupt mask.</description>
-                        <bitRange>[10:10]</bitRange>
-                    </field>
-                    <field>
-                        <name>VSMSK</name>
-                        <description>VSync interrupt mask.</description>
-                        <bitRange>[11:11]</bitRange>
-                    </field>
-                    <field>
-                        <name>EDWMSK</name>
-                        <description>Rectangle write termination interrupt mask.</description>
-                        <bitRange>[12:12]</bitRange>
-                    </field>
-                    <field>
-                        <name>HSMSK</name>
-                        <description>HSync interrupt mask.</description>
-                        <bitRange>[10:10]</bitRange>
-                    </field>
-                    <field>
-                        <name>ONES</name>
-                        <description>FIXME: Unknown description.</description>
-                        <bitRange>[12:11]</bitRange>
-                        <access>read-only</access>
-                    </field>
-                    <!-- Bits 13-63 are unused. -->
-                </fields>
-            </register>
         </peripheral>
 
         <peripheral>
