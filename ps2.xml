@@ -2305,6 +2305,55 @@
                         <bitRange>[31:24]</bitRange>
                         <access>read-only</access>
                     </field>
+                    <!-- Bits 32-63 are unused. -->
+                </fields>
+            </register>
+
+            <register>
+                <name>IMR</name>
+                <description>Interrupt mask control.</description>
+                <addressOffset>0x1010</addressOffset>
+                <access>read-only</access>
+
+                <fields>
+                    <!-- Bits 0-7 are unused. -->
+                    <field>
+                        <name>SIGMSK</name>
+                        <description>Signal event interrupt mask.</description>
+                        <bitRange>[8:8]</bitRange>
+                    </field>
+                    <field>
+                        <name>FINISHMSK</name>
+                        <description>Finish event interrupt mask.</description>
+                        <bitRange>[9:9]</bitRange>
+                    </field>
+                    <field>
+                        <name>HSMSK</name>
+                        <description>HSync interrupt mask.</description>
+                        <bitRange>[10:10]</bitRange>
+                    </field>
+                    <field>
+                        <name>VSMSK</name>
+                        <description>VSync interrupt mask.</description>
+                        <bitRange>[11:11]</bitRange>
+                    </field>
+                    <field>
+                        <name>EDWMSK</name>
+                        <description>Rectangle write termination interrupt mask.</description>
+                        <bitRange>[12:12]</bitRange>
+                    </field>
+                    <field>
+                        <name>HSMSK</name>
+                        <description>HSync interrupt mask.</description>
+                        <bitRange>[10:10]</bitRange>
+                    </field>
+                    <field>
+                        <name>ONES</name>
+                        <description>FIXME: Unknown description.</description>
+                        <bitRange>[12:11]</bitRange>
+                        <access>read-only</access>
+                    </field>
+                    <!-- Bits 13-63 are unused. -->
                 </fields>
             </register>
         </peripheral>
