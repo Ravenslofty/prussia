@@ -2114,12 +2114,12 @@
                             <enumeratedValues>
                                 <usage>read</usage>
                                 <enumeratedValue>
-                                    <name>NO_HSYNC.</name>
+                                    <name>NO_HSYNC</name>
                                     <description>No Hsync interrupt pending.</description>
                                     <value>0</value>
                                 </enumeratedValue>
                                 <enumeratedValue>
-                                    <name>HSYNC_GENERATED.</name>
+                                    <name>HSYNC_GENERATED</name>
                                     <description>Hsync interrupt has been generated.</description>
                                     <value>1</value>
                                 </enumeratedValue>
@@ -2147,12 +2147,12 @@
                             <enumeratedValues>
                                 <usage>read</usage>
                                 <enumeratedValue>
-                                    <name>NO_VSYNC.</name>
+                                    <name>NO_VSYNC</name>
                                     <description>No Vsync interrupt pending.</description>
                                     <value>0</value>
                                 </enumeratedValue>
                                 <enumeratedValue>
-                                    <name>VSYNC_GENERATED.</name>
+                                    <name>VSYNC_GENERATED</name>
                                     <description>Vsync interrupt has been generated.</description>
                                     <value>1</value>
                                 </enumeratedValue>
@@ -2180,12 +2180,12 @@
                             <enumeratedValues>
                                 <usage>read</usage>
                                 <enumeratedValue>
-                                    <name>NO_HSYNC.</name>
+                                    <name>NO_EDWINT</name>
                                     <description>No rectangular area write interrupt pending.</description>
                                     <value>0</value>
                                 </enumeratedValue>
                                 <enumeratedValue>
-                                    <name>RAWRITE_GENERATED.</name>
+                                    <name>RAWRITE_GENERATED</name>
                                     <description>Rectangular area write interrupt has been generated.</description>
                                     <value>1</value>
                                 </enumeratedValue>
@@ -2343,14 +2343,9 @@
                             <bitRange>[12:12]</bitRange>
                         </field>
                         <field>
-                            <name>HSMSK</name>
-                            <description>HSync interrupt mask.</description>
-                            <bitRange>[10:10]</bitRange>
-                        </field>
-                        <field>
                             <name>ONES</name>
                             <description>All set to one, unknown why.</description>
-                            <bitRange>[12:11]</bitRange>
+                            <bitRange>[14:13]</bitRange>
                             <access>read-only</access>
                         </field>
                         <!-- Bits 13-63 are unused. -->
@@ -2367,6 +2362,7 @@
                         <field>
                             <name>DIR</name>
                             <description>Host to local direction, or vice versa.</description>
+                            <bitRange>[0:0]</bitRange>
 
                             <enumeratedValues>
                                 <enumeratedValue>
