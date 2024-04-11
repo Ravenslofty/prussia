@@ -2018,6 +2018,82 @@
                     </fields>
                 </register>
             </registers>
+
+            <register>
+                <name>CSR</name>
+                <description>GS system status.</description>
+                <addressOffset>0x1000</addressOffset>
+                <access>read-write</access>
+
+                <fields>
+                    <field>
+                        <name>SIGNAL</name>
+                        <description>SIGNAL event control.</description>
+                        <bitRange>[0:0]</bitRange>
+                        </enumeratedValues>
+                    </field>
+                    <field>
+                        <name>FINISH</name>
+                        <description>SIGNAL event control.</description>
+                        <bitRange>[1:1]</bitRange>
+                    </field>
+                    <field>
+                        <name>HSINT</name>
+                        <description>HSync interrupt control.</description>
+                        <bitRange>[2:2]</bitRange>
+                    </field>
+                    <field>
+                        <name>VSINT</name>
+                        <description>VSync interrupt control.</description>
+                        <bitRange>[3:3]</bitRange>
+                    </field>
+                    <field>
+                        <name>EDWINT</name>
+                        <description>Rectangular area write termination interrupt control.</description>
+                        <bitRange>[4:4]</bitRange>
+                    </field>
+                    <field>
+                        <name>ZERO</name>
+                        <description>Must always be zero.</description>
+                        <bitRange>[6:5]</bitRange>
+                    </field>
+                    <field>
+                        <name>FLUSH</name>
+                        <description>Drawing suspend and FIFO clear (enabled during data write).</description>
+                        <bitRange>[8:8]</bitRange>
+                    </field>
+                    <field>
+                        <name>RESET</name>
+                        <description>GS reset..</description>
+                        <bitRange>[9:9]</bitRange>
+                    </field>
+                    <field>
+                        <name>NFIELD</name>
+                        <description>VSync sampled FIELD.</description>
+                        <bitRange>[12:12]</bitRange>
+                    </field>
+                    <field>
+                        <name>FIELD</name>
+                        <description>.</description>
+                        <bitRange>[13:13]</bitRange>
+                    </field>
+                    <field>
+                        <name>FIFO</name>
+                        <description>SIGNAL event control.</description>
+                        <bitRange>[15:14]</bitRange>
+                    </field>
+                    <field>
+                        <name>REV</name>
+                        <description>SIGNAL event control.</description>
+                        <bitRange>[23:16]</bitRange>
+                    </field>
+                    <field>
+                        <name>ID</name>
+                        <description>SIGNAL event control.</description>
+                        <bitRange>[31:24]</bitRange>
+                    </field>
+                </fields>
+            </register>
         </peripheral>
 
         <peripheral>
