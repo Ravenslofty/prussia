@@ -2382,6 +2382,26 @@
                         </field>
                     </fields>
                 </register>
+
+                <register>
+                    <name>SIGLBLID</name>
+                    <description>Signal Id value.</description>
+                    <addressOffset>0x1080</addressOffset>
+                    <access>read-only</access>
+
+                    <fields>
+                        <field>
+                            <name>SIGID</name>
+                            <description>Id value set by SIGNAL register.</description>
+                            <bitRange>[31:0]</bitRange>
+                        </field>
+                        <field>
+                            <name>LBLID</name>
+                            <description>Id value set by LABEL register.</description>
+                            <bitRange>[63:32]</bitRange>
+                        </field>
+                    </fields>
+                </register>
             </registers>
         </peripheral>
 
