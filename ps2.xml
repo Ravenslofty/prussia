@@ -1307,24 +1307,9 @@
                             <bitRange>[15:8]</bitRange>
                         </field>
                         <field>
-                            <name>NFLD</name>
-                            <description>(Uses EXTBUF external digital in)</description>
+                            <name>ONES</name>
+                            <description>All set to one. Behaviour is undefined according to the GS users manual but advises to set them regardless, so likely related to a hardware bug.</description>
                             <bitRange>[16:16]</bitRange>
-                        </field>
-                        <field>
-                            <name>EXVWINS</name>
-                            <description>(Uses EXTBUF external digital in)</description>
-                            <bitRange>[41:32]</bitRange>
-                        </field>
-                        <field>
-                            <name>EXVWINE</name>
-                            <description>(Uses EXTBUF external digital in)</description>
-                            <bitRange>[51:42]</bitRange>
-                        </field>
-                        <field>
-                            <name>EVSYNCMD</name>
-                            <description>(Uses EXTBUF external digital in)</description>
-                            <bitRange>[60:52]</bitRange>
                         </field>
                     </fields>
                 </register>
@@ -1604,14 +1589,14 @@
 
                 <register>
                     <name>SRFSH</name>
-                    <description>DRAM refresh rate.</description>
+                    <description>GS DRAM refresh rate.</description>
                     <addressOffset>0x30</addressOffset>
                     <access>write-only</access>
 
                     <fields>
                         <field>
                             <name>RFSH</name>
-                            <description>DRAM refresh rate.</description>
+                            <description>GS DRAM refresh rate.</description>
                             <bitRange>[3:0]</bitRange>
                         </field>
                     </fields>
@@ -1766,12 +1751,12 @@
                         </field>
                         <field>
                             <name>MAGH</name>
-                            <description>Horizontal magnification. Magnification = factor -1 (0 = 1x, 1 = 2x, etc.)</description>
+                            <description>Horizontal magnification in VCKs. Magnification = factor -1 (0 = 1x, 1 = 2x, etc.)</description>
                             <bitRange>[24:23]</bitRange>
                         </field>
                         <field>
                             <name>MAGV</name>
-                            <description>Vertical magnification. Magnification = factor -1 (0 = 1x, 1 = 2x, etc.)</description>
+                            <description>Vertical magnification in scanlines. Magnification = factor -1 (0 = 1x, 1 = 2x, etc.)</description>
                             <bitRange>[38:27]</bitRange>
                         </field>
                         <field>
@@ -1932,17 +1917,17 @@
                     <fields>
                         <field>
                             <name>SX</name>
-                            <description>Upper left X position (VCK).</description>
+                            <description>Upper left X position (px).</description>
                             <bitRange>[11:0]</bitRange>
                         </field>
                         <field>
                             <name>SY</name>
-                            <description>Upper left Y position (VCK).</description>
+                            <description>Upper left Y position (px).</description>
                             <bitRange>[22:12]</bitRange>
                         </field>
                         <field>
                             <name>SMPH</name>
-                            <description>Horizontal sampling rate interval (VCK).</description>
+                            <description>Horizontal sampling rate interval (measured in scanlines).</description>
                             <bitRange>[26:23]</bitRange>
                         </field>
                         <field>
@@ -2040,7 +2025,7 @@
                                 </enumeratedValue>
                                 <enumeratedValue>
                                     <name>ENABLE</name>
-                                    <description>Clear old event and enable new eent.</description>
+                                    <description>Clear old event and enable new event.</description>
                                     <value>1</value>
                                 </enumeratedValue>
                             </enumeratedValues>
@@ -2344,7 +2329,7 @@
                         </field>
                         <field>
                             <name>ONES</name>
-                            <description>All set to one, unknown why.</description>
+                            <description>All set to one. Behaviour is undefined according to the GS users manual but advises to set them regardless, so likely related to a hardware bug.</description>
                             <bitRange>[14:13]</bitRange>
                             <access>read-only</access>
                         </field>
