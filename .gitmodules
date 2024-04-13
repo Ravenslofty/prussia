@@ -1,0 +1,3 @@
+[submodule "svd2rust"]
+	path = svd2rust
+	url = https://github.com/rust-embedded/svd2rust/

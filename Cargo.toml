@@ -7,6 +7,7 @@ members = [
     "prussia_dma",
     "prussia_intc",
     "prussia_rt",
+    "playstation2-pac-rs"
 ]
 
 [profile.dev]
