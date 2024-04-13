@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<device schemaVersion="1.1" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="CMSIS-SVD.xsd">
+<device schemaVersion="1.1" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance"
+    xs:noNamespaceSchemaLocation="CMSIS-SVD.xsd">
     <name>PlayStation2</name>
     <series>other</series>
     <version>1</version>
@@ -41,7 +42,9 @@
                     <fields>
                         <field>
                             <name>COUNT</name>
-                            <description>Counter Value. The counter value is incremented according to the conditions of the clock and the gate signal specified in the Tn_MODE.</description>
+                            <description>Counter Value. The counter value is incremented according
+                                to the conditions of the clock and the gate signal specified in the
+                                Tn_MODE.</description>
                             <bitRange>[15:0]</bitRange>
                         </field>
                     </fields>
@@ -130,17 +133,20 @@
                                 </enumeratedValue>
                                 <enumeratedValue>
                                     <name>RISING</name>
-                                    <description>Resets and starts counting at the gate signal's rising edge.</description>
+                                    <description>Resets and starts counting at the gate signal's
+                                        rising edge.</description>
                                     <value>1</value>
                                 </enumeratedValue>
                                 <enumeratedValue>
                                     <name>FALLING</name>
-                                    <description>Resets and starts counting at the gate signal's falling edge.</description>
+                                    <description>Resets and starts counting at the gate signal's
+                                        falling edge.</description>
                                     <value>2</value>
                                 </enumeratedValue>
                                 <enumeratedValue>
                                     <name>BOTH</name>
-                                    <description>Resets and starts counting at both edges of the gate signal.</description>
+                                    <description>Resets and starts counting at both edges of the
+                                        gate signal.</description>
                                     <value>3</value>
                                 </enumeratedValue>
                             </enumeratedValues>
@@ -153,12 +159,14 @@
                             <enumeratedValues>
                                 <enumeratedValue>
                                     <name>Disabled</name>
-                                    <description>The counter keeps counting, ignoring the reference value.</description>
+                                    <description>The counter keeps counting, ignoring the reference
+                                        value.</description>
                                     <value>0</value>
                                 </enumeratedValue>
                                 <enumeratedValue>
                                     <name>Enabled</name>
-                                    <description>The counter is cleared to 0 when the counter value is equal to the reference value.</description>
+                                    <description>The counter is cleared to 0 when the counter value
+                                        is equal to the reference value.</description>
                                     <value>1</value>
                                 </enumeratedValue>
                             </enumeratedValues>
@@ -194,7 +202,8 @@
                                 </enumeratedValue>
                                 <enumeratedValue>
                                     <name>Enabled</name>
-                                    <description>An interrupt is generated when the counter value is equal to the reference value.</description>
+                                    <description>An interrupt is generated when the counter value is
+                                        equal to the reference value.</description>
                                     <value>1</value>
                                 </enumeratedValue>
                             </enumeratedValues>
@@ -267,7 +276,8 @@
                     <fields>
                         <field>
                             <name>COMP</name>
-                            <description>Compare Value. Reference value to be compared with Tn_COUNT.</description>
+                            <description>Compare Value. Reference value to be compared with
+                                Tn_COUNT.</description>
                             <bitRange>[15:0]</bitRange>
                         </field>
                     </fields>
@@ -282,7 +292,8 @@
                     <fields>
                         <field>
                             <name>HOLD</name>
-                            <description>Hold Value. The value of Tn_COUNT is copied when an SBUS interrupt occurs.</description>
+                            <description>Hold Value. The value of Tn_COUNT is copied when an SBUS
+                                interrupt occurs.</description>
                             <bitRange>[15:0]</bitRange>
                         </field>
                     </fields>
@@ -370,7 +381,8 @@
                     <fields>
                         <field>
                             <name>OPTION</name>
-                            <description>Command Option. Contents differ depending on executed command.</description>
+                            <description>Command Option. Contents differ depending on executed
+                                command.</description>
                             <bitRange>[27:0]</bitRange>
                             <access>write-only</access>
                         </field>
@@ -400,7 +412,8 @@
                                 </enumeratedValue>
                                 <enumeratedValue>
                                     <name>DISABLE</name>
-                                    <description>DATA field disabled (VDEC / FDEC still in execution.)</description>
+                                    <description>DATA field disabled (VDEC / FDEC still in
+                                        execution.)</description>
                                     <value>1</value>
                                 </enumeratedValue>
                             </enumeratedValues>
@@ -435,7 +448,8 @@
                         </field>
                         <field>
                             <name>ECD</name>
-                            <description>Error code detection. Set to 0 when a new command is issued, then set to 1 if an error is encountered.</description>
+                            <description>Error code detection. Set to 0 when a new command is
+                                issued, then set to 1 if an error is encountered.</description>
                             <bitRange>[14:14]</bitRange>
                             <access>read-only</access>
 
@@ -454,7 +468,8 @@
                         </field>
                         <field>
                             <name>SCD</name>
-                            <description>Start code detection. Set to 0 when a new command is issued, then set to 1 if a start code is encountered.</description>
+                            <description>Start code detection. Set to 0 when a new command is
+                                issued, then set to 1 if a start code is encountered.</description>
                             <bitRange>[15:15]</bitRange>
                             <access>read-only</access>
 
@@ -534,7 +549,8 @@
                                 </enumeratedValue>
                                 <enumeratedValue>
                                     <name>INTRA_MACRO_BLOCK</name>
-                                    <description>2-dimensional VLC table specially for intra macro block.</description>
+                                    <description>2-dimensional VLC table specially for intra macro
+                                        block.</description>
                                     <value>1</value>
                                 </enumeratedValue>
                             </enumeratedValues>
@@ -614,7 +630,8 @@
                         <!-- Bits 27-29 are unused. -->
                         <field>
                             <name>RST</name>
-                            <description>Reset. Writing 1 will force-abandon the current command and data, and reset the IPU.</description>
+                            <description>Reset. Writing 1 will force-abandon the current command and
+                                data, and reset the IPU.</description>
                             <bitRange>[30:30]</bitRange>
                             <access>write-only</access>
 
@@ -657,18 +674,21 @@
                     <fields>
                         <field>
                             <name>BP</name>
-                            <description>Bit stream pointer to bit position in first 128-bit data to start decoding.</description>
+                            <description>Bit stream pointer to bit position in first 128-bit data to
+                                start decoding.</description>
                             <bitRange>[6:0]</bitRange>
                         </field>
                         <!-- Bit 7 is unused. -->
                         <field>
                             <name>IFC</name>
-                            <description>Input FIFO counter. Equal to number of qwords in IPU_in_FIFO.</description>
+                            <description>Input FIFO counter. Equal to number of qwords in
+                                IPU_in_FIFO.</description>
                             <bitRange>[11:8]</bitRange>
                         </field>
                         <field>
                             <name>FP</name>
-                            <description>FIFO pointer. Equal to number of qwords remaining in IPU except IPU_in_FIFO.</description>
+                            <description>FIFO pointer. Equal to number of qwords remaining in IPU
+                                except IPU_in_FIFO.</description>
                             <bitRange>[17:16]</bitRange>
                         </field>
                         <!-- Bits 17-31 are unused. -->
@@ -677,7 +697,8 @@
 
                 <register>
                     <name>IPU_TOP</name>
-                    <description>Reads the first 32 bits of the bit stream after execution of a BDEC / IDEC / VDEC / FDEC command completes.</description>
+                    <description>Reads the first 32 bits of the bit stream after execution of a BDEC
+                        / IDEC / VDEC / FDEC command completes.</description>
                     <addressOffset>0x30</addressOffset>
                     <size>64</size>
                     <access>read-only</access>
@@ -701,7 +722,8 @@
                                 </enumeratedValue>
                                 <enumeratedValue>
                                     <name>DISABLE</name>
-                                    <description>BSTOP field is disabled (decoding still in execution.)</description>
+                                    <description>BSTOP field is disabled (decoding still in
+                                        execution.)</description>
                                     <value>1</value>
                                 </enumeratedValue>
                             </enumeratedValues>
@@ -738,7 +760,8 @@
                                 </enumeratedValue>
                                 <enumeratedValue>
                                     <name>RESET</name>
-                                    <description>When set, the GIF is reset and the internal register returns to the initial value.</description>
+                                    <description>When set, the GIF is reset and the internal
+                                        register returns to the initial value.</description>
                                     <value>1</value>
                                 </enumeratedValue>
                             </enumeratedValues>
@@ -750,12 +773,14 @@
                             <enumeratedValues>
                                 <enumeratedValue>
                                     <name>TRANSFER_RESTART</name>
-                                    <description>Restarts transfer processing. When set, the other GIF registers can no longer be read.</description>
+                                    <description>Restarts transfer processing. When set, the other
+                                        GIF registers can no longer be read.</description>
                                     <value>0</value>
                                 </enumeratedValue>
                                 <enumeratedValue>
                                     <name>TEMP_STOP</name>
-                                    <description>Temporarily stops transfer processing. When set, allows reading the other GIF registers for debugging.</description>
+                                    <description>Temporarily stops transfer processing. When set,
+                                        allows reading the other GIF registers for debugging.</description>
                                     <value>1</value>
                                 </enumeratedValue>
                             </enumeratedValues>
@@ -782,7 +807,9 @@
                                 </enumeratedValue>
                                 <enumeratedValue>
                                     <name>MASK</name>
-                                    <description>Enables the PATH3 mask. If set during a transmission, the mask is enabled after the end of transmission.</description>
+                                    <description>Enables the PATH3 mask. If set during a
+                                        transmission, the mask is enabled after the end of
+                                        transmission.</description>
                                     <value>1</value>
                                 </enumeratedValue>
                             </enumeratedValues>
@@ -826,7 +853,8 @@
                                 </enumeratedValue>
                                 <enumeratedValue>
                                     <name>DISABLE</name>
-                                    <description>Disabled (Masked by the MR3 flag of the GIF_MODE register.)</description>
+                                    <description>Disabled (Masked by the MR3 flag of the GIF_MODE
+                                        register.)</description>
                                     <value>1</value>
                                 </enumeratedValue>
                             </enumeratedValues>
@@ -877,7 +905,8 @@
                                 </enumeratedValue>
                                 <enumeratedValue>
                                     <name>TEMP_STOP</name>
-                                    <description>Temporary stop state triggered by PSE flag of GIF_CTRL register.</description>
+                                    <description>Temporary stop state triggered by PSE flag of
+                                        GIF_CTRL register.</description>
                                     <value>1</value>
                                 </enumeratedValue>
                             </enumeratedValues>
@@ -907,7 +936,8 @@
                             <enumeratedValues>
                                 <enumeratedValue>
                                     <name>NO_REQUEST</name>
-                                    <description>(Initial value) No request to wait for processing in PATH3.</description>
+                                    <description>(Initial value) No request to wait for processing
+                                        in PATH3.</description>
                                     <value>0</value>
                                 </enumeratedValue>
                                 <enumeratedValue>
@@ -924,7 +954,8 @@
                             <enumeratedValues>
                                 <enumeratedValue>
                                     <name>NO_REQUEST</name>
-                                    <description>(Initial value) No request to wait for processing in PATH2.</description>
+                                    <description>(Initial value) No request to wait for processing
+                                        in PATH2.</description>
                                     <value>0</value>
                                 </enumeratedValue>
                                 <enumeratedValue>
@@ -941,7 +972,8 @@
                             <enumeratedValues>
                                 <enumeratedValue>
                                     <name>NO_REQUEST</name>
-                                    <description>(Initial value) No request to wait for processing in PATH1.</description>
+                                    <description>(Initial value) No request to wait for processing
+                                        in PATH1.</description>
                                     <value>0</value>
                                 </enumeratedValue>
                                 <enumeratedValue>
@@ -1024,7 +1056,8 @@
 
                 <register>
                     <name>GIF_TAG0</name>
-                    <description>GIFtag (bits 31-16) immediately before. Only accessible when GIF_CTRL PSE is set to 1.</description>
+                    <description>GIFtag (bits 31-16) immediately before. Only accessible when
+                        GIF_CTRL PSE is set to 1.</description>
                     <addressOffset>0x40</addressOffset>
                     <access>read-only</access>
 
@@ -1041,7 +1074,8 @@
                         </field>
                         <field>
                             <name>TAG</name>
-                            <description>(Undefined) Values from bit 31 to bit 16 among the most recently read GIFtag values.</description>
+                            <description>(Undefined) Values from bit 31 to bit 16 among the most
+                                recently read GIFtag values.</description>
                             <bitRange>[31:16]</bitRange>
                         </field>
                     </fields>
@@ -1049,14 +1083,16 @@
 
                 <register>
                     <name>GIF_TAG1</name>
-                    <description>GIFtag (bits 45-32) immediately before. Only accessible when GIF_CTRL PSE is set to 1.</description>
+                    <description>GIFtag (bits 45-32) immediately before. Only accessible when
+                        GIF_CTRL PSE is set to 1.</description>
                     <addressOffset>0x50</addressOffset>
                     <access>read-only</access>
 
                     <fields>
                         <field>
                             <name>TAG</name>
-                            <description>(Undefined) Values from bit 45 to bit 32 among the most recently read GIFtag values.</description>
+                            <description>(Undefined) Values from bit 45 to bit 32 among the most
+                                recently read GIFtag values.</description>
                             <bitRange>[13:0]</bitRange>
                         </field>
                         <field>
@@ -1084,14 +1120,16 @@
 
                 <register>
                     <name>GIF_TAG2</name>
-                    <description>GIFtag (bits 95-64) immediately before. Only accessible when GIF_CTRL PSE is set to 1.</description>
+                    <description>GIFtag (bits 95-64) immediately before. Only accessible when
+                        GIF_CTRL PSE is set to 1.</description>
                     <addressOffset>0x60</addressOffset>
                     <access>read-only</access>
 
                     <fields>
                         <field>
                             <name>REGS</name>
-                            <description>Values from bit 95 to bit 64 among most recently read GIFtag values (Lower part of REGS field.)</description>
+                            <description>Values from bit 95 to bit 64 among most recently read
+                                GIFtag values (Lower part of REGS field.)</description>
                             <bitRange>[31:0]</bitRange>
                         </field>
                     </fields>
@@ -1099,14 +1137,16 @@
 
                 <register>
                     <name>GIF_TAG3</name>
-                    <description>GIFtag (bits 127-96) immediately before. Only accessible when GIF_CTRL PSE is set to 1.</description>
+                    <description>GIFtag (bits 127-96) immediately before. Only accessible when
+                        GIF_CTRL PSE is set to 1.</description>
                     <addressOffset>0x70</addressOffset>
                     <access>read-only</access>
 
                     <fields>
                         <field>
                             <name>REGS</name>
-                            <description>Values from bit 127 to bit 96 among most recently read GIFtag values (Lower part of REGS field.)</description>
+                            <description>Values from bit 127 to bit 96 among most recently read
+                                GIFtag values (Lower part of REGS field.)</description>
                             <bitRange>[31:0]</bitRange>
                         </field>
                     </fields>
@@ -1114,23 +1154,27 @@
 
                 <register>
                     <name>GIF_CNT</name>
-                    <description>Transfer status counter. Only accessible when GIF_CTRL PSE is set to 1.</description>
+                    <description>Transfer status counter. Only accessible when GIF_CTRL PSE is set
+                        to 1.</description>
                     <addressOffset>0x80</addressOffset>
                     <access>read-only</access>
 
                     <fields>
                         <field>
                             <name>LOOPCNT</name>
-                            <description>Value of current loop counter (backward counter from GIF_TAG0 NLOOP field). Decremented when starting processing of the GIF_TAG1 NREGSth register descriptor.</description>
+                            <description>Value of current loop counter (backward counter from
+                                GIF_TAG0 NLOOP field). Decremented when starting processing of the
+                                GIF_TAG1 NREGSth register descriptor.</description>
                             <bitRange>[14:0]</bitRange>
                         </field>
                         <field>
                             <name>REGCNT</name>
                             <description>
-                                Register descriptor number (0-15) currently in process (Becomes indeterminate in IMAGE mode).
+                                Register descriptor number (0-15) currently in process (Becomes
+                                indeterminate in IMAGE mode).
                                 * 1 - Lowest significant register descriptor of REGS field.
                                 * 2 - 2nd lowest significant register descriptor of REGS field.
-                                  ..
+                                ..
                                 * 15 - 15th lowest significant register descriptor of REGS field.
                                 * 0 - Most significant register descriptor of REGS field.
                             </description>
@@ -1146,14 +1190,17 @@
 
                 <register>
                     <name>GIF_P3CNT</name>
-                    <description>PATH3 transfer status counter. Only accessible when GIF_CTRL PSE is set to 1.</description>
+                    <description>PATH3 transfer status counter. Only accessible when GIF_CTRL PSE is
+                        set to 1.</description>
                     <addressOffset>0x90</addressOffset>
                     <access>read-only</access>
 
                     <fields>
                         <field>
                             <name>P3CNT</name>
-                            <description>The LOOPCNT field value of the GIF_CNT register when transfer via PATH3 is interrupted. This is not updated in the event of a transfer restart.</description>
+                            <description>The LOOPCNT field value of the GIF_CNT register when
+                                transfer via PATH3 is interrupted. This is not updated in the event
+                                of a transfer restart.</description>
                             <bitRange>[14:0]</bitRange>
                         </field>
                         <!-- Bits 31-15 are unused. -->
@@ -1162,19 +1209,22 @@
 
                 <register>
                     <name>GIF_P3TAG</name>
-                    <description>PATH3 tag value. Only accessible when GIF_CTRL PSE is set to 1 and when PATH3 is transferring data in IMAGE mode.</description>
+                    <description>PATH3 tag value. Only accessible when GIF_CTRL PSE is set to 1 and
+                        when PATH3 is transferring data in IMAGE mode.</description>
                     <addressOffset>0xA0</addressOffset>
                     <access>read-only</access>
 
                     <fields>
                         <field>
                             <name>LOOPCNT</name>
-                            <description>The NLOOP field value of the GIFtag read via PATH3 at the end.</description>
+                            <description>The NLOOP field value of the GIFtag read via PATH3 at the
+                                end.</description>
                             <bitRange>[14:0]</bitRange>
                         </field>
                         <field>
                             <name>EOP</name>
-                            <description>The EOP flag value of the GIFtag read via PATH 3 at the end.</description>
+                            <description>The EOP flag value of the GIFtag read via PATH 3 at the
+                                end.</description>
                             <bitRange>[15:15]</bitRange>
                         </field>
                     </fields>
@@ -1185,7 +1235,8 @@
         <peripheral>
             <name>GS_PRIVILEGED</name>
             <version>1</version>
-            <description>Privileged GS registers. Some are accessible via mapped EE addressed, but some require the GIF for accessing the relevant registers on the GS.</description>
+            <description>Privileged GS registers. Some are accessible via mapped EE addressed, but
+                some require the GIF for accessing the relevant registers on the GS.</description>
             <groupName>GS_PRIVILEGED</groupName>
             <baseAddress>0xB2000000</baseAddress>
             <size>64</size>
@@ -1273,12 +1324,14 @@
                             <enumeratedValues>
                                 <enumeratedValue>
                                     <name>RC1</name>
-                                    <description>Alpha value from Read Circuit 1 for output selection.</description>
+                                    <description>Alpha value from Read Circuit 1 for output
+                                        selection.</description>
                                     <value>0</value>
                                 </enumeratedValue>
                                 <enumeratedValue>
                                     <name>RC2</name>
-                                    <description>Alpha value from Read Circuit 2 for output selection.</description>
+                                    <description>Alpha value from Read Circuit 2 for output
+                                        selection.</description>
                                     <value>1</value>
                                 </enumeratedValue>
                             </enumeratedValues>
@@ -1297,7 +1350,7 @@
                                 <enumeratedValue>
                                     <name>BGCOLOR</name>
                                     <description>Use background color.</description>
-                                    <value>0</value>
+                                    <value>1</value>
                                 </enumeratedValue>
                             </enumeratedValues>
                         </field>
@@ -1308,7 +1361,9 @@
                         </field>
                         <field>
                             <name>ONES</name>
-                            <description>All set to one. Behaviour is undefined according to the GS users manual but advises to set them regardless, so likely related to a hardware bug.</description>
+                            <description>All set to one. Behaviour is undefined according to the GS
+                                users manual but advises to set them regardless, so likely related
+                                to a hardware bug.</description>
                             <bitRange>[16:16]</bitRange>
                         </field>
                     </fields>
@@ -1320,8 +1375,11 @@
                     <addressOffset>0x10</addressOffset>
                     <access>write-only</access>
 
-                    <!-- Refer to https://github.com/jur/linux-2.2.1-ps2/blob/98cdeb6f28e401ef9ac3a750c1f8912ec7967681/drivers/video/ps2gs.c#L73 for reference values. -->
-                    <!-- To calculate video clock: video clock VCK = (13500000 * @lc) / ((@t1248 + 1) * @spml * @rc) -->
+                    <!-- Refer to
+                    https://github.com/jur/linux-2.2.1-ps2/blob/98cdeb6f28e401ef9ac3a750c1f8912ec7967681/drivers/video/ps2gs.c#L73
+                    for reference values. -->
+                    <!-- To calculate video clock: video clock VCK = (13500000 * @lc) / ((@t1248 +
+                    1) * @spml * @rc) -->
                     <fields>
                         <field>
                             <name>RC</name>
@@ -1382,7 +1440,8 @@
                         </field>
                         <field>
                             <name>PRST</name>
-                            <description>Reset the PCRTC circuit. A special procedure should be followed to use properly (see GS Mode Selector app documentation.)</description>
+                            <description>Reset the PCRTC circuit. A special procedure should be
+                                followed to use properly (see GS Mode Selector app documentation.)</description>
                             <bitRange>[16:16]</bitRange>
 
                             <enumeratedValues>
@@ -1400,7 +1459,9 @@
                         </field>
                         <field>
                             <name>SINT</name>
-                            <description>Activate / Deactivate the Phase Lock Loop (PLL) circuit. A special procedure should be followed to use properly (see GS Mode Selector app documentation.)</description>
+                            <description>Activate / Deactivate the Phase Lock Loop (PLL) circuit. A
+                                special procedure should be followed to use properly (see GS Mode
+                                Selector app documentation.)</description>
                             <bitRange>[17:17]</bitRange>
 
                             <enumeratedValues>
@@ -1666,22 +1727,26 @@
                     <fields>
                         <field>
                             <name>VFP</name>
-                            <description>Vertical front porch interval. Halflines with colour burst after video data.</description>
+                            <description>Vertical front porch interval. Halflines with colour burst
+                                after video data.</description>
                             <bitRange>[9:0]</bitRange>
                         </field>
                         <field>
                             <name>VFPE</name>
-                            <description>Vertical front porch interval end. Halflines without colour burst after VFP.</description>
+                            <description>Vertical front porch interval end. Halflines without colour
+                                burst after VFP.</description>
                             <bitRange>[19:10]</bitRange>
                         </field>
                         <field>
                             <name>VBP</name>
-                            <description>Vertical back porch interval. Halflines with colour burst after VBPE.</description>
+                            <description>Vertical back porch interval. Halflines with colour burst
+                                after VBPE.</description>
                             <bitRange>[31:20]</bitRange>
                         </field>
                         <field>
                             <name>VBPE</name>
-                            <description>Vertical back porch interval end. Halflines without colour burst after VS.</description>
+                            <description>Vertical back porch interval end. Halflines without colour
+                                burst after VS.</description>
                             <bitRange>[41:32]</bitRange>
                         </field>
                         <field>
@@ -1751,12 +1816,14 @@
                         </field>
                         <field>
                             <name>MAGH</name>
-                            <description>Horizontal magnification in VCKs. Magnification = factor -1 (0 = 1x, 1 = 2x, etc.)</description>
+                            <description>Horizontal magnification in VCKs. Magnification = factor -1
+                                (0 = 1x, 1 = 2x, etc.)</description>
                             <bitRange>[24:23]</bitRange>
                         </field>
                         <field>
                             <name>MAGV</name>
-                            <description>Vertical magnification in scanlines. Magnification = factor -1 (0 = 1x, 1 = 2x, etc.)</description>
+                            <description>Vertical magnification in scanlines. Magnification = factor
+                                -1 (0 = 1x, 1 = 2x, etc.)</description>
                             <bitRange>[38:27]</bitRange>
                         </field>
                         <field>
@@ -2171,7 +2238,8 @@
                                 </enumeratedValue>
                                 <enumeratedValue>
                                     <name>RAWRITE_GENERATED</name>
-                                    <description>Rectangular area write interrupt has been generated.</description>
+                                    <description>Rectangular area write interrupt has been
+                                        generated.</description>
                                     <value>1</value>
                                 </enumeratedValue>
                             </enumeratedValues>
@@ -2220,7 +2288,8 @@
                                 </enumeratedValue>
                                 <enumeratedValue>
                                     <name>RESET</name>
-                                    <description>GS soft system reset. Clears FIFOs and resets IMR to all 1's.</description>
+                                    <description>GS soft system reset. Clears FIFOs and resets IMR
+                                        to all 1's.</description>
                                     <value>1</value>
                                 </enumeratedValue>
                             </enumeratedValues>
@@ -2329,7 +2398,9 @@
                         </field>
                         <field>
                             <name>ONES</name>
-                            <description>All set to one. Behaviour is undefined according to the GS users manual but advises to set them regardless, so likely related to a hardware bug.</description>
+                            <description>All set to one. Behaviour is undefined according to the GS
+                                users manual but advises to set them regardless, so likely related
+                                to a hardware bug.</description>
                             <bitRange>[14:13]</bitRange>
                             <access>read-only</access>
                         </field>
@@ -2424,7 +2495,8 @@
                                 </enumeratedValue>
                                 <enumeratedValue>
                                     <name>PROCESSING</name>
-                                    <description>Decompressing/Transferring the data following the VIFcode</description>
+                                    <description>Decompressing/Transferring the data following the
+                                        VIFcode</description>
                                     <value>3</value>
                                 </enumeratedValue>
                             </enumeratedValues>
@@ -2692,7 +2764,8 @@
                                 </enumeratedValue>
                                 <enumeratedValue>
                                     <name>PROCESSING</name>
-                                    <description>Decompressing/Transferring the data following the VIFcode</description>
+                                    <description>Decompressing/Transferring the data following the
+                                        VIFcode</description>
                                     <value>3</value>
                                 </enumeratedValue>
                             </enumeratedValues>
@@ -2728,7 +2801,8 @@
                                 </enumeratedValue>
                                 <enumeratedValue>
                                     <name>WAIT</name>
-                                    <description>Wait (Stopped status with one of FLUSH/FLUSHA, DIRECT/DIRECTHL and MSCALF commands when GIF != idle.)</description>
+                                    <description>Wait (Stopped status with one of FLUSH/FLUSHA,
+                                        DIRECT/DIRECTHL and MSCALF commands when GIF != idle.)</description>
                                     <value>1</value>
                                 </enumeratedValue>
                             </enumeratedValues>
@@ -2753,7 +2827,8 @@
                         </field>
                         <field>
                             <name>DBF</name>
-                            <description>Double buffer flag. Cleared to 0 by OFFSET and reversed by MSCAL/MSCALF/MSCNT.</description>
+                            <description>Double buffer flag. Cleared to 0 by OFFSET and reversed by
+                                MSCAL/MSCALF/MSCNT.</description>
                             <bitRange>[7:7]</bitRange>
                             <access>read-only</access>
                             <enumeratedValues>
@@ -2910,25 +2985,30 @@
                     <fields>
                         <field>
                             <name>RST</name>
-                            <description>Reset. Resets the whole VIF (including VIF FIFO) when 1 is written.</description>
+                            <description>Reset. Resets the whole VIF (including VIF FIFO) when 1 is
+                                written.</description>
                             <bitRange>[0:0]</bitRange>
                             <modifiedWriteValues>set</modifiedWriteValues>
                         </field>
                         <field>
                             <name>FBK</name>
-                            <description>ForceBreak. Causes a ForceBreak to the VIF when 1 is written. (Stall occurrence)</description>
+                            <description>ForceBreak. Causes a ForceBreak to the VIF when 1 is
+                                written. (Stall occurrence)</description>
                             <bitRange>[1:1]</bitRange>
                             <modifiedWriteValues>set</modifiedWriteValues>
                         </field>
                         <field>
                             <name>STP</name>
-                            <description>Stop. Stops after end of VIDcode in process when 1 is written. (Stall occurrence)</description>
+                            <description>Stop. Stops after end of VIDcode in process when 1 is
+                                written. (Stall occurrence)</description>
                             <bitRange>[2:2]</bitRange>
                             <modifiedWriteValues>set</modifiedWriteValues>
                         </field>
                         <field>
                             <name>STC</name>
-                            <description>Stall Cancel. Cancels the VIF stall and clears the VSS, VFS, VIS, INT, ER0 and ER1 of the VIF_STAT register to 0 when 1 is written</description>
+                            <description>Stall Cancel. Cancels the VIF stall and clears the VSS,
+                                VFS, VIS, INT, ER0 and ER1 of the VIF_STAT register to 0 when 1 is
+                                written</description>
                             <bitRange>[3:3]</bitRange>
                             <modifiedWriteValues>set</modifiedWriteValues>
                         </field>
@@ -3657,32 +3737,38 @@
                             <enumeratedValues>
                                 <enumeratedValue>
                                     <name>CYCLE_8</name>
-                                    <description>Number of cycles to release the bbus to EE core when Cycle Stealing is on</description>
+                                    <description>Number of cycles to release the bbus to EE core
+                                        when Cycle Stealing is on</description>
                                     <value>0</value>
                                 </enumeratedValue>
                                 <enumeratedValue>
                                     <name>CYCLE_16</name>
-                                    <description>Number of cycles to release the bbus to EE core when Cycle Stealing is on</description>
+                                    <description>Number of cycles to release the bbus to EE core
+                                        when Cycle Stealing is on</description>
                                     <value>1</value>
                                 </enumeratedValue>
                                 <enumeratedValue>
                                     <name>CYCLE_32</name>
-                                    <description>Number of cycles to release the bbus to EE core when Cycle Stealing is on</description>
+                                    <description>Number of cycles to release the bbus to EE core
+                                        when Cycle Stealing is on</description>
                                     <value>2</value>
                                 </enumeratedValue>
                                 <enumeratedValue>
                                     <name>CYCLE_64</name>
-                                    <description>Number of cycles to release the bbus to EE core when Cycle Stealing is on</description>
+                                    <description>Number of cycles to release the bbus to EE core
+                                        when Cycle Stealing is on</description>
                                     <value>3</value>
                                 </enumeratedValue>
                                 <enumeratedValue>
                                     <name>CYCLE_128</name>
-                                    <description>Number of cycles to release the bbus to EE core when Cycle Stealing is on</description>
+                                    <description>Number of cycles to release the bbus to EE core
+                                        when Cycle Stealing is on</description>
                                     <value>4</value>
                                 </enumeratedValue>
                                 <enumeratedValue>
                                     <name>CYCLE_256</name>
-                                    <description>Number of cycles to release the bbus to EE core when Cycle Stealing is on</description>
+                                    <description>Number of cycles to release the bbus to EE core
+                                        when Cycle Stealing is on</description>
                                     <value>5</value>
                                 </enumeratedValue>
                             </enumeratedValues>
@@ -3990,7 +4076,8 @@
                             <enumeratedValues>
                                 <enumeratedValue>
                                     <name>OFF</name>
-                                    <description>Does not output applicable channel status to CPCOND[0]</description>
+                                    <description>Does not output applicable channel status to
+                                        CPCOND[0]</description>
                                     <value>0</value>
                                 </enumeratedValue>
                                 <enumeratedValue>
@@ -4007,7 +4094,8 @@
                             <enumeratedValues>
                                 <enumeratedValue>
                                     <name>OFF</name>
-                                    <description>Does not output applicable channel status to CPCOND[0]</description>
+                                    <description>Does not output applicable channel status to
+                                        CPCOND[0]</description>
                                     <value>0</value>
                                 </enumeratedValue>
                                 <enumeratedValue>
@@ -4024,7 +4112,8 @@
                             <enumeratedValues>
                                 <enumeratedValue>
                                     <name>OFF</name>
-                                    <description>Does not output applicable channel status to CPCOND[0]</description>
+                                    <description>Does not output applicable channel status to
+                                        CPCOND[0]</description>
                                     <value>0</value>
                                 </enumeratedValue>
                                 <enumeratedValue>
@@ -4041,7 +4130,8 @@
                             <enumeratedValues>
                                 <enumeratedValue>
                                     <name>OFF</name>
-                                    <description>Does not output applicable channel status to CPCOND[0]</description>
+                                    <description>Does not output applicable channel status to
+                                        CPCOND[0]</description>
                                     <value>0</value>
                                 </enumeratedValue>
                                 <enumeratedValue>
@@ -4058,7 +4148,8 @@
                             <enumeratedValues>
                                 <enumeratedValue>
                                     <name>OFF</name>
-                                    <description>Does not output applicable channel status to CPCOND[0]</description>
+                                    <description>Does not output applicable channel status to
+                                        CPCOND[0]</description>
                                     <value>0</value>
                                 </enumeratedValue>
                                 <enumeratedValue>
@@ -4075,7 +4166,8 @@
                             <enumeratedValues>
                                 <enumeratedValue>
                                     <name>OFF</name>
-                                    <description>Does not output applicable channel status to CPCOND[0]</description>
+                                    <description>Does not output applicable channel status to
+                                        CPCOND[0]</description>
                                     <value>0</value>
                                 </enumeratedValue>
                                 <enumeratedValue>
@@ -4092,7 +4184,8 @@
                             <enumeratedValues>
                                 <enumeratedValue>
                                     <name>OFF</name>
-                                    <description>Does not output applicable channel status to CPCOND[0]</description>
+                                    <description>Does not output applicable channel status to
+                                        CPCOND[0]</description>
                                     <value>0</value>
                                 </enumeratedValue>
                                 <enumeratedValue>
@@ -4109,7 +4202,8 @@
                             <enumeratedValues>
                                 <enumeratedValue>
                                     <name>OFF</name>
-                                    <description>Does not output applicable channel status to CPCOND[0]</description>
+                                    <description>Does not output applicable channel status to
+                                        CPCOND[0]</description>
                                     <value>0</value>
                                 </enumeratedValue>
                                 <enumeratedValue>
@@ -4126,7 +4220,8 @@
                             <enumeratedValues>
                                 <enumeratedValue>
                                     <name>OFF</name>
-                                    <description>Does not output applicable channel status to CPCOND[0]</description>
+                                    <description>Does not output applicable channel status to
+                                        CPCOND[0]</description>
                                     <value>0</value>
                                 </enumeratedValue>
                                 <enumeratedValue>
@@ -4143,7 +4238,8 @@
                             <enumeratedValues>
                                 <enumeratedValue>
                                     <name>OFF</name>
-                                    <description>Does not output applicable channel status to CPCOND[0]</description>
+                                    <description>Does not output applicable channel status to
+                                        CPCOND[0]</description>
                                     <value>0</value>
                                 </enumeratedValue>
                                 <enumeratedValue>
@@ -4349,12 +4445,14 @@
                     <fields>
                         <field>
                             <name>SQWC</name>
-                            <description>Skip quadword counter. Size of the part not transferred (qword)</description>
+                            <description>Skip quadword counter. Size of the part not transferred
+                                (qword)</description>
                             <bitRange>[7:0]</bitRange>
                         </field>
                         <field>
                             <name>TQWC</name>
-                            <description>Transfer quadword counter. Size of the part transferred (qword)</description>
+                            <description>Transfer quadword counter. Size of the part transferred
+                                (qword)</description>
                             <bitRange>[23:16]</bitRange>
                         </field>
                     </fields>
@@ -4544,7 +4642,8 @@
 
                         <field>
                             <name>VIF0</name>
-                            <description>VIF0's detection of VIFcode with an interrupt bit or an exception, or VIF0 stalls with occurrence of an interrupt.</description>
+                            <description>VIF0's detection of VIFcode with an interrupt bit or an
+                                exception, or VIF0 stalls with occurrence of an interrupt.</description>
                             <bitRange>[4:4]</bitRange>
                             <enumeratedValues>
                                 <enumeratedValue>
@@ -4562,7 +4661,8 @@
 
                         <field>
                             <name>VIF1</name>
-                            <description>VIF1's detection of VIFcode with an interrupt bit or an exception, or VIF1 stalls with occurrence of an interrupt.</description>
+                            <description>VIF1's detection of VIFcode with an interrupt bit or an
+                                exception, or VIF1 stalls with occurrence of an interrupt.</description>
                             <bitRange>[5:5]</bitRange>
                             <enumeratedValues>
                                 <enumeratedValue>
@@ -4580,7 +4680,8 @@
 
                         <field>
                             <name>VU0</name>
-                            <description>VU0's execution of a microinstruction with an interrupt bit, or VU0 stalls with occurrence of an interrupt.</description>
+                            <description>VU0's execution of a microinstruction with an interrupt
+                                bit, or VU0 stalls with occurrence of an interrupt.</description>
                             <bitRange>[6:6]</bitRange>
                             <enumeratedValues>
                                 <enumeratedValue>
@@ -4598,7 +4699,8 @@
 
                         <field>
                             <name>VU1</name>
-                            <description>VU1's execution of a microinstruction with an interrupt bit, or VU1 stalls with occurrence of an interrupt.</description>
+                            <description>VU1's execution of a microinstruction with an interrupt
+                                bit, or VU1 stalls with occurrence of an interrupt.</description>
                             <bitRange>[7:7]</bitRange>
                             <enumeratedValues>
                                 <enumeratedValue>
@@ -4616,7 +4718,8 @@
 
                         <field>
                             <name>IPU</name>
-                            <description>IPU's detection of the end of data or an exception IPU stalls with occurrence of an interrupt.</description>
+                            <description>IPU's detection of the end of data or an exception IPU
+                                stalls with occurrence of an interrupt.</description>
                             <bitRange>[8:8]</bitRange>
                             <enumeratedValues>
                                 <enumeratedValue>
@@ -4724,7 +4827,8 @@
 
                         <field>
                             <name>VU0WD</name>
-                            <description>VU0 in RUN status for a long time continuously; ForceBreak is sent to VU0.</description>
+                            <description>VU0 in RUN status for a long time continuously; ForceBreak
+                                is sent to VU0.</description>
                             <bitRange>[14:14]</bitRange>
                             <enumeratedValues>
                                 <enumeratedValue>
@@ -4840,7 +4944,8 @@
 
                         <field>
                             <name>VIF0</name>
-                            <description>VIF0's detection of VIFcode with an interrupt bit or an exception, or VIF0 stalls with occurrence of an interrupt.</description>
+                            <description>VIF0's detection of VIFcode with an interrupt bit or an
+                                exception, or VIF0 stalls with occurrence of an interrupt.</description>
                             <bitRange>[4:4]</bitRange>
                             <enumeratedValues>
                                 <enumeratedValue>
@@ -4858,7 +4963,8 @@
 
                         <field>
                             <name>VIF1</name>
-                            <description>VIF1's detection of VIFcode with an interrupt bit or an exception, or VIF1 stalls with occurrence of an interrupt.</description>
+                            <description>VIF1's detection of VIFcode with an interrupt bit or an
+                                exception, or VIF1 stalls with occurrence of an interrupt.</description>
                             <bitRange>[5:5]</bitRange>
                             <enumeratedValues>
                                 <enumeratedValue>
@@ -4876,7 +4982,8 @@
 
                         <field>
                             <name>VU0</name>
-                            <description>VU0's execution of a microinstruction with an interrupt bit, or VU0 stalls with occurrence of an interrupt.</description>
+                            <description>VU0's execution of a microinstruction with an interrupt
+                                bit, or VU0 stalls with occurrence of an interrupt.</description>
                             <bitRange>[6:6]</bitRange>
                             <enumeratedValues>
                                 <enumeratedValue>
@@ -4894,7 +5001,8 @@
 
                         <field>
                             <name>VU1</name>
-                            <description>VU1's execution of a microinstruction with an interrupt bit, or VU1 stalls with occurrence of an interrupt.</description>
+                            <description>VU1's execution of a microinstruction with an interrupt
+                                bit, or VU1 stalls with occurrence of an interrupt.</description>
                             <bitRange>[7:7]</bitRange>
                             <enumeratedValues>
                                 <enumeratedValue>
@@ -4912,7 +5020,8 @@
 
                         <field>
                             <name>IPU</name>
-                            <description>IPU's detection of the end of data or an exception IPU stalls with occurrence of an interrupt.</description>
+                            <description>IPU's detection of the end of data or an exception IPU
+                                stalls with occurrence of an interrupt.</description>
                             <bitRange>[8:8]</bitRange>
                             <enumeratedValues>
                                 <enumeratedValue>
@@ -5020,7 +5129,8 @@
 
                         <field>
                             <name>VU0WD</name>
-                            <description>VU0 in RUN status for a long time continuously; ForceBreak is sent to VU0.</description>
+                            <description>VU0 in RUN status for a long time continuously; ForceBreak
+                                is sent to VU0.</description>
                             <bitRange>[14:14]</bitRange>
                             <enumeratedValues>
                                 <enumeratedValue>
