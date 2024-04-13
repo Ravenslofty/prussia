@@ -1,0 +1,16 @@
+[package]
+name = "playstation2"
+version = "0.1.3"
+edition = "2021"
+description = "A Rust Peripheral Access Crate (PAC) for the PlayStation 2."
+homepage = "https://github.com/Ravenslofty/prussia/"
+repository = "https://github.com/Ravenslofty/prussia/"
+documentation = "https://docs.rs/playstation2"
+readme = "README.md"
+keywords = ["peripheral-access", "pac", "svd", "playstation2"]
+license = "MIT OR Apache-2.0"
+
+include = ["src/**/*", "Cargo.toml"]
+
+[dependencies]
+vcell = "0.1.3"
