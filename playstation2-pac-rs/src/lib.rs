@@ -4068,8 +4068,8 @@ module"]
         pub enum Slbg {
             #[doc = "0: Blend alpha with output of Read Circuit 2."]
             Circuit2 = 0,
-            #[doc = "0: Use background color."]
-            Bgcolor = 0,
+            #[doc = "1: Use background color."]
+            Bgcolor = 1,
         }
         impl From<Slbg> for bool {
             #[inline(always)]
