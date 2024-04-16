@@ -4,10 +4,10 @@ use core::arch::{asm, global_asm};
 
 use bitflags::bitflags;
 
-// global_asm!(include_str!("routines.S"));
-
 extern "C" {
     fn _read_badvaddr() -> u32;
+    fn _read_timercount() -> u32;
+    fn _write_timercount(count: u32);
 }
 
 /// A virtual address responsible for either of the below exceptions:
@@ -19,7 +19,7 @@ extern "C" {
 pub struct BadVAddr(u32);
 
 impl BadVAddr {
-    /// Load a [BadVAddr] from the _BadVAddr_ register (`$12`)
+    /// Load a [BadVAddr] from the _CoP0.BadVAddr_ register (`$12`)
     pub fn load() -> Self {
         let bad_v_addr = unsafe { _read_badvaddr() };
 
@@ -68,6 +68,40 @@ bitflags! {
         const CU3 = 1 << 31;
     }
 }
+
+/// A value read from the CoP0.Status register. The register increments every CPU clock cycle.
+/// This register, when equal to the CoP0.Compare register, signals a timer interrupt.
+/// FIXME: Pick a method, discard the other.
+#[derive(Debug)]
+pub struct TimerCount(u32);
+
+impl TimerCount {
+    /// Load a [TimerCount] value from the _CoP0.Count_ register (`$9`).
+    pub fn working_load() -> Self {
+        let count;
+        unsafe { asm!(".set noat; mfc0 {}, $9", out(reg) count) };
+
+        TimerCount(count)
+    }
+
+    /// Load a [TimerCount] value from the _CoP0.Count_ register (`$9`).
+    pub fn failing_load() -> Self {
+        let count = unsafe { _read_timercount() };
+
+        TimerCount(count)
+    }
+
+    /// Write [Self] to the _CoP0.Count_ register (`$9`).
+    pub fn store(self) {
+        unsafe { _write_timercount(self.0) }
+    }
+}
+
+// TODO: Compare
+// TODO: EPC
+// TODO: BadPAddr
+// TODO: Perf
+// TODO: ErrorEPC
 
 impl Status {
     /// Load the contents of the Coprocessor 0 Status register, returning a Status type with the

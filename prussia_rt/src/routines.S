@@ -25,6 +25,18 @@ _read_badvaddr:
 	jr $ra			# Return to Rust...
 	mfc0	$2, $8  # with the BadVAddr register value.
 
+# Read coprocessor 0 Count register.
+.global _read_timercount
+_read_timercount:
+	jr $ra			# Return to Rust...
+	mfc0	$2, $9  # with the Count register value.
+
+# Write coprocessor 0 Count register.
+.global _write_timercount
+_write_timercount:
+	jr	$ra			# Return to Rust...
+	mtc0	$4, $9	# after setting the Count register.
+
 # Read a u64 atomically. Rust would make two reads, but this would just be the truncated bottom
 # half. This method is always correct though.
 # $4 (a0) = address.
