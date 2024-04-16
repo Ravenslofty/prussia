@@ -19,7 +19,13 @@ _write_status:
 	jr	$ra			# Return to Rust...
 	mtc0	$4, $12			# after setting the Status register.
 
-# Read a u64 atomically. Rust would make two reads, but this would just be the truncated bottom 
+# Read coprocessor 0 BadVAddr register.
+.global _read_badvaddr
+_read_badvaddr:
+	jr $ra			# Return to Rust...
+	mfc0	$2, $8  # with the BadVAddr register value.
+
+# Read a u64 atomically. Rust would make two reads, but this would just be the truncated bottom
 # half. This method is always correct though.
 # $4 (a0) = address.
 .global _read_u64
@@ -32,7 +38,7 @@ _read_u64:
 	dsrl32	$3, 0			# Return highest word in $v1.
 	jr	$ra			# And return to caller.
 	nop
-	
+
 # Write a u64 atomically. Rust would make two writes, but this would probably confuse the device
 # we are writing to. This method is always correct though.
 # $4 (a0) = address.
