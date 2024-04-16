@@ -1,8 +1,31 @@
 //! Coprocessor 0 manipulation routines.
 
-use core::arch::asm;
+use core::arch::{asm, global_asm};
 
 use bitflags::bitflags;
+
+// global_asm!(include_str!("routines.S"));
+
+extern "C" {
+    fn _read_badvaddr() -> u32;
+}
+
+/// A virtual address responsible for either of the below exceptions:
+/// * TLB Invalid
+/// * TLB Modified
+/// * TLB Refill
+/// * Address Error
+#[derive(Debug)]
+pub struct BadVAddr(u32);
+
+impl BadVAddr {
+    /// Load a [BadVAddr] from the _BadVAddr_ register (`$12`)
+    pub fn load() -> Self {
+        let bad_v_addr = unsafe { _read_badvaddr() };
+
+        BadVAddr(bad_v_addr)
+    }
+}
 
 bitflags! {
     /// The current processor state.
