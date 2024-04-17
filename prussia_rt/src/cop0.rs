@@ -12,6 +12,8 @@ extern "C" {
     fn _write_compare(compare: u32);
     fn _read_epc() -> u32;
     fn _write_epc(epc: u32);
+    fn _read_badpaddr() -> u32;
+    fn _write_badpaddr(badpaddr: u32);
 }
 
 /// A virtual address responsible for either of the below exceptions:
@@ -132,7 +134,25 @@ impl EPC {
     }
 }
 
-// TODO: EPC
+/// A physical address read from teh CoP0.BadPAddr register. The value is automatically set to the
+/// most recent physical address that caused a bus error (assuming bus error masking (Status.BEM) is disabled).
+#[derive(Debug)]
+pub struct BadPAddr(u32);
+
+impl BadPAddr {
+    /// Load a [BadPAddr] value from the _CoP0.BadPAddr_ register (`$23`).
+    pub fn load() -> Self {
+        let badpaddr = unsafe { _read_badpaddr() };
+
+        BadPAddr(badpaddr)
+    }
+
+    /// Write [Self] to the _CoP0.BadPAddr_ register (`$23`).
+    pub fn store(self) {
+        unsafe { _write_badpaddr(self.0) }
+    }
+}
+
 // TODO: BadPAddr
 // TODO: Perf
 // TODO: ErrorEPC
