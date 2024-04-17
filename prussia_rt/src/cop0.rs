@@ -8,6 +8,8 @@ extern "C" {
     fn _read_badvaddr() -> u32;
     fn _read_timercount() -> u32;
     fn _write_timercount(count: u32);
+    fn _read_compare() -> u32;
+    fn _write_compare(compare: u32);
 }
 
 /// A virtual address responsible for either of the below exceptions:
@@ -77,15 +79,7 @@ pub struct TimerCount(u32);
 
 impl TimerCount {
     /// Load a [TimerCount] value from the _CoP0.Count_ register (`$9`).
-    pub fn working_load() -> Self {
-        let count;
-        unsafe { asm!(".set noat; mfc0 {}, $9", out(reg) count) };
-
-        TimerCount(count)
-    }
-
-    /// Load a [TimerCount] value from the _CoP0.Count_ register (`$9`).
-    pub fn failing_load() -> Self {
+    pub fn load() -> Self {
         let count = unsafe { _read_timercount() };
 
         TimerCount(count)
@@ -97,7 +91,26 @@ impl TimerCount {
     }
 }
 
-// TODO: Compare
+/// A value read from the CoP0.Compare register. The register acts as a timer;
+/// when the Count register becomes equal to the Compare register, the interrupt bit in the Cause
+/// register is set, and a timer interrupt occurs if enabled.
+#[derive(Debug)]
+pub struct Compare(u32);
+
+impl Compare {
+    /// Load a [Compare] value from the _CoP0.Compare_ register (`$11`).
+    pub fn load() -> Self {
+        let compare = unsafe { _read_compare() };
+
+        Compare(compare)
+    }
+
+    /// Write [Self] to the _CoP0.Compare_ register (`$11`).
+    pub fn store(self) {
+        unsafe { _write_compare(self.0) }
+    }
+}
+
 // TODO: EPC
 // TODO: BadPAddr
 // TODO: Perf

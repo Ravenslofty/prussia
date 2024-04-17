@@ -22,20 +22,32 @@ _write_status:
 # Read coprocessor 0 BadVAddr register.
 .global _read_badvaddr
 _read_badvaddr:
-	jr $ra			# Return to Rust...
-	mfc0	$2, $8  # with the BadVAddr register value.
+	mfc0	$2, $8
+	jr $ra
 
 # Read coprocessor 0 Count register.
 .global _read_timercount
 _read_timercount:
-	jr $ra			# Return to Rust...
-	mfc0	$2, $9  # with the Count register value.
+	mfc0	$2, $9
+	jr $ra
 
 # Write coprocessor 0 Count register.
 .global _write_timercount
 _write_timercount:
-	jr	$ra			# Return to Rust...
-	mtc0	$4, $9	# after setting the Count register.
+	mtc0	$4, $9
+	jr	$ra
+
+# Read coprocessor 0 Compare register.
+.global _read_compare
+_read_compare:
+	mfc0	$2, $11
+	jr $ra
+
+# Write coprocessor 0 Compare register.
+.global _write_compare
+_write_compare:
+	mtc0	$4, $11
+	jr	$ra
 
 # Read a u64 atomically. Rust would make two reads, but this would just be the truncated bottom
 # half. This method is always correct though.
