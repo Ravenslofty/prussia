@@ -10,6 +10,8 @@ extern "C" {
     fn _write_timercount(count: u32);
     fn _read_compare() -> u32;
     fn _write_compare(compare: u32);
+    fn _read_epc() -> u32;
+    fn _write_epc(epc: u32);
 }
 
 /// A virtual address responsible for either of the below exceptions:
@@ -108,6 +110,25 @@ impl Compare {
     /// Write [Self] to the _CoP0.Compare_ register (`$11`).
     pub fn store(self) {
         unsafe { _write_compare(self.0) }
+    }
+}
+
+/// A value read from the CoP0.EPC register. The value is the returning virtual address to jump to
+/// after handling an exception.
+#[derive(Debug)]
+pub struct EPC(u32);
+
+impl EPC {
+    /// Load an [EPC] value from the _CoP0.EPC_ register (`$14`).
+    pub fn load() -> Self {
+        let epc = unsafe { _read_epc() };
+
+        EPC(epc)
+    }
+
+    /// Write [Self] to the _CoP0.EPC_ register (`$14`).
+    pub fn store(self) {
+        unsafe { _write_epc(self.0) }
     }
 }
 

@@ -49,6 +49,18 @@ _write_compare:
 	mtc0	$4, $11
 	jr	$ra
 
+# Read coprocessor 0 EPC register.
+.global _read_epc
+_read_epc:
+	mfc0	$2, $14
+	jr $ra
+
+# Write coprocessor 0 EPC register.
+.global _write_epc
+_write_epc:
+	mtc0	$4, $14
+	jr	$ra
+
 # Read a u64 atomically. Rust would make two reads, but this would just be the truncated bottom
 # half. This method is always correct though.
 # $4 (a0) = address.
