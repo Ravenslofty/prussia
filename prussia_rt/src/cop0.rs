@@ -14,6 +14,8 @@ extern "C" {
     fn _write_epc(epc: u32);
     fn _read_badpaddr() -> u32;
     fn _write_badpaddr(badpaddr: u32);
+    fn _read_errorepc() -> u32;
+    fn _write_errorepc(errorepc: u32);
 }
 
 /// A virtual address responsible for either of the below exceptions:
@@ -134,7 +136,7 @@ impl EPC {
     }
 }
 
-/// A physical address read from teh CoP0.BadPAddr register. The value is automatically set to the
+/// A physical address read from the CoP0.BadPAddr register. The value is automatically set to the
 /// most recent physical address that caused a bus error (assuming bus error masking (Status.BEM) is disabled).
 #[derive(Debug)]
 pub struct BadPAddr(u32);
@@ -153,9 +155,28 @@ impl BadPAddr {
     }
 }
 
-// TODO: BadPAddr
+/// A virtual address read from the CoP0.ErrorEPC register. The value is a return address set when
+/// an NMI, debug, or counter exception occurs and is handled. The address normally points to the
+/// instruction which generated the error. If the instruction is in a branch delay slot, the address
+/// is set to the branch instruction prior to the erroring instruction (indicated by Cause.BD2 being set to 1).
+#[derive(Debug)]
+pub struct ErrorEPC(u32);
+
+impl ErrorEPC {
+    /// Load an [ErrorEPC] value from _CoP0.ErrorEPC_ register (`$30`).
+    pub fn load() -> Self {
+        let errorepc = unsafe { _read_errorepc() };
+
+        ErrorEPC(errorepc)
+    }
+
+    /// Write [Self] to the _CoP0.ErrorEPC_ register (`$30`).
+    pub fn store(self) {
+        unsafe { _write_errorepc(self.0) }
+    }
+}
+
 // TODO: Perf
-// TODO: ErrorEPC
 
 impl Status {
     /// Load the contents of the Coprocessor 0 Status register, returning a Status type with the
