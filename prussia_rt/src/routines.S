@@ -77,6 +77,18 @@ _write_badpaddr:
 	jr	$ra
 	mtc0	$4, $23
 
+# Read coprocessor 0 ErrorEPC register.
+.global _read_errorepc
+_read_errorepc:
+	jr $ra
+	mfc0	$2, $30
+
+# Write coprocessor 0 ErrorEPC register.
+.global _write_errorepc
+_write_errorepc:
+	jr	$ra
+	mtc0	$4, $30
+
 # Read a u64 atomically. Rust would make two reads, but this would just be the truncated bottom
 # half. This method is always correct though.
 # $4 (a0) = address.
