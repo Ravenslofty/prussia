@@ -1,3 +1,7 @@
+# The assembler tries to reorder our instructions around delay slots.
+# Since we want to preserve this order, disable the reordering feature.
+.set noreorder
+
 # Bootstrap routine for PruSSia. LLVM only needs a stack pointer, and the rest we can do in Rust.
 .extern _rust_start
 .global _start
@@ -22,56 +26,56 @@ _write_status:
 # Read coprocessor 0 BadVAddr register.
 .global _read_badvaddr
 _read_badvaddr:
-	mfc0	$2, $8
 	jr $ra
+	mfc0	$2, $8
 
 # Read coprocessor 0 Count register.
 .global _read_timercount
 _read_timercount:
-	mfc0	$2, $9
 	jr $ra
+	mfc0	$2, $9
 
 # Write coprocessor 0 Count register.
 .global _write_timercount
 _write_timercount:
-	mtc0	$4, $9
 	jr	$ra
+	mtc0	$4, $9
 
 # Read coprocessor 0 Compare register.
 .global _read_compare
 _read_compare:
-	mfc0	$2, $11
 	jr $ra
+	mfc0	$2, $11
 
 # Write coprocessor 0 Compare register.
 .global _write_compare
 _write_compare:
-	mtc0	$4, $11
 	jr	$ra
+	mtc0	$4, $11
 
 # Read coprocessor 0 EPC register.
 .global _read_epc
 _read_epc:
-	mfc0	$2, $14
 	jr $ra
+	mfc0	$2, $14
 
 # Write coprocessor 0 EPC register.
 .global _write_epc
 _write_epc:
-	mtc0	$4, $14
 	jr	$ra
+	mtc0	$4, $14
 
 # Read coprocessor 0 BadPAddr register.
 .global _read_badpaddr
 _read_badpaddr:
-	mfc0	$2, $23
 	jr $ra
+	mfc0	$2, $23
 
 # Write coprocessor 0 BadPAddr register.
 .global _write_badpaddr
 _write_badpaddr:
-	mtc0	$4, $23
 	jr	$ra
+	mtc0	$4, $23
 
 # Read a u64 atomically. Rust would make two reads, but this would just be the truncated bottom
 # half. This method is always correct though.
