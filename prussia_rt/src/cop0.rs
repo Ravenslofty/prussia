@@ -181,6 +181,158 @@ impl PerfCounterControl {
     }
 }
 
+/// Represents the CTR0 event Ids supported by the PCCR.EVENT0 register field.
+#[derive(Debug)]
+#[repr(u8)]
+pub enum PCCRCtr0 {
+    /// Reserved
+    Reserved = 0,
+    /// Processor cycle
+    ProcessorCycle = 1,
+    /// Issues single instruction
+    IssueSingleInstruction = 2,
+    /// Issues branch
+    IssuesBranch = 3,
+    /// BTAC miss
+    BtacMiss = 4,
+    /// TLB miss
+    TlbMiss = 5,
+    /// Instruction cache miss
+    InstructionCacheMiss = 6,
+    /// Access DTLB
+    AccessDtlb = 7,
+    /// Non-blocking load
+    NonBlockingLoad = 8,
+    /// WBB single request
+    WBBSingleRequest = 9,
+    /// WBB burst request
+    WBBBurstRequest = 10,
+    /// CPU address bus busy
+    CPUAddressBusBusy = 11,
+    /// Completes instruction
+    CompletesInstruction = 12,
+    /// Completes non-BDS instruction
+    CompletesNonBdsInstruction = 13,
+    /// Completes COP2 instruction
+    CompletesCop2Instruction = 14,
+    /// Completes load
+    CompletesLoads = 15,
+    /// No event
+    NoEvent = 16,
+}
+
+impl From<PCCRCtr0> for PerfCounterControl {
+    fn from(value: PCCRCtr0) -> Self {
+        let event0 = (value as u32) << 5;
+
+        PerfCounterControl::from_bits_truncate(event0)
+    }
+}
+
+impl From<PerfCounterControl> for PCCRCtr0 {
+    fn from(value: PerfCounterControl) -> Self {
+        let bits: u32 = (value & PerfCounterControl::EVENT0).bits >> 5;
+
+        match bits {
+            0 => Self::Reserved,
+            1 => Self::ProcessorCycle,
+            2 => Self::IssueSingleInstruction,
+            3 => Self::IssuesBranch,
+            4 => Self::BtacMiss,
+            5 => Self::TlbMiss,
+            6 => Self::InstructionCacheMiss,
+            7 => Self::AccessDtlb,
+            8 => Self::NonBlockingLoad,
+            9 => Self::WBBSingleRequest,
+            10 => Self::WBBBurstRequest,
+            11 => Self::CPUAddressBusBusy,
+            12 => Self::CompletesInstruction,
+            13 => Self::CompletesNonBdsInstruction,
+            14 => Self::CompletesCop2Instruction,
+            15 => Self::CompletesLoads,
+            _ => Self::NoEvent,
+            i if i > 16 && i < 32 => Self::Reserved,
+        }
+    }
+}
+
+/// Represents the CTR1 event Ids supported by the PCCR.EVENT1 register field.
+#[derive(Debug)]
+#[repr(u8)]
+pub enum PCCRCtr1 {
+    /// Issues low order branch
+    IssuesLowOrderBranch = 0,
+    /// Processor cycle
+    ProcessorCycle = 1,
+    /// Issues double instruction
+    IssuesDoubleInstruction = 2,
+    /// Branch prediction miss
+    BranchPredictionMiss = 3,
+    /// TLB miss
+    TlbMiss = 4,
+    /// DTLB miss
+    DtlbMiss = 5,
+    /// Data cache miss
+    DataCacheMiss = 6,
+    /// WBB single request unusable
+    WbbSingleRequestUnusable = 7,
+    /// WBB burst request unusable
+    WbbBurstRequestUnusable = 8,
+    /// WBB burst request almost full
+    WbbBurstRequestAlmostFull = 9,
+    /// WBB burst request full
+    WbbBurstRequestFull = 10,
+    /// CPU data bus busy
+    CpuDataBusBusy = 11,
+    /// Completes instruction
+    CompletesInstruction = 12,
+    /// Completes non-BDS instruction
+    CompletesNonBdsInstruction = 13,
+    /// Completes COP1 instruction
+    CompletesCop1Instruction = 14,
+    /// Completes stores
+    CompletesStores = 15,
+    /// No event
+    NoEvent = 16,
+    /// Reserved
+    Reserved = 17,
+}
+
+impl From<PCCRCtr1> for PerfCounterControl {
+    fn from(value: PCCRCtr1) -> Self {
+        let event1 = (value as u32) << 15;
+
+        PerfCounterControl::from_bits_truncate(event1)
+    }
+}
+
+impl From<PerfCounterControl> for PCCRCtr1 {
+    fn from(value: PerfCounterControl) -> Self {
+        let bits: u32 = (value & PerfCounterControl::EVENT0).bits >> 5;
+
+        match bits {
+            0 => Self::IssuesLowOrderBranch,
+            1 => Self::ProcessorCycle,
+            2 => Self::IssuesDoubleInstruction,
+            3 => Self::BranchPredictionMiss,
+            4 => Self::TlbMiss,
+            5 => Self::DtlbMiss,
+            6 => Self::DataCacheMiss,
+            7 => Self::WbbSingleRequestUnusable,
+            8 => Self::WbbBurstRequestUnusable,
+            9 => Self::WbbBurstRequestAlmostFull,
+            10 => Self::WbbBurstRequestFull,
+            11 => Self::CpuDataBusBusy,
+            12 => Self::CompletesInstruction,
+            13 => Self::CompletesNonBdsInstruction,
+            14 => Self::CompletesCop1Instruction,
+            15 => Self::CompletesStores,
+            _ => Self::NoEvent,
+            i if i > 16 && i < 32 => Self::Reserved,
+        }
+    }
+}
+
 // TODO: Perf
 
 bitflags! {
