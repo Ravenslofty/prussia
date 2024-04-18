@@ -18,6 +18,10 @@ extern "C" {
     fn _write_errorepc(errorepc: u32);
     fn _read_pccr() -> u32;
     fn _write_pccr(pccr: u32);
+    fn _read_pcr0() -> u32;
+    fn _read_pcr1() -> u32;
+    fn _write_pcr0(pcr0: u32);
+    fn _write_pcr1(pcr1: u32);
 }
 
 /// A virtual address responsible for either of the below exceptions:
@@ -197,7 +201,7 @@ pub enum PCCRCtr0 {
     BtacMiss = 4,
     /// TLB miss
     TlbMiss = 5,
-    /// Instruction cache miss
+    /// Instruction cache (I$) miss
     InstructionCacheMiss = 6,
     /// Access DTLB
     AccessDtlb = 7,
@@ -272,7 +276,7 @@ pub enum PCCRCtr1 {
     TlbMiss = 4,
     /// DTLB miss
     DtlbMiss = 5,
-    /// Data cache miss
+    /// Data cache (D$) miss
     DataCacheMiss = 6,
     /// WBB single request unusable
     WbbSingleRequestUnusable = 7,
@@ -333,7 +337,53 @@ impl From<PerfCounterControl> for PCCRCtr1 {
     }
 }
 
-// TODO: Perf
+/// Represents a value from the _Cop0.PCR0/1_ Performance Counter registers.
+#[derive(Debug)]
+#[repr(transparent)]
+pub struct PerfCounter(u32);
+
+impl PerfCounter {
+    /// Mask for the OVFL bit.
+    pub const OVFL: u32 = 1 << 31;
+    /// Mask for the VALUE field.
+    pub const VALUE: u32 = u32::MAX >> 1;
+
+    /// Check if the OVFL bit is enabled.
+    #[inline(always)]
+    pub fn is_ovfl(&self) -> bool {
+        self.0 & Self::OVFL == 1
+    }
+
+    /// Get the contents of the VALUE field.
+    #[inline(always)]
+    pub fn value(&self) -> u32 {
+        self.0 & Self::VALUE
+    }
+
+    /// Load a [PerfCounter] value from the _CoP0.PCR0_ register (via `mfpc`).
+    pub fn load_pcr0() -> Self {
+        let pcr0 = unsafe { _read_pcr0() };
+
+        PerfCounter(pcr0)
+    }
+
+    /// Load a [PerfCounter] value from the _CoP0.PCR1_ register (via `mfpc`).
+    pub fn load_pcr1() -> Self {
+        let pcr1 = unsafe { _read_pcr1() };
+
+        PerfCounter(pcr1)
+    }
+
+    /// Write [Self] to the _CoP0.PCR0_ register (via `mtpc`).
+    pub fn store_pcr0(self) {
+        unsafe { _write_pcr0(self.0) }
+    }
+
+    /// Write [Self] to the _CoP0.PCR1_ register (via `mtpc`).
+    pub fn store_pcr1(self) {
+        unsafe { _write_pcr1(self.0) }
+    }
+}
 
 bitflags! {
     /// The current processor state.
