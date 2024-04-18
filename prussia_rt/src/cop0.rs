@@ -16,6 +16,8 @@ extern "C" {
     fn _write_badpaddr(badpaddr: u32);
     fn _read_errorepc() -> u32;
     fn _write_errorepc(errorepc: u32);
+    fn _read_pccr() -> u32;
+    fn _write_pccr(pccr: u32);
 }
 
 /// A virtual address responsible for either of the below exceptions:
@@ -32,48 +34,6 @@ impl BadVAddr {
         let bad_v_addr = unsafe { _read_badvaddr() };
 
         BadVAddr(bad_v_addr)
-    }
-}
-
-bitflags! {
-    /// The current processor state.
-    pub struct Status: u32 {
-        /// Whether interrupts are enabled. 0 = masked, 1 = enabled.
-        const IE  = 1;
-        /// Whether we are in an exception (everything which isn't an error) context.
-        const EXL = 1 << 1;
-        /// Whether we are in an error (Reset, NMI, performance counter, debug exception) context.
-        const ERL = 1 << 2;
-        /// Which processor mode we are in. 00 = kernel, 01 = supervisor, 10 = user.
-        const KSU = 3 << 3;
-        /// Whether interrupt 2 is masked. 0 = masked, 1 = enabled.
-        const IM2 = 1 << 10;
-        /// Whether interrupt 3 is masked. 0 = masked, 1 = enabled.
-        const IM3 = 1 << 11;
-        /// Whether bus errors are masked. 0 = masked, 1 = enabled.
-        const BEM = 1 << 12;
-        /// Whether interrupt 7 is masked. 0 = masked, 1 = enabled.
-        const IM7 = 1 << 15;
-        /// Whether the IE bit is enabled. 0 = disabled (this disables all interrupts), 1 = enabled.
-        const EIE = 1 << 16;
-        /// Whether the EI/DI instructions have any effect in user mode.
-        /// 0 = no effect in user mode, 1 = normal function in user mode.
-        const EDI = 1 << 17;
-        /// Status of the last CACHE instruction. 0 = miss, 1 = hit.
-        const CH  = 1 << 18;
-        /// Whether TLB or general exception handlers are located in RAM or ROM. 0 = RAM, 1 = ROM.
-        const BEV = 1 << 22;
-        /// Whether performance counter/debug exceptions are located in RAM or ROM.
-        /// 0 = RAM, 1 = ROM.
-        const DEV = 1 << 23;
-        /// Whether coprocessor 0 is usable. 0 = unusable, 1 = usable.
-        const CU0 = 1 << 28;
-        /// Whether coprocessor 1 is usable. 0 = unusable, 1 = usable.
-        const CU1 = 1 << 29;
-        /// Whether coprocessor 2 is usable. 0 = unusable, 1 = usable.
-        const CU2 = 1 << 30;
-        /// Whether coprocessor 3 is usable. 0 = unusable, 1 = usable.
-        const CU3 = 1 << 31;
     }
 }
 
@@ -176,7 +136,94 @@ impl ErrorEPC {
     }
 }
 
+bitflags! {
+    /// A value in the PCCR performance counter control register.
+    pub struct PerfCounterControl: u32 {
+        /// When set, enables a counting operation in CTR0 when handling a level 1 exception.
+        const EXL0 = 1 << 1;
+        /// When set, enables a counting operation in CTR0 in Kernel mode.
+        const K0 = 1 << 2;
+        /// When set, enables a counting operation in CTR0 in Supervisor mode.
+        const S0 = 1 << 3;
+        /// When set, enables a counting operation in CTR0 in User mode.
+        const U0 = 1 << 4;
+        /// The Id of the CTR0 events to be counted.
+        const EVENT0 = 0x1F << 5;
+        /// When set, enables a counting operation in CTR1 when handling a level 1 exception.
+        const EXL1 = 1 << 11;
+        /// When set, enables a counting operation in CTR1 in Kernel mode.
+        const K1 = 1 << 12;
+        /// When set, enables a counting operation in CTR1 in Supervisor mode.
+        const S1 = 1 << 13;
+        /// When set, enables a counting operation in CTR1 in User mode.
+        const U1 = 1 << 14;
+        /// The Id of the CTR1 events to be counted.
+        const EVENT1 = 0x1F << 15;
+        /// Enables the counter function.
+        const CTE = 1 << 31;
+    }
+}
+
+impl PerfCounterControl {
+    /// Load a [PerfCounterControl] value from the _CoP0.PCCR_ register (via `mfps`).
+    pub fn load() -> Self {
+        let control = unsafe { _read_pccr() };
+
+        PerfCounterControl::from_bits_truncate(control)
+    }
+
+    /// Write [Self] to the _CoP0.PCCR_ register (via `mtps`).
+    pub fn store(self) {
+        let control = self.bits;
+        unsafe {
+            _write_pccr(control);
+        }
+    }
+}
+
 // TODO: Perf
+
+bitflags! {
+    /// The current processor state.
+    pub struct Status: u32 {
+        /// Whether interrupts are enabled. 0 = masked, 1 = enabled.
+        const IE  = 1;
+        /// Whether we are in an exception (everything which isn't an error) context.
+        const EXL = 1 << 1;
+        /// Whether we are in an error (Reset, NMI, performance counter, debug exception) context.
+        const ERL = 1 << 2;
+        /// Which processor mode we are in. 00 = kernel, 01 = supervisor, 10 = user.
+        const KSU = 3 << 3;
+        /// Whether interrupt 2 is masked. 0 = masked, 1 = enabled.
+        const IM2 = 1 << 10;
+        /// Whether interrupt 3 is masked. 0 = masked, 1 = enabled.
+        const IM3 = 1 << 11;
+        /// Whether bus errors are masked. 0 = masked, 1 = enabled.
+        const BEM = 1 << 12;
+        /// Whether interrupt 7 is masked. 0 = masked, 1 = enabled.
+        const IM7 = 1 << 15;
+        /// Whether the IE bit is enabled. 0 = disabled (this disables all interrupts), 1 = enabled.
+        const EIE = 1 << 16;
+        /// Whether the EI/DI instructions have any effect in user mode.
+        /// 0 = no effect in user mode, 1 = normal function in user mode.
+        const EDI = 1 << 17;
+        /// Status of the last CACHE instruction. 0 = miss, 1 = hit.
+        const CH  = 1 << 18;
+        /// Whether TLB or general exception handlers are located in RAM or ROM. 0 = RAM, 1 = ROM.
+        const BEV = 1 << 22;
+        /// Whether performance counter/debug exceptions are located in RAM or ROM.
+        /// 0 = RAM, 1 = ROM.
+        const DEV = 1 << 23;
+        /// Whether coprocessor 0 is usable. 0 = unusable, 1 = usable.
+        const CU0 = 1 << 28;
+        /// Whether coprocessor 1 is usable. 0 = unusable, 1 = usable.
+        const CU1 = 1 << 29;
+        /// Whether coprocessor 2 is usable. 0 = unusable, 1 = usable.
+        const CU2 = 1 << 30;
+        /// Whether coprocessor 3 is usable. 0 = unusable, 1 = usable.
+        const CU3 = 1 << 31;
+    }
+}
 
 impl Status {
     /// Load the contents of the Coprocessor 0 Status register, returning a Status type with the
