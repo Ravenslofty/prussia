@@ -89,6 +89,18 @@ _write_errorepc:
 	jr	$ra
 	mtc0	$4, $30
 
+# Read coprocessor 0 PCCR register.
+.global _read_pccr
+_read_pccr:
+	jr $ra
+	mfps	$2, 0
+
+# Write coprocessor 0 PCCR register.
+.global _write_pccr
+_write_pccr:
+	jr $ra
+	mtps	$4, 0
+
 # Read a u64 atomically. Rust would make two reads, but this would just be the truncated bottom
 # half. This method is always correct though.
 # $4 (a0) = address.
