@@ -89,17 +89,42 @@ _write_errorepc:
 	jr	$ra
 	mtc0	$4, $30
 
-# Read coprocessor 0 PCCR register.
+# Read coprocessor 0 Perf/PCCR register.
 .global _read_pccr
 _read_pccr:
 	jr $ra
 	mfps	$2, 0
 
-# Write coprocessor 0 PCCR register.
+# Write coprocessor 0 Perf/PCCR register.
 .global _write_pccr
 _write_pccr:
 	jr $ra
 	mtps	$4, 0
+
+# Read coprocessor 0 PCR0 register.
+.global _read_pcr0
+_read_pcr0:
+	jr $ra
+	mfpc	$2, 0
+
+# Write coprocessor 0 PCR0 register.
+.global _write_pcr0
+_write_pcr0:
+	jr $ra
+	mtpc	$4, 0
+
+# Read coprocessor 1 PCR1 register.
+.global _read_pcr1
+_read_pcr1:
+	jr $ra
+	mfpc	$2, 1
+
+# Write coprocessor 1 PCR1 register.
+.global _write_pcr1
+_write_pcr1:
+	jr $ra
+	mtpc	$4, 1
+
 
 # Read a u64 atomically. Rust would make two reads, but this would just be the truncated bottom
 # half. This method is always correct though.
