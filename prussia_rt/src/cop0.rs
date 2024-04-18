@@ -188,7 +188,7 @@ impl PerfCounterControl {
 /// Represents the CTR0 event Ids supported by the PCCR.EVENT0 register field.
 #[derive(Debug)]
 #[repr(u8)]
-pub enum PCCRCtr0 {
+pub enum PCCREvent0 {
     /// Reserved
     Reserved = 0,
     /// Processor cycle
@@ -225,15 +225,15 @@ pub enum PCCRCtr0 {
     NoEvent = 16,
 }
 
-impl From<PCCRCtr0> for PerfCounterControl {
-    fn from(value: PCCRCtr0) -> Self {
+impl From<PCCREvent0> for PerfCounterControl {
+    fn from(value: PCCREvent0) -> Self {
         let event0 = (value as u32) << 5;
 
         PerfCounterControl::from_bits_truncate(event0)
     }
 }
 
-impl From<PerfCounterControl> for PCCRCtr0 {
+impl From<PerfCounterControl> for PCCREvent0 {
     fn from(value: PerfCounterControl) -> Self {
         let bits: u32 = (value & PerfCounterControl::EVENT0).bits >> 5;
 
@@ -254,8 +254,9 @@ impl From<PerfCounterControl> for PCCRCtr0 {
             13 => Self::CompletesNonBdsInstruction,
             14 => Self::CompletesCop2Instruction,
             15 => Self::CompletesLoads,
-            _ => Self::NoEvent,
+            16 => Self::NoEvent,
             i if i > 16 && i < 32 => Self::Reserved,
+            _ => Self::NoEvent,
         }
     }
 }
@@ -263,7 +264,7 @@ impl From<PerfCounterControl> for PCCRCtr0 {
 /// Represents the CTR1 event Ids supported by the PCCR.EVENT1 register field.
 #[derive(Debug)]
 #[repr(u8)]
-pub enum PCCRCtr1 {
+pub enum PCCREvent1 {
     /// Issues low order branch
     IssuesLowOrderBranch = 0,
     /// Processor cycle
@@ -302,15 +303,15 @@ pub enum PCCRCtr1 {
     Reserved = 17,
 }
 
-impl From<PCCRCtr1> for PerfCounterControl {
-    fn from(value: PCCRCtr1) -> Self {
+impl From<PCCREvent1> for PerfCounterControl {
+    fn from(value: PCCREvent1) -> Self {
         let event1 = (value as u32) << 15;
 
         PerfCounterControl::from_bits_truncate(event1)
     }
 }
 
-impl From<PerfCounterControl> for PCCRCtr1 {
+impl From<PerfCounterControl> for PCCREvent1 {
     fn from(value: PerfCounterControl) -> Self {
         let bits: u32 = (value & PerfCounterControl::EVENT0).bits >> 5;
 
@@ -331,8 +332,9 @@ impl From<PerfCounterControl> for PCCRCtr1 {
             13 => Self::CompletesNonBdsInstruction,
             14 => Self::CompletesCop1Instruction,
             15 => Self::CompletesStores,
-            _ => Self::NoEvent,
+            16 => Self::NoEvent,
             i if i > 16 && i < 32 => Self::Reserved,
+            _ => Self::NoEvent,
         }
     }
 }
