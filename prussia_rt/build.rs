@@ -27,7 +27,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let libprussia_rt_asm_src_path =
         PathBuf::from(std::env::var("CARGO_MANIFEST_DIR")?).join(LIBPRUSSIA_RT_ASM_SRC_NAME);
     println!(
-        "cargo::rerun-if-changed={}",
+        "cargo:rerun-if-changed={}",
         libprussia_rt_asm_src_path.display()
     );
 
