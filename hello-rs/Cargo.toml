@@ -12,7 +12,6 @@ path = "src/main.rs"
 filename = "hello_rs.elf"
 
 [dependencies]
-panic-halt = "0.2.0"
 prussia_bios = { path = "../prussia_bios" }
 prussia_dma = { path = "../prussia_dma" }
 prussia_rt = { path = "../prussia_rt" }

@@ -12,9 +12,14 @@
 #![deny(missing_docs)]
 #![feature(asm_experimental_arch)]
 
+use core::panic::PanicInfo;
+
+use panic::panic_entrypoint;
+
 pub mod atomic;
 pub mod cop0;
 pub mod interrupts;
+mod panic;
 
 // Static data initialised to zero goes in the .bss segment, which is essentially a pointer to
 // uninitialised memory. We need to zero .bss before the main program runs.
@@ -44,4 +49,9 @@ pub unsafe extern "C" fn _rust_start() -> ! {
     zero_bss();
 
     main()
+}
+
+#[panic_handler]
+fn panic(info: &PanicInfo) -> ! {
+    panic_entrypoint(info);
 }
