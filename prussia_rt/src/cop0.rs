@@ -24,6 +24,53 @@ extern "C" {
     fn _write_pcr1(pcr1: u32);
 }
 
+/// Represents a coredump of the CoP0 registers.
+#[derive(Debug)]
+pub struct CoP0Dump {
+    bad_v_addr: BadVAddr,
+    count: TimerCount,
+    compare: Compare,
+    status: Status,
+    cause: Cause,
+    epc: EPC,
+    bad_p_addr: BadPAddr,
+    perf: PerfCounterControl,
+    pcr0: PerfCounter,
+    pcr1: PerfCounter,
+    error_epc: ErrorEPC,
+}
+
+impl CoP0Dump {
+    /// Dumps all register contents and constructs an instance of [CoP0Dump].
+    pub fn load() -> Self {
+        let bad_v_addr = BadVAddr::load();
+        let count = TimerCount::load();
+        let compare = Compare::load();
+        let status = Status::load();
+        let cause = Cause::load();
+        let epc = EPC::load();
+        let bad_p_addr = BadPAddr::load();
+        let perf = PerfCounterControl::load();
+        let pcr0 = PerfCounter::load_pcr0();
+        let pcr1 = PerfCounter::load_pcr1();
+        let error_epc = ErrorEPC::load();
+
+        Self {
+            bad_v_addr,
+            count,
+            compare,
+            status,
+            cause,
+            epc,
+            bad_p_addr,
+            perf,
+            pcr0,
+            pcr1,
+            error_epc,
+        }
+    }
+}
+
 /// A virtual address responsible for either of the below exceptions:
 /// * TLB Invalid
 /// * TLB Modified
