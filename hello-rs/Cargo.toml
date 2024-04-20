@@ -1,8 +1,15 @@
+cargo-features = ["different-binary-name"]
+
 [package]
 name = "hello-rs"
 version = "0.1.0"
 authors = ["Dan Ravensloft <dan.ravensloft@gmail.com>"]
 edition = "2018"
+
+[[bin]]
+name = "hello_rs_elf"
+path = "src/main.rs"
+filename = "hello_rs.elf"
 
 [dependencies]
 panic-halt = "0.2.0"
