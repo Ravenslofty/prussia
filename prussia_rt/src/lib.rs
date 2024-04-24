@@ -19,7 +19,7 @@ use panic::panic_entrypoint;
 pub mod atomic;
 pub mod cop0;
 pub mod interrupts;
-mod panic;
+pub mod panic;
 
 // Static data initialised to zero goes in the .bss segment, which is essentially a pointer to
 // uninitialised memory. We need to zero .bss before the main program runs.
