@@ -11,13 +11,18 @@
 #![no_std]
 #![deny(missing_docs)]
 #![feature(asm_experimental_arch)]
+#![feature(naked_functions)]
+#![feature(core_intrinsics)]
 
 use core::panic::PanicInfo;
 
 use panic::panic_entrypoint;
 
+use crate::exceptions::initialise_exception_vectors;
+
 pub mod atomic;
 pub mod cop0;
+pub mod exceptions;
 pub mod interrupts;
 pub mod panic;
 
@@ -47,6 +52,7 @@ pub unsafe extern "C" fn _rust_start() -> ! {
     }
 
     zero_bss();
+    initialise_exception_vectors();
 
     main()
 }

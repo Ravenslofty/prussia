@@ -9,6 +9,13 @@ _start:
 	j	_rust_start		# Call Rust
 	lui	$sp, 0x20		# Set the stack pointer to 0x0020'0000.
 
+# Purposefully trigger a break.
+.global _trigger_break_exception
+_trigger_break_exception:
+	break
+	jr $ra
+	nop
+
 # Read coprocessor 0 Status register. This *could* be done with inline assembly, but I'm going to
 # aim for compilation on stable.
 .global _read_status
