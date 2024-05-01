@@ -4,12 +4,12 @@ use core::{arch::asm, fmt::Write};
 
 use prussia_debug::EEOut;
 
-use crate::cop0::CoP0Dump;
+use crate::cop0::{CoP0Dump, L1Exception};
 
 /// Address for the V_COMMON exception vector.
-pub const V_COMMON_EXCEPTION_VECTOR: usize = 0x80000180;
+pub const V_COMMON_EXCEPTION_VECTOR: usize = 0x8000_0180;
 /// Address for the bootstrap V_COMMON exception vector.
-pub const V_COMMON_EXCEPTION_BOOTSTRAP_VECTOR: usize = 0xBFC00380;
+pub const V_COMMON_EXCEPTION_BOOTSTRAP_VECTOR: usize = 0xBFC0_0380;
 
 /// Address pointer to an EE-side exception handler.
 pub struct EEExceptionVector {
@@ -67,9 +67,11 @@ pub unsafe extern "C" fn _v_common_exception_vec() {
     asm! {
         ".set noreorder
          .set noat
+
          la $k0, _v_common_exception_handler
          jr $k0
          nop
+
          .set at
          .set reorder",
         options(noreturn)
@@ -89,7 +91,7 @@ pub unsafe extern "C" fn _v_common_exception_handler() {
          mfc0 $k1, $14
 
          # Call the main cause handler.
-         jal _dispatch_exc_cause_handler
+         jal _dispatch_common_exc_handler
          nop
 
          # Load the return address and jump to it. Does not handle address incrementing
@@ -105,12 +107,24 @@ pub unsafe extern "C" fn _v_common_exception_handler() {
 }
 
 #[no_mangle]
-extern "C" fn _dispatch_exc_cause_handler() {
+extern "C" fn _dispatch_common_exc_handler() {
     writeln!(EEOut, "Encountered trap exception. Got here.").unwrap();
 
     let cop0_dump = CoP0Dump::load();
 
     writeln!(EEOut, "CoP0 registers: {cop0_dump:#?}").unwrap();
 
-    loop {}
+    let Some(exc_code) = L1Exception::try_from_common_cause(cop0_dump.cause) else {
+        writeln!(EEOut, "UNKNOWN CAUSE CODE. RETURNING PREMATURELY.").unwrap();
+        return;
+    };
+
+    writeln!(EEOut, "Exception cause: {:?}", exc_code).unwrap();
+    match exc_code {
+        L1Exception::Breakpoint | L1Exception::ReservedInsn | L1Exception::SystemCall => {
+            writeln!(EEOut, "Incrementing exception exit address.").unwrap();
+            unsafe { asm!("addiu $k1, 4") }
+        }
+        _ => {}
+    }
 }

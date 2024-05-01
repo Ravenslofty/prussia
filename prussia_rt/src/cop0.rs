@@ -27,19 +27,32 @@ extern "C" {
 /// Represents a coredump of the CoP0 registers.
 #[derive(Debug)]
 pub struct CoP0Dump {
-    bad_v_addr: BadVAddr,
-    count: TimerCount,
-    compare: Compare,
-    status: Status,
-    cause: Cause,
-    epc: EPC,
-    bad_p_addr: BadPAddr,
-    perf: PerfCounterControl,
-    perf_event0: PCCREvent0,
-    perf_event1: PCCREvent1,
-    pcr0: PerfCounter,
-    pcr1: PerfCounter,
-    error_epc: ErrorEPC,
+    /// [BadVAddr] value loaded from the BadVAddr register.
+    pub bad_v_addr: BadVAddr,
+    /// [TimerCount] value loaded from the Count register.
+    pub count: TimerCount,
+    /// [Compare] value loaded from the Compare register.
+    pub compare: Compare,
+    /// [Status] value loaded from the Status register.
+    pub status: Status,
+    /// [Cause] value loaded from the Cause register.
+    pub cause: Cause,
+    /// [EPC] value loaded from the EPC register.
+    pub epc: EPC,
+    /// [BadPAddr] value loaded from the BadPAddr register.
+    pub bad_p_addr: BadPAddr,
+    /// [PerfCounterControl] value loaded from the Perf register.
+    pub perf: PerfCounterControl,
+    /// [PCCREvent0] value loaded from the Perf.EVENT0 register field.
+    pub perf_event0: PCCREvent0,
+    /// [PCCREvent1] value loaded from the Perf.EVENT1 register field.
+    pub perf_event1: PCCREvent1,
+    /// [PerfCounter] value loaded from the PCR0 register.
+    pub pcr0: PerfCounter,
+    /// [PerfCounter] value loaded from the PCR1 register.
+    pub pcr1: PerfCounter,
+    /// [ErrorEPC] value loaded from the ErrorEPC register.
+    pub error_epc: ErrorEPC,
 }
 
 impl CoP0Dump {
@@ -92,7 +105,7 @@ impl BadVAddr {
     }
 }
 
-/// A value read from the CoP0.Status register. The register increments every CPU clock cycle.
+/// A value read from the CoP0.Count register. The register increments every CPU clock cycle.
 /// This register, when equal to the CoP0.Compare register, signals a timer interrupt.
 /// FIXME: Pick a method, discard the other.
 #[derive(Debug)]
@@ -106,7 +119,7 @@ impl TimerCount {
         TimerCount(count)
     }
 
-    /// Write [Self] to the _CoP0.Count_ register (`$9`).
+    /// Write [TimerCount] to the _CoP0.Count_ register (`$9`).
     pub fn store(self) {
         unsafe { _write_timercount(self.0) }
     }
@@ -578,7 +591,7 @@ impl L1Exception {
     }
 
     /// Convert a L1 exception code in the Common exception handler.
-    /// This function rturns Option, but if it fails, you're passing in the wrong value.
+    /// This function returns Option, but if it fails, you're passing in the wrong value.
     pub fn try_from_common(x: u8) -> Option<Self> {
         match x {
             1 => Some(L1Exception::TlbModified),
@@ -596,6 +609,13 @@ impl L1Exception {
             13 => Some(L1Exception::Trap),
             _ => None,
         }
+    }
+
+    /// Convert a L1 exception code in the Common exception handler.
+    pub fn try_from_common_cause(cause: Cause) -> Option<Self> {
+        let bits: u32 = (cause & Cause::EXC_CODE).bits >> 2;
+
+        Self::try_from_common(bits as u8)
     }
 }
 
