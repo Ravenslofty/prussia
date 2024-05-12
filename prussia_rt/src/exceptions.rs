@@ -4,7 +4,7 @@ use core::{arch::asm, fmt::Write};
 
 use prussia_debug::EEOut;
 
-use crate::cop0::{CoP0Dump, L1Exception};
+use crate::cop0::{Cause, CoP0Dump, L1Exception};
 
 /// Address for the V_COMMON exception vector.
 pub const V_COMMON_EXCEPTION_VECTOR: usize = 0x8000_0180;
@@ -47,6 +47,11 @@ pub const EXCEPTION_HANDLER_TABLE: [EEExceptionVector; 2] = [
     },
 ];
 
+/// Contains 16 function vectors to V_COMMON exception code handlers.
+/// Initialise by running [initialise_exception_vectors].
+#[no_mangle]
+static mut V_COMMON_HANDLERS: [usize; 16] = [0; 16];
+
 /// Load all exception vectors into their respective destinations.
 pub fn initialise_exception_vectors() {
     for vector in &EXCEPTION_HANDLER_TABLE {
@@ -59,6 +64,23 @@ pub fn initialise_exception_vectors() {
         };
     }
     writeln!(EEOut, "Exception vectors loaded.").unwrap();
+
+    for x in unsafe { V_COMMON_HANDLERS.iter_mut() } {
+        *x = unimplemented_v_common_handler as usize;
+    }
+
+    unsafe {
+        V_COMMON_HANDLERS[9] = v_common_breakpoint_handler as usize;
+    }
+}
+
+#[no_mangle]
+extern "C" fn unimplemented_v_common_handler() {
+    let cause = Cause::load();
+    let Some(exc_code) = L1Exception::try_from_common_cause(cause) else {
+        panic!("Unexpected exception code found in Cause register ({cause:?})");
+    };
+    unimplemented!("Unhandled V_COMMON exception. Code: {exc_code}");
 }
 
 /// First level of exception-handling. Trampolines to the main exception handler.
@@ -87,18 +109,27 @@ pub unsafe extern "C" fn _v_common_exception_handler() {
         ".set noreorder
          .set noat
 
-         # Load the return address
-         mfc0 $k1, $14
+         mfc0    $k0, $13
+         andi    $k0, 0x3F
 
-         # Call the main cause handler.
-         jal _dispatch_common_exc_handler
+         addi    $sp, -20
+         sw      $ra, 0($sp)
+         sw      $t0, 16($sp)
+
+         la      $t0, V_COMMON_HANDLERS  // Load start of handler table.
+         add     $k0, $t0                // Add ExcCode to handler table.
+
+         lw      $t0, 16($sp)            // Restore $t0 from stack.
+
+         lw      $k0, 0($k0)             // Get the handler address.
+         jalr    $k0                     // Jump to the handler.
          nop
 
-         # Load the return address and jump to it. Does not handle address incrementing
-         # if exception is break, syscall, or similar which does not auto-advance the epc.
-         lw $ra, 120($k0)
-         jr $k0
-         nop
+         lw      $ra, 0($sp)             // Restore $ra from stack.
+         addi    $sp, 20                 // Pop stack.
+
+         .int 0x0000000f  // Sync all pending instructions.
+         .int 0x42000018  // Return from the exception.
 
          .set at
          .set reorder",
@@ -107,9 +138,7 @@ pub unsafe extern "C" fn _v_common_exception_handler() {
 }
 
 #[no_mangle]
-extern "C" fn _dispatch_common_exc_handler() {
-    writeln!(EEOut, "Encountered trap exception. Got here.").unwrap();
-
+extern "C" fn v_common_breakpoint_handler() {
     let cop0_dump = CoP0Dump::load();
 
     writeln!(EEOut, "CoP0 registers: {cop0_dump:#?}").unwrap();
@@ -123,7 +152,15 @@ extern "C" fn _dispatch_common_exc_handler() {
     match exc_code {
         L1Exception::Breakpoint | L1Exception::ReservedInsn | L1Exception::SystemCall => {
             writeln!(EEOut, "Incrementing exception exit address.").unwrap();
-            unsafe { asm!("addiu $k1, 4") }
+            unsafe {
+                asm!(
+                    "
+                    mfc0 $k1, $14
+                    addiu $k1, 4
+                    mtc0 $k1, $14
+                    "
+                )
+            }
         }
         _ => {}
     }

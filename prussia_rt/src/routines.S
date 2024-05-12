@@ -1,6 +1,7 @@
 # The assembler tries to reorder our instructions around delay slots.
 # Since we want to preserve this order, disable the reordering feature.
 .set noreorder
+.set noat
 
 # Bootstrap routine for PruSSia. LLVM only needs a stack pointer, and the rest we can do in Rust.
 .extern _rust_start

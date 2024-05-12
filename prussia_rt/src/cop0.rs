@@ -1,6 +1,9 @@
 //! Coprocessor 0 manipulation routines.
 
-use core::arch::{asm, global_asm};
+use core::{
+    arch::{asm, global_asm},
+    fmt::Display,
+};
 
 use bitflags::bitflags;
 
@@ -616,6 +619,12 @@ impl L1Exception {
         let bits: u32 = (cause & Cause::EXC_CODE).bits >> 2;
 
         Self::try_from_common(bits as u8)
+    }
+}
+
+impl Display for L1Exception {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        write!(f, "{self:?}")
     }
 }
 
