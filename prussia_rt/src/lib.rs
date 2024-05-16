@@ -14,7 +14,7 @@
 #![feature(naked_functions)]
 #![feature(core_intrinsics)]
 
-use core::panic::PanicInfo;
+use core::{panic::PanicInfo, ptr::addr_of_mut};
 
 use panic::panic_entrypoint;
 
@@ -39,7 +39,10 @@ unsafe fn zero_bss() {
         static mut END_OF_BSS: u32;
     }
 
-    r0::zero_bss::<u32>(&mut START_OF_BSS as *mut u32, &mut END_OF_BSS as *mut u32);
+    r0::zero_bss::<u32>(
+        addr_of_mut!(START_OF_BSS) as *mut u32,
+        addr_of_mut!(END_OF_BSS) as *mut u32,
+    );
 }
 
 // A PS2 program's execution flow begins in _start, which calls the EE kernel to set up this thread

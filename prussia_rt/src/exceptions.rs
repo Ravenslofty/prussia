@@ -2,11 +2,9 @@
 
 mod v_common;
 
-use core::{arch::asm, fmt::Write};
+use core::fmt::Write;
 
 use prussia_debug::EEOut;
-
-use crate::cop0::{Cause, CoP0Dump, L1Exception};
 
 use self::v_common::{
     _v_common_exception_vec, unimplemented_v_common_handler, v_common_breakpoint_handler,

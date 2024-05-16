@@ -1,9 +1,6 @@
 //! Coprocessor 0 manipulation routines.
 
-use core::{
-    arch::{asm, global_asm},
-    fmt::Display,
-};
+use core::{arch::asm, fmt::Display};
 
 use bitflags::bitflags;
 

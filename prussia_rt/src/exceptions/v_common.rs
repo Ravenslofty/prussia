@@ -37,7 +37,10 @@ pub fn trigger_break_exception() {
 pub(super) extern "C" fn unimplemented_v_common_handler() {
     let cause = Cause::load();
     let Some(exc_code) = L1Exception::try_from_common_cause(cause) else {
-        panic!("Unexpected exception code found in Cause register ({cause})");
+        panic!(
+            "Unexpected exception code found in Cause register ({:?})",
+            cause
+        );
     };
     unimplemented!("Unhandled V_COMMON exception. Code: {exc_code}");
 }
