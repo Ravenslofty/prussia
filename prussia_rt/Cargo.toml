@@ -6,6 +6,8 @@ authors = ["Dan Ravensloft <dan.ravensloft@gmail.com>"]
 edition = "2018"
 
 [dependencies]
+# TODO: Update to 2.5.0.
 bitflags = "1.0.4"
 prussia_debug = { version = "0.1.0", path = "../prussia_debug" }
+# TODO: Remove deprecated package.
 r0 = "0.2.2"

@@ -7,8 +7,8 @@ use core::fmt::Write;
 use prussia_debug::EEOut;
 
 use self::v_common::{
-    _v_common_exception_vec, unimplemented_v_common_handler, v_common_breakpoint_handler,
-    V_COMMON_EXCEPTION_BOOTSTRAP_VECTOR, V_COMMON_EXCEPTION_VECTOR, V_COMMON_HANDLERS,
+    _v_common_exception_vec, init_v_common_handlers_table, unimplemented_v_common_handler,
+    V_COMMON_EXCEPTION_BOOTSTRAP_VECTOR, V_COMMON_EXCEPTION_VECTOR,
 };
 
 pub use self::v_common::trigger_break_exception;
@@ -46,11 +46,5 @@ pub fn initialise_exception_vectors() {
     }
     writeln!(EEOut, "Exception vectors loaded.").unwrap();
 
-    for x in unsafe { V_COMMON_HANDLERS.iter_mut() } {
-        *x = unimplemented_v_common_handler as usize;
-    }
-
-    unsafe {
-        V_COMMON_HANDLERS[9] = v_common_breakpoint_handler as usize;
-    }
+    init_v_common_handlers_table()
 }

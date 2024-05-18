@@ -13,9 +13,19 @@ pub(super) const V_COMMON_EXCEPTION_VECTOR: usize = 0x8000_0180;
 pub(super) const V_COMMON_EXCEPTION_BOOTSTRAP_VECTOR: usize = 0xBFC0_0380;
 
 /// Contains 16 function vectors to V_COMMON exception code handlers.
-/// Initialise by running [initialise_exception_vectors].
 #[no_mangle]
 pub(super) static mut V_COMMON_HANDLERS: [usize; 16] = [0; 16];
+
+pub(super) fn init_v_common_handlers_table() {
+    for x in unsafe { V_COMMON_HANDLERS.iter_mut() } {
+        *x = unimplemented_v_common_handler as usize;
+    }
+
+    unsafe {
+        V_COMMON_HANDLERS[8] = v_common_syscall_handler as usize;
+        V_COMMON_HANDLERS[9] = v_common_breakpoint_handler as usize;
+    }
+}
 
 /// Purposefully trigger a break exception. For testing purposes.
 pub fn trigger_break_exception() {
@@ -35,14 +45,22 @@ pub fn trigger_break_exception() {
 
 #[no_mangle]
 pub(super) extern "C" fn unimplemented_v_common_handler() {
-    let cause = Cause::load();
-    let Some(exc_code) = L1Exception::try_from_common_cause(cause) else {
-        panic!(
-            "Unexpected exception code found in Cause register ({:?})",
-            cause
-        );
+    writeln!(EEOut, "Unimplemented v_common exception!").unwrap();
+
+    let cop0_dump = CoP0Dump::load();
+
+    writeln!(EEOut, "CoP0 registers: {cop0_dump:#?}").unwrap();
+
+    let Some(exc_code) = L1Exception::try_from_common_cause(cop0_dump.cause) else {
+        writeln!(EEOut, "UNKNOWN CAUSE CODE. RETURNING PREMATURELY.").unwrap();
+        return;
     };
-    unimplemented!("Unhandled V_COMMON exception. Code: {exc_code}");
+
+    writeln!(EEOut, "Exception cause: {:?}", exc_code).unwrap();
+
+    loop {}
+
+    unreachable!("Unhandled exceptions should not reach this point.");
 }
 
 /// First level of exception-handling. Trampolines to the main exception handler.
@@ -103,27 +121,32 @@ unsafe extern "C" fn _v_common_exception_handler() {
 pub(super) extern "C" fn v_common_breakpoint_handler() {
     let cop0_dump = CoP0Dump::load();
 
-    writeln!(EEOut, "CoP0 registers: {cop0_dump:#?}").unwrap();
+    writeln!(EEOut, "BREAK: Encountered breakpoint!").unwrap();
 
-    let Some(exc_code) = L1Exception::try_from_common_cause(cop0_dump.cause) else {
-        writeln!(EEOut, "UNKNOWN CAUSE CODE. RETURNING PREMATURELY.").unwrap();
-        return;
-    };
+    unsafe {
+        asm!(
+            "
+            mfc0 $k1, $14
+            addiu $k1, 4
+            mtc0 $k1, $14
+            "
+        )
+    }
+}
 
-    writeln!(EEOut, "Exception cause: {:?}", exc_code).unwrap();
-    match exc_code {
-        L1Exception::Breakpoint | L1Exception::ReservedInsn | L1Exception::SystemCall => {
-            writeln!(EEOut, "Incrementing exception exit address.").unwrap();
-            unsafe {
-                asm!(
-                    "
-                    mfc0 $k1, $14
-                    addiu $k1, 4
-                    mtc0 $k1, $14
-                    "
-                )
-            }
-        }
-        _ => {}
+#[no_mangle]
+pub(super) extern "C" fn v_common_syscall_handler() {
+    let cop0_dump = CoP0Dump::load();
+
+    writeln!(EEOut, "SYSCALL: Encountered Syscall exception!").unwrap();
+
+    unsafe {
+        asm!(
+            "
+            mfc0 $k1, $14
+            addiu $k1, 4
+            mtc0 $k1, $14
+            "
+        )
     }
 }
