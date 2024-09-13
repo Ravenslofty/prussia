@@ -1,10 +1,18 @@
+cargo-features = ["different-binary-name"]
+
 [package]
 name = "hello-rs"
 version = "0.1.0"
 authors = ["Dan Ravensloft <dan.ravensloft@gmail.com>"]
 edition = "2018"
 
+[[bin]]
+name = "hello-rs"
+path = "src/main.rs"
+filename = "hello-rs.elf"
+
 [dependencies]
+prussia_debug = { path = "../prussia_debug" }
 prussia_bios = { path = "../prussia_bios" }
 prussia_dma = { path = "../prussia_dma" }
 prussia_rt = { path = "../prussia_rt" }
