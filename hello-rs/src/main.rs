@@ -19,6 +19,10 @@ fn main() -> ! {
 
     writeln!(EEOut, "main - Status: {status:?}").unwrap();
 
+    bios::sleep_thread();
+
+    writeln!(EEOut, "main - Thread woke up").unwrap();
+
     loop {}
 
     bios::exit(0);

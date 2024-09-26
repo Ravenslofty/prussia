@@ -2,7 +2,7 @@
 
 mod v_common;
 
-use core::fmt::Write;
+use core::{fmt::Write, ptr::copy_nonoverlapping};
 
 use prussia_debug::EEOut;
 
@@ -37,11 +37,7 @@ pub const EXCEPTION_HANDLER_TABLE: [EEExceptionVector; 2] = [
 pub fn initialise_exception_vectors() {
     for vector in &EXCEPTION_HANDLER_TABLE {
         unsafe {
-            core::intrinsics::volatile_copy_nonoverlapping_memory(
-                vector.location as *mut u32,
-                vector.handler as *const u32,
-                4,
-            );
+            copy_nonoverlapping(vector.handler as *const u32, vector.location as *mut u32, 4,);
         };
     }
     writeln!(EEOut, "Exception vectors loaded.").unwrap();

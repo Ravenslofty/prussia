@@ -24,6 +24,22 @@ extern "C" {
     fn _write_pcr1(pcr1: u32);
 }
 
+macro_rules! impl_newtype_from_trait {
+    ($newtype: ident, $inner: ident) => {
+        impl From<$inner> for $newtype {
+            fn from(i: $inner) -> Self {
+                Self(i)
+            }
+        }
+
+        impl From<$newtype> for $inner {
+            fn from(nt: $newtype) -> Self {
+                nt.0
+            }
+        }
+    };
+}
+
 /// Represents a coredump of the CoP0 registers.
 #[derive(Debug)]
 pub struct CoP0Dump {
@@ -105,6 +121,8 @@ impl BadVAddr {
     }
 }
 
+impl_newtype_from_trait!(BadVAddr, u32);
+
 /// A value read from the CoP0.Count register. The register increments every CPU clock cycle.
 /// This register, when equal to the CoP0.Compare register, signals a timer interrupt.
 /// FIXME: Pick a method, discard the other.
@@ -124,6 +142,8 @@ impl TimerCount {
         unsafe { _write_timercount(self.0) }
     }
 }
+
+impl_newtype_from_trait!(TimerCount, u32);
 
 /// A value read from the CoP0.Compare register. The register acts as a timer;
 /// when the Count register becomes equal to the Compare register, the interrupt bit in the Cause
@@ -145,6 +165,8 @@ impl Compare {
     }
 }
 
+impl_newtype_from_trait!(Compare, u32);
+
 /// A value read from the CoP0.EPC register. The value is the returning virtual address to jump to
 /// after handling an exception.
 #[derive(Debug)]
@@ -162,7 +184,14 @@ impl EPC {
     pub fn store(self) {
         unsafe { _write_epc(self.0) }
     }
+
+    /// Convert to a raw pointer. Remember to check the `Cause.BD` register field to determine if an offset is needed.
+    pub fn as_raw_ptr(&self) -> *const u32 {
+        self.0 as *const u32
+    }
 }
+
+impl_newtype_from_trait!(EPC, u32);
 
 /// A physical address read from the CoP0.BadPAddr register. The value is automatically set to the
 /// most recent physical address that caused a bus error (assuming bus error masking (Status.BEM) is disabled).
@@ -182,6 +211,8 @@ impl BadPAddr {
         unsafe { _write_badpaddr(self.0) }
     }
 }
+
+impl_newtype_from_trait!(BadPAddr, u32);
 
 /// A virtual address read from the CoP0.ErrorEPC register. The value is a return address set when
 /// an NMI, debug, or counter exception occurs and is handled. The address normally points to the
@@ -203,6 +234,8 @@ impl ErrorEPC {
         unsafe { _write_errorepc(self.0) }
     }
 }
+
+impl_newtype_from_trait!(ErrorEPC, u32);
 
 bitflags! {
     /// A value in the PCCR performance counter control register.

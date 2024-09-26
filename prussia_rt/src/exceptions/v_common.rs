@@ -136,9 +136,25 @@ pub(super) extern "C" fn v_common_breakpoint_handler() {
 
 #[no_mangle]
 pub(super) extern "C" fn v_common_syscall_handler() {
+    const SYSCALL_CODE_FIELD_MASK: u32 = 0x3FF_FFC0;
+    
     let cop0_dump = CoP0Dump::load();
 
-    writeln!(EEOut, "SYSCALL: Encountered Syscall exception!").unwrap();
+    let epc_addr = cop0_dump.epc.as_raw_ptr();
+    let in_delay_slot = cop0_dump.cause.intersection(Cause::BD) == Cause::BD;
+    let syscall_addr = if in_delay_slot {
+        unsafe {
+            epc_addr.offset(1)
+        }
+    } else {
+        epc_addr
+    };
+
+    let syscall_code_field = (syscall_addr as u32) & SYSCALL_CODE_FIELD_MASK >> 6;
+
+    writeln!(EEOut, "SYSCALL: Encountered Syscall exception! In branch delay slot: {in_delay_slot}").unwrap();
+    writeln!(EEOut, "SYSCALL: EPC address: {epc_addr:?}, instruction address: {syscall_addr:?}, code field: {syscall_code_field:#0x}").unwrap();
+
 
     unsafe {
         asm!(
