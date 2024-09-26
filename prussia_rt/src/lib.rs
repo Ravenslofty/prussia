@@ -12,11 +12,13 @@
 #![deny(missing_docs)]
 #![feature(asm_experimental_arch)]
 #![feature(naked_functions)]
-#![feature(core_intrinsics)]
+#![feature(strict_provenance)]
 
-use core::{panic::PanicInfo, ptr::addr_of_mut};
+use core::panic::PanicInfo;
+use core::fmt::Write;
 
 use panic::panic_entrypoint;
+use prussia_debug::EEOut;
 
 use crate::exceptions::initialise_exception_vectors;
 
@@ -38,11 +40,16 @@ unsafe fn zero_bss() {
         static mut START_OF_BSS: u32;
         static mut END_OF_BSS: u32;
     }
+    
+    unsafe {
+        let mut i = START_OF_BSS as *mut u32;
+        let end = END_OF_BSS as *mut u32;
 
-    r0::zero_bss::<u32>(
-        addr_of_mut!(START_OF_BSS) as *mut u32,
-        addr_of_mut!(END_OF_BSS) as *mut u32,
-    );
+        while i < end {
+            core::ptr::write_volatile(i, core::mem::zeroed());
+            i = i.offset(1);
+        }
+    }
 }
 
 // A PS2 program's execution flow begins in _start, which calls the EE kernel to set up this thread
@@ -54,8 +61,15 @@ pub unsafe extern "C" fn _rust_start() -> ! {
         fn main() -> !;
     }
 
+    writeln!(EEOut, "rt - Hello world!").unwrap();
+
     zero_bss();
+
+    writeln!(EEOut, "rt - BSS zero-ed out.").unwrap();
+
     initialise_exception_vectors();
+
+    writeln!(EEOut, "rt - Exc vectors set.").unwrap();
 
     main()
 }
