@@ -2,9 +2,9 @@
 
 mod v_common;
 
-use core::{fmt::Write, ptr::copy_nonoverlapping};
+use core::ptr::copy_nonoverlapping;
 
-use prussia_debug::EEOut;
+use prussia_debug::println_ee;
 
 use self::v_common::{
     _v_common_exception_vec, init_v_common_handlers_table, unimplemented_v_common_handler,
@@ -40,7 +40,8 @@ pub fn initialise_exception_vectors() {
             copy_nonoverlapping(vector.handler as *const u32, vector.location as *mut u32, 4,);
         };
     }
-    writeln!(EEOut, "Exception vectors loaded.").unwrap();
+
+    println_ee!("Exception vectors loaded.");
 
     init_v_common_handlers_table()
 }

@@ -15,10 +15,9 @@
 #![feature(strict_provenance)]
 
 use core::panic::PanicInfo;
-use core::fmt::Write;
 
 use panic::panic_entrypoint;
-use prussia_debug::EEOut;
+use prussia_debug::println_ee;
 
 use crate::exceptions::initialise_exception_vectors;
 
@@ -61,15 +60,15 @@ pub unsafe extern "C" fn _rust_start() -> ! {
         fn main() -> !;
     }
 
-    writeln!(EEOut, "rt - Hello world!").unwrap();
+    println_ee!("rt - Hello world!");
 
     zero_bss();
 
-    writeln!(EEOut, "rt - BSS zero-ed out.").unwrap();
+    println_ee!("rt - BSS zero-ed out.");
 
     initialise_exception_vectors();
 
-    writeln!(EEOut, "rt - Exc vectors set.").unwrap();
+    println_ee!("rt - Exception vectors set.");
 
     main()
 }

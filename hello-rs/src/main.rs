@@ -1,8 +1,7 @@
 #![no_std]
 #![no_main]
 
-use core::fmt::Write;
-use debug::EEOut;
+use debug::println_ee;
 use rt::cop0::Status;
 
 extern crate prussia_debug as debug;
@@ -13,15 +12,15 @@ extern crate prussia_rt as rt;
 #[no_mangle]
 fn main() -> ! {
 
-    writeln!(EEOut, "main - Hello world!").unwrap();
+    println_ee!("main - Hello world!");
 
     let status = Status::load();
 
-    writeln!(EEOut, "main - Status: {status:?}").unwrap();
+    println_ee!("main - Status: {status:?}");
 
     bios::sleep_thread();
 
-    writeln!(EEOut, "main - Thread woke up").unwrap();
+    println_ee!("main - Thread woke up!");
 
     loop {}
 

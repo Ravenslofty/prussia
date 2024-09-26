@@ -1,6 +1,6 @@
-use core::{arch::asm, fmt::Write};
+use core::arch::asm;
 
-use prussia_debug::EEOut;
+use prussia_debug::println_ee;
 
 use crate::{
     cop0::{Cause, CoP0Dump, L1Exception},
@@ -33,30 +33,28 @@ pub fn trigger_break_exception() {
         fn _trigger_break_exception();
     }
 
-    writeln!(
-        EEOut,
+    println_ee!(
         "Triggering break exception, which should call the handler at {:0>8p}",
         EXCEPTION_HANDLER_TABLE[0].handler
-    )
-    .unwrap();
+    );
     unsafe { _trigger_break_exception() };
-    writeln!(EEOut, "Returned from break exception.").unwrap();
+    println_ee!("Returned from break exception.");
 }
 
 #[no_mangle]
 pub(super) extern "C" fn unimplemented_v_common_handler() {
-    writeln!(EEOut, "Unimplemented v_common exception!").unwrap();
+    println_ee!("Unimplemented v_common exception!");
 
     let cop0_dump = CoP0Dump::load();
 
-    writeln!(EEOut, "CoP0 registers: {cop0_dump:#?}").unwrap();
+    println_ee!("CoP0 registers: {cop0_dump:#?}");
 
     let Some(exc_code) = L1Exception::try_from_common_cause(cop0_dump.cause) else {
-        writeln!(EEOut, "UNKNOWN CAUSE CODE. RETURNING PREMATURELY.").unwrap();
+        println_ee!("UNKNOWN CAUSE CODE. RETURNING PREMATURELY.");
         return;
     };
 
-    writeln!(EEOut, "Exception cause: {:?}", exc_code).unwrap();
+    println_ee!("Exception cause: {:?}", exc_code);
 
     loop {}
 
@@ -121,7 +119,7 @@ unsafe extern "C" fn _v_common_exception_handler() {
 pub(super) extern "C" fn v_common_breakpoint_handler() {
     let cop0_dump = CoP0Dump::load();
 
-    writeln!(EEOut, "BREAK: Encountered breakpoint!").unwrap();
+    println_ee!("BREAK: Encountered breakpoint!");
 
     unsafe {
         asm!(
@@ -152,8 +150,8 @@ pub(super) extern "C" fn v_common_syscall_handler() {
 
     let syscall_code_field = (syscall_addr as u32) & SYSCALL_CODE_FIELD_MASK >> 6;
 
-    writeln!(EEOut, "SYSCALL: Encountered Syscall exception! In branch delay slot: {in_delay_slot}").unwrap();
-    writeln!(EEOut, "SYSCALL: EPC address: {epc_addr:?}, instruction address: {syscall_addr:?}, code field: {syscall_code_field:#0x}").unwrap();
+    println_ee!("SYSCALL: Encountered Syscall exception! In branch delay slot: {in_delay_slot}");
+    println_ee!("SYSCALL: EPC address: {epc_addr:?}, instruction address: {syscall_addr:?}, code field: {syscall_code_field:#0x}");
 
 
     unsafe {
