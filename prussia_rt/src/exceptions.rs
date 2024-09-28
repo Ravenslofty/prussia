@@ -7,11 +7,11 @@ use core::ptr::copy_nonoverlapping;
 use prussia_debug::println_ee;
 
 use self::v_common::{
-    _v_common_exception_vec, init_v_common_handlers_table, unimplemented_v_common_handler,
+    _v_common_exception_vec, init_v_common_handlers_table,
     V_COMMON_EXCEPTION_BOOTSTRAP_VECTOR, V_COMMON_EXCEPTION_VECTOR,
 };
 
-pub use self::v_common::trigger_break_exception;
+pub use self::v_common::{trigger_break_exception, trigger_overflow_exception};
 
 /// Address pointer to an EE-side exception handler.
 pub struct EEExceptionVector {
