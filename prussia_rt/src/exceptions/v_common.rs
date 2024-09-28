@@ -4,7 +4,7 @@ use prussia_debug::println_ee;
 
 use crate::{
     cop0::{Cause, CoP0Dump, L1Exception},
-    exceptions::EXCEPTION_HANDLER_TABLE,
+    exceptions::EXCEPTION_HANDLER_TABLE, thread::ThreadControlBlock,
 };
 
 /// Address for the V_COMMON exception vector.
@@ -101,8 +101,8 @@ pub(super) unsafe extern "C" fn _v_common_exception_vec() {
         ".set noreorder
          .set noat
 
-         la $k0, _v_common_exception_handler
-         jr $k0
+         la   $k0, _v_common_exception_handler
+         jr   $k0
          nop
 
          .set at
@@ -120,6 +120,45 @@ unsafe extern "C" fn _v_common_exception_handler() {
         ".set noreorder
          .set noat
 
+         // Allocate space for a TCB debug struct and save address.
+         addi $sp, $sp, -0x100
+         sd   $a0, 48($sp)
+         move $a0, $sp
+
+         // Fill TCB struct.
+         sd      $at, 0($a0)            // Save $at
+         sd      $v0, 8($a0)            // Save $v0
+         sd      $v1, 16($a0)           // Save $v1
+         sd      $a0, 24($a0)           // Save $a0
+         sd      $a1, 32($a0)           // Save $a1
+         sd      $a2, 40($a0)           // Save $a2
+         sd      $a3, 48($a0)           // Save $a3
+         sd      $t0, 56($a0)           // Save $t0
+         sd      $t1, 64($a0)           // Save $t1
+         sd      $t2, 72($a0)           // Save $t2
+         sd      $t3, 80($a0)           // Save $t3
+         sd      $t4, 88($a0)           // Save $t4
+         sd      $t5, 96($a0)           // Save $t5
+         sd      $t6, 104($a0)          // Save $t6
+         sd      $t7, 112($a0)          // Save $t7
+         sd      $s0, 120($a0)          // Save $s0
+         sd      $s1, 128($a0)          // Save $s1
+         sd      $s2, 136($a0)          // Save $s2
+         sd      $s3, 144($a0)          // Save $s3
+         sd      $s4, 152($a0)          // Save $s4
+         sd      $s5, 160($a0)          // Save $s5
+         sd      $s6, 168($a0)          // Save $s6
+         sd      $s7, 176($a0)          // Save $s7
+         sd      $t8, 184($a0)          // Save $t8
+         sd      $t9, 192($a0)          // Save $t9
+         sd      $k0, 200($a0)          // Save $k0
+         sd      $k1, 208($a0)          // Save $k1
+         sd      $gp, 216($a0)          // Save $gp
+         sd      $sp, 224($a0)          // Save $sp
+         sd      $fp, 232($a0)          // Save $fp
+         sd      $ra, 240($a0)          // Save $ra
+
+         // Handler jump section.
          mfc0    $k0, $13
          andi    $k0, 0x3F
 
@@ -137,7 +176,10 @@ unsafe extern "C" fn _v_common_exception_handler() {
          nop
 
          lw      $ra, 0($sp)             // Restore $ra from stack.
-         addi    $sp, 20                 // Pop stack.
+         addi    $sp, 20                 // Pop stack, undo handler.
+
+         // Pop TCB struct.
+         addi    $sp, 0x100
 
          .int 0x0000000f  // Sync all pending instructions.
          .int 0x42000018  // Return from the exception.
@@ -150,7 +192,7 @@ unsafe extern "C" fn _v_common_exception_handler() {
 
 /// Breakpoint exception handler
 #[no_mangle]
-pub(super) extern "C" fn v_common_breakpoint_handler() {
+pub(super) extern "C" fn v_common_breakpoint_handler(tcb_ptr: *mut ThreadControlBlock) {
     let cop0_dump = CoP0Dump::load();
 
     println_ee!("BREAK: Encountered breakpoint!");
@@ -161,7 +203,7 @@ pub(super) extern "C" fn v_common_breakpoint_handler() {
 // FIXME: Overflow handler could not be verified as working. Retest when possible.
 /// Overflow exception handler
 #[no_mangle]
-pub(super) extern "C" fn v_common_overflow_handler() {
+pub(super) extern "C" fn v_common_overflow_handler(tcb_ptr: *mut ThreadControlBlock) {
     let cop0_dump = CoP0Dump::load();
 
     let epc_addr = cop0_dump.epc;
@@ -172,9 +214,9 @@ pub(super) extern "C" fn v_common_overflow_handler() {
 
 /// Syscall exception handler
 #[no_mangle]
-pub(super) extern "C" fn v_common_syscall_handler() {
+pub(super) extern "C" fn v_common_syscall_handler(tcb_ptr: *mut ThreadControlBlock) {
     const SYSCALL_CODE_FIELD_MASK: u32 = 0x3FF_FFC0;
-    
+
     let cop0_dump = CoP0Dump::load();
 
     let epc_addr = cop0_dump.epc.as_raw_ptr();
@@ -191,6 +233,12 @@ pub(super) extern "C" fn v_common_syscall_handler() {
 
     println_ee!("SYSCALL: Syscall triggered. In branch delay slot: {in_delay_slot}");
     println_ee!("SYSCALL: EPC address: {epc_addr:?}, instruction address: {syscall_addr:?}, code field: {syscall_code_field:#0x}");
+
+    if let Some(tcb) = unsafe {tcb_ptr.as_ref()} {
+        println_ee!("SYSCALL: TCB at time of exception: {tcb:#?}");
+    } else {
+        println_ee!("SYSCALL: No TCB information available.");
+    };
 
     increment_epc!()
 }

@@ -18,13 +18,15 @@ fn main() -> ! {
 
     println_ee!("main - Status: {status:?}");
 
-    bios::sleep_thread();
+    // bios::sleep_thread();
 
-    println_ee!("main - Thread woke up!");
+    // println_ee!("main - Thread woke up!");
 
     println_ee!("main - Testing overflow.");
 
     trigger_overflow_exception();
+    
+    bios::set_gs_crt(bios::Interlacing::Noninterlaced, bios::VideoMode::Pal, bios::FieldFrameMode::Frame);
 
     println_ee!("main - Returned.");
 

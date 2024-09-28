@@ -26,6 +26,7 @@ pub mod cop0;
 pub mod exceptions;
 pub mod interrupts;
 pub mod panic;
+pub mod thread;
 
 // Static data initialised to zero goes in the .bss segment, which is essentially a pointer to
 // uninitialised memory. We need to zero .bss before the main program runs.
