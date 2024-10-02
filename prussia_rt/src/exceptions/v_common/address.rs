@@ -1,5 +1,3 @@
-use core::arch::asm;
-
 use prussia_debug::println_ee;
 
 use crate::{cop0::CoP0Dump, thread::ThreadControlBlock};
@@ -28,7 +26,7 @@ pub unsafe fn trigger_addrload_exception() {
     println_ee!("Returned from exception handler.");
 }
 
-/// Overflow exception handler
+/// Address (instruction fetch/load) exception handler
 #[no_mangle]
 pub(super) extern "C" fn v_common_addr_load_handler(tcb_ptr: *mut ThreadControlBlock) {
     let cop0_dump = CoP0Dump::load();
@@ -36,4 +34,18 @@ pub(super) extern "C" fn v_common_addr_load_handler(tcb_ptr: *mut ThreadControlB
     let epc_addr = cop0_dump.epc;
 
     println_ee!("ADDRLOAD: Instruction Fetch/Load error encountered.");
+
+    println_ee!("ADDRLOAD: Returning.");
+}
+
+/// Address (store) exception handler
+#[no_mangle]
+pub(super) extern "C" fn v_common_addr_store_handler(tcb_ptr: *mut ThreadControlBlock) {
+    let cop0_dump = CoP0Dump::load();
+
+    let epc_addr = cop0_dump.epc;
+
+    println_ee!("ADDRSTOR: Store error encountered.");
+
+    println_ee!("ADDRSTOR: Returning.");
 }

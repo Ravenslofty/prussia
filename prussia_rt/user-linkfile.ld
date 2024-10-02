@@ -26,30 +26,30 @@ SECTIONS {
         *(.text .text.*);
     } > MAIN_REGION :text
 
-    /* The .data segment contains mutable globals initialised with a non-zero value. */
     .sdata ALIGN(128) : {
         *(.sdata .sdata.*);
-    }
+    } > MAIN_REGION
 
+    /* The .data segment contains mutable globals initialised with a non-zero value. */
     .data ALIGN(128) : {
         *(.data .data.*);
-    }
+    } > MAIN_REGION
 
     /* The .rodata segment contains constant globals. */
     .rodata ALIGN(128) : {
         *(.rodata .rodata.*);
-    }
+    } > MAIN_REGION
 
     /* The .bss segment contains mutable globals initialised with a zero value. */
     .sbss ALIGN(128) : {
         START_OF_BSS = .;
         *(.sbss .sbss.*);
-    }
+    } > MAIN_REGION
 
     .bss ALIGN(128) : {
         *(.bss .bss.*);
         END_OF_BSS = .;
-    }
+    } > MAIN_REGION
 
     PROVIDE(END_OF_RAM = 0x02000000);
 
