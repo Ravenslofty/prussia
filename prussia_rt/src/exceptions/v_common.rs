@@ -1,21 +1,34 @@
+mod breakpoint;
+mod overflow;
+mod syscall;
+mod address;
+
 use core::arch::asm;
 
+use address::v_common_addr_load_handler;
+use breakpoint::v_common_breakpoint_handler;
+use overflow::v_common_overflow_handler;
 use prussia_debug::println_ee;
+use syscall::v_common_syscall_handler;
 
 use crate::{
-    cop0::{Cause, CoP0Dump, L1Exception},
-    exceptions::EXCEPTION_HANDLER_TABLE, thread::ThreadControlBlock,
+    cop0::{CoP0Dump, L1Exception},
+    exceptions::EXCEPTION_HANDLER_TABLE
 };
+
+pub use self::{breakpoint::trigger_break_exception, overflow::trigger_overflow_exception, address::trigger_addrload_exception};
 
 /// Address for the V_COMMON exception vector.
 pub(super) const V_COMMON_EXCEPTION_VECTOR: usize = 0x8000_0180;
 /// Address for the bootstrap V_COMMON exception vector.
 pub(super) const V_COMMON_EXCEPTION_BOOTSTRAP_VECTOR: usize = 0xBFC0_0380;
 
+/// Increments the EPC register by 1 instruction (4 bytes).
+#[macro_export]
 macro_rules! increment_epc {
     () => {
         unsafe {
-            asm!(
+            core::arch::asm!(
                 "
                 mfc0 $k1, $14
                 addiu $k1, 4
@@ -36,42 +49,11 @@ pub(super) fn init_v_common_handlers_table() {
     }
 
     unsafe {
+        V_COMMON_HANDLERS[4] = v_common_addr_load_handler as usize;
         V_COMMON_HANDLERS[8] = v_common_syscall_handler as usize;
         V_COMMON_HANDLERS[9] = v_common_breakpoint_handler as usize;
         V_COMMON_HANDLERS[12] = v_common_overflow_handler as usize;
     }
-}
-
-/// Purposefully trigger a break exception. For testing purposes.
-pub fn trigger_break_exception() {
-    extern "C" {
-        fn _trigger_break_exception();
-    }
-
-    println_ee!(
-        "Triggering break exception, which should call the handler at {:0>8p}",
-        EXCEPTION_HANDLER_TABLE[0].handler
-    );
-    unsafe { _trigger_break_exception() };
-    println_ee!("Returned from break exception.");
-}
-
-/// Purposefully trigger an overflow exception. For testing purposes.
-pub fn trigger_overflow_exception() {
-    println_ee!("Triggering overflow.");
-
-    unsafe {
-        asm!(
-            "
-            # Trigger overflow
-            li $t2, 0x7FFFFFFF
-            li $t3, 0x7FFFFFFF
-            add $t4, $t2, $t3
-            "
-        )
-    }
-
-    println_ee!("Exited overflow.");
 }
 
 #[no_mangle]
@@ -188,57 +170,4 @@ unsafe extern "C" fn _v_common_exception_handler() {
          .set reorder",
          options(noreturn)
     }
-}
-
-/// Breakpoint exception handler
-#[no_mangle]
-pub(super) extern "C" fn v_common_breakpoint_handler(tcb_ptr: *mut ThreadControlBlock) {
-    let cop0_dump = CoP0Dump::load();
-
-    println_ee!("BREAK: Encountered breakpoint!");
-
-    increment_epc!()
-}
-
-// FIXME: Overflow handler could not be verified as working. Retest when possible.
-/// Overflow exception handler
-#[no_mangle]
-pub(super) extern "C" fn v_common_overflow_handler(tcb_ptr: *mut ThreadControlBlock) {
-    let cop0_dump = CoP0Dump::load();
-
-    let epc_addr = cop0_dump.epc;
-    let erroring_addr = unsafe {epc_addr.as_raw_ptr().offset(-1)};
-
-    println_ee!("OVERFLOW: Overflow occurred! Erroring address: {erroring_addr:?}, returning address: {epc_addr:?}");
-}
-
-/// Syscall exception handler
-#[no_mangle]
-pub(super) extern "C" fn v_common_syscall_handler(tcb_ptr: *mut ThreadControlBlock) {
-    const SYSCALL_CODE_FIELD_MASK: u32 = 0x3FF_FFC0;
-
-    let cop0_dump = CoP0Dump::load();
-
-    let epc_addr = cop0_dump.epc.as_raw_ptr();
-    let in_delay_slot = cop0_dump.cause.intersection(Cause::BD) == Cause::BD;
-    let syscall_addr = if in_delay_slot {
-        unsafe {
-            epc_addr.offset(1)
-        }
-    } else {
-        epc_addr
-    };
-
-    let syscall_code_field = (syscall_addr as u32) & SYSCALL_CODE_FIELD_MASK >> 6;
-
-    println_ee!("SYSCALL: Syscall triggered. In branch delay slot: {in_delay_slot}");
-    println_ee!("SYSCALL: EPC address: {epc_addr:?}, instruction address: {syscall_addr:?}, code field: {syscall_code_field:#0x}");
-
-    if let Some(tcb) = unsafe {tcb_ptr.as_ref()} {
-        println_ee!("SYSCALL: TCB at time of exception: {tcb:#?}");
-    } else {
-        println_ee!("SYSCALL: No TCB information available.");
-    };
-
-    increment_epc!()
 }

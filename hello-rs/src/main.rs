@@ -2,7 +2,7 @@
 #![no_main]
 
 use debug::println_ee;
-use rt::{cop0::Status, exceptions::trigger_overflow_exception};
+use rt::{cop0::Status, exceptions::{trigger_overflow_exception, trigger_addrload_exception}};
 
 extern crate prussia_debug as debug;
 extern crate prussia_bios as bios;
@@ -24,9 +24,11 @@ fn main() -> ! {
 
     println_ee!("main - Testing overflow.");
 
-    trigger_overflow_exception();
+    // trigger_overflow_exception();
     
-    bios::set_gs_crt(bios::Interlacing::Noninterlaced, bios::VideoMode::Pal, bios::FieldFrameMode::Frame);
+    // bios::set_gs_crt(bios::Interlacing::Noninterlaced, bios::VideoMode::Pal, bios::FieldFrameMode::Frame);
+
+    unsafe { trigger_addrload_exception() };
 
     println_ee!("main - Returned.");
 
