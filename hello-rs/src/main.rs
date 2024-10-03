@@ -2,7 +2,12 @@
 #![no_main]
 
 use debug::println_ee;
-use rt::{cop0::Status, exceptions::{trigger_overflow_exception, trigger_addrload_exception}};
+use rt::{cop0::Status, exceptions::{
+    trgger_reserved_instruction_handler,
+    trigger_addrload_exception,
+    trigger_bus_load_exception,
+    trigger_overflow_exception, trigger_trap_exception
+}};
 
 extern crate prussia_debug as debug;
 extern crate prussia_bios as bios;
@@ -28,7 +33,12 @@ fn main() -> ! {
     
     // bios::set_gs_crt(bios::Interlacing::Noninterlaced, bios::VideoMode::Pal, bios::FieldFrameMode::Frame);
 
-    unsafe { trigger_addrload_exception() };
+    // unsafe { trigger_addrload_exception() };
+
+    // unsafe { trgger_reserved_instruction_handler() };
+    unsafe { trigger_trap_exception() };
+
+    // unsafe { trigger_bus_load_exception() };
 
     println_ee!("main - Returned.");
 

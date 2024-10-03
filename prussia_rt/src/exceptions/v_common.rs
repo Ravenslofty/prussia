@@ -5,6 +5,7 @@ mod address;
 mod bus;
 mod reserved_instruction;
 mod cop_unusable;
+mod trap;
 
 use core::arch::asm;
 
@@ -16,15 +17,17 @@ use overflow::v_common_overflow_handler;
 use prussia_debug::println_ee;
 use reserved_instruction::v_common_reserved_instruction_handler;
 use syscall::v_common_syscall_handler;
+use trap::v_common_trap_handler;
 
 use crate::cop0::{CoP0Dump, L1Exception};
 
 pub use self::{
-    breakpoint::trigger_break_exception,
-    overflow::trigger_overflow_exception,
     address::trigger_addrload_exception,
+    breakpoint::trigger_break_exception,
     bus::trigger_bus_load_exception,
+    overflow::trigger_overflow_exception,
     reserved_instruction::trgger_reserved_instruction_handler,
+    trap::trigger_trap_exception,
 };
 
 /// Address for the V_COMMON exception vector.
@@ -69,6 +72,7 @@ pub(super) fn init_v_common_handlers_table() {
         V_COMMON_HANDLERS[10] = v_common_reserved_instruction_handler as usize;
         V_COMMON_HANDLERS[11] = v_common_cop_unusable_handler as usize;
         V_COMMON_HANDLERS[12] = v_common_overflow_handler as usize;
+        V_COMMON_HANDLERS[13] = v_common_trap_handler as usize;
     }
 }
 
