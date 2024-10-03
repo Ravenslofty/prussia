@@ -19,7 +19,7 @@ use reserved_instruction::v_common_reserved_instruction_handler;
 use syscall::v_common_syscall_handler;
 use trap::v_common_trap_handler;
 
-use crate::cop0::{CoP0Dump, L1Exception};
+use crate::{cop0::{CoP0Dump, L1Exception}, thread::ThreadControlBlock};
 
 pub use self::{
     address::trigger_addrload_exception,
@@ -77,19 +77,23 @@ pub(super) fn init_v_common_handlers_table() {
 }
 
 #[no_mangle]
-pub(super) extern "C" fn unimplemented_v_common_handler() {
-    println_ee!("Unimplemented v_common exception!");
+pub(super) extern "C" fn unimplemented_v_common_handler(tcb_ptr: *mut ThreadControlBlock) {
+    println_ee!("EXCUNKWN: Unimplemented/unrecognised V_COMMON exception!");
 
     let cop0_dump = CoP0Dump::load();
 
-    println_ee!("CoP0 registers: {cop0_dump:#?}");
+    println_ee!("EXCUNKWN: CoP0 registers: {cop0_dump:#?}");
 
-    let Some(exc_code) = L1Exception::try_from_common_cause(cop0_dump.cause) else {
-        println_ee!("UNKNOWN CAUSE CODE. RETURNING PREMATURELY.");
-        return;
+    if let Some(tcb) = unsafe {tcb_ptr.as_ref()} {
+        println_ee!("EXCUNKWN: TCB at time of exception: {tcb:#?}");
+    } else {
+        println_ee!("EXCUNKWN: No TCB information available.");
     };
 
-    println_ee!("Exception cause: {:?}", exc_code);
+    match L1Exception::try_from_common_cause(cop0_dump.cause) {
+        Some(exc_code) => println_ee!("EXCUNKWN: Exception cause: {:?}", exc_code),
+        None => println_ee!("EXCUNKWN: UNKNOWN CAUSE CODE. Cause: {:?}.", cop0_dump.cause),
+    }
 
     loop {}
 
