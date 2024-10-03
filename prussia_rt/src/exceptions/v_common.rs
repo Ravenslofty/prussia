@@ -4,12 +4,14 @@ mod syscall;
 mod address;
 mod bus;
 mod reserved_instruction;
+mod cop_unusable;
 
 use core::arch::asm;
 
 use address::{v_common_addr_load_handler, v_common_addr_store_handler};
 use breakpoint::v_common_breakpoint_handler;
 use bus::{v_common_bus_load_handler, v_common_bus_store_handler};
+use cop_unusable::v_common_cop_unusable_handler;
 use overflow::v_common_overflow_handler;
 use prussia_debug::println_ee;
 use reserved_instruction::v_common_reserved_instruction_handler;
@@ -65,6 +67,7 @@ pub(super) fn init_v_common_handlers_table() {
         V_COMMON_HANDLERS[8] = v_common_syscall_handler as usize;
         V_COMMON_HANDLERS[9] = v_common_breakpoint_handler as usize;
         V_COMMON_HANDLERS[10] = v_common_reserved_instruction_handler as usize;
+        V_COMMON_HANDLERS[11] = v_common_cop_unusable_handler as usize;
         V_COMMON_HANDLERS[12] = v_common_overflow_handler as usize;
     }
 }
