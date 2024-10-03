@@ -13,7 +13,7 @@ pub(super) extern "C" fn v_common_syscall_handler(tcb_ptr: *mut ThreadControlBlo
     let in_delay_slot = cop0_dump.cause.intersection(Cause::BD) == Cause::BD;
     let syscall_addr = if in_delay_slot {
         unsafe {
-            epc_addr.offset(1)
+            epc_addr.offset(-1)
         }
     } else {
         epc_addr

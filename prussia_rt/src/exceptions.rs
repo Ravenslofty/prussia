@@ -11,7 +11,7 @@ use self::v_common::{
     V_COMMON_EXCEPTION_BOOTSTRAP_VECTOR, V_COMMON_EXCEPTION_VECTOR,
 };
 
-pub use self::v_common::{trigger_break_exception, trigger_overflow_exception, trigger_addrload_exception, trigger_bus_load_exception};
+pub use self::v_common::{trigger_break_exception, trigger_overflow_exception, trigger_addrload_exception, trigger_bus_load_exception, trgger_reserved_instruction_handler};
 
 /// Address pointer to an EE-side exception handler.
 pub struct EEExceptionVector {

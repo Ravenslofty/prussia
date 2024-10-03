@@ -3,6 +3,7 @@ mod overflow;
 mod syscall;
 mod address;
 mod bus;
+mod reserved_instruction;
 
 use core::arch::asm;
 
@@ -11,11 +12,18 @@ use breakpoint::v_common_breakpoint_handler;
 use bus::{v_common_bus_load_handler, v_common_bus_store_handler};
 use overflow::v_common_overflow_handler;
 use prussia_debug::println_ee;
+use reserved_instruction::v_common_reserved_instruction_handler;
 use syscall::v_common_syscall_handler;
 
 use crate::cop0::{CoP0Dump, L1Exception};
 
-pub use self::{breakpoint::trigger_break_exception, overflow::trigger_overflow_exception, address::trigger_addrload_exception, bus::trigger_bus_load_exception};
+pub use self::{
+    breakpoint::trigger_break_exception,
+    overflow::trigger_overflow_exception,
+    address::trigger_addrload_exception,
+    bus::trigger_bus_load_exception,
+    reserved_instruction::trgger_reserved_instruction_handler,
+};
 
 /// Address for the V_COMMON exception vector.
 pub(super) const V_COMMON_EXCEPTION_VECTOR: usize = 0x8000_0180;
@@ -23,6 +31,8 @@ pub(super) const V_COMMON_EXCEPTION_VECTOR: usize = 0x8000_0180;
 pub(super) const V_COMMON_EXCEPTION_BOOTSTRAP_VECTOR: usize = 0xBFC0_0380;
 
 /// Increments the EPC register by 1 instruction (4 bytes).
+/// 
+/// WARNING: This **DOES NOT** account for branch delay slots.
 #[macro_export]
 macro_rules! increment_epc {
     () => {
@@ -54,6 +64,7 @@ pub(super) fn init_v_common_handlers_table() {
         V_COMMON_HANDLERS[7] = v_common_bus_store_handler as usize;
         V_COMMON_HANDLERS[8] = v_common_syscall_handler as usize;
         V_COMMON_HANDLERS[9] = v_common_breakpoint_handler as usize;
+        V_COMMON_HANDLERS[10] = v_common_reserved_instruction_handler as usize;
         V_COMMON_HANDLERS[12] = v_common_overflow_handler as usize;
     }
 }
