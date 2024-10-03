@@ -15,7 +15,7 @@ pub fn trigger_break_exception() {
     println_ee!("Returned from break exception.");
 }
 
-/// Breakpoint exception handler
+/// Breakpoint exception handler.
 #[no_mangle]
 pub(super) extern "C" fn v_common_breakpoint_handler(tcb_ptr: *mut ThreadControlBlock) {
     let cop0_dump = CoP0Dump::load();

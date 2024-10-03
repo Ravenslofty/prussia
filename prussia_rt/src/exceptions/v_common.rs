@@ -2,21 +2,20 @@ mod breakpoint;
 mod overflow;
 mod syscall;
 mod address;
+mod bus;
 
 use core::arch::asm;
 
 use address::{v_common_addr_load_handler, v_common_addr_store_handler};
 use breakpoint::v_common_breakpoint_handler;
+use bus::{v_common_bus_load_handler, v_common_bus_store_handler};
 use overflow::v_common_overflow_handler;
 use prussia_debug::println_ee;
 use syscall::v_common_syscall_handler;
 
-use crate::{
-    cop0::{CoP0Dump, L1Exception},
-    exceptions::EXCEPTION_HANDLER_TABLE
-};
+use crate::cop0::{CoP0Dump, L1Exception};
 
-pub use self::{breakpoint::trigger_break_exception, overflow::trigger_overflow_exception, address::trigger_addrload_exception};
+pub use self::{breakpoint::trigger_break_exception, overflow::trigger_overflow_exception, address::trigger_addrload_exception, bus::trigger_bus_load_exception};
 
 /// Address for the V_COMMON exception vector.
 pub(super) const V_COMMON_EXCEPTION_VECTOR: usize = 0x8000_0180;
@@ -51,6 +50,8 @@ pub(super) fn init_v_common_handlers_table() {
     unsafe {
         V_COMMON_HANDLERS[4] = v_common_addr_load_handler as usize;
         V_COMMON_HANDLERS[5] = v_common_addr_store_handler as usize;
+        V_COMMON_HANDLERS[6] = v_common_bus_load_handler as usize;
+        V_COMMON_HANDLERS[7] = v_common_bus_store_handler as usize;
         V_COMMON_HANDLERS[8] = v_common_syscall_handler as usize;
         V_COMMON_HANDLERS[9] = v_common_breakpoint_handler as usize;
         V_COMMON_HANDLERS[12] = v_common_overflow_handler as usize;

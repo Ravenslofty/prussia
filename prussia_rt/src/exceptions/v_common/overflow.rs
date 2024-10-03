@@ -21,7 +21,7 @@ pub fn trigger_overflow_exception() {
 }
 
 // FIXME: Overflow handler could not be verified as working. Retest when possible.
-/// Overflow exception handler
+/// Overflow exception handler.
 #[no_mangle]
 pub(super) extern "C" fn v_common_overflow_handler(tcb_ptr: *mut ThreadControlBlock) {
     let cop0_dump = CoP0Dump::load();

@@ -2,7 +2,7 @@ use prussia_debug::println_ee;
 
 use crate::{cop0::{Cause, CoP0Dump}, increment_epc, thread::ThreadControlBlock};
 
-/// Syscall exception handler
+/// Syscall exception handler.
 #[no_mangle]
 pub(super) extern "C" fn v_common_syscall_handler(tcb_ptr: *mut ThreadControlBlock) {
     const SYSCALL_CODE_FIELD_MASK: u32 = 0x3FF_FFC0;
