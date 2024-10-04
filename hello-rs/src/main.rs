@@ -3,10 +3,7 @@
 
 use debug::println_ee;
 use rt::{cop0::Status, exceptions::{
-    trgger_reserved_instruction_handler,
-    trigger_addrload_exception,
-    trigger_bus_load_exception,
-    trigger_overflow_exception, trigger_trap_exception
+    trgger_reserved_instruction_handler, trigger_addrload_exception, trigger_bus_load_exception, trigger_overflow_exception, trigger_tlb_modified_exception, trigger_trap_exception
 }};
 
 extern crate prussia_debug as debug;
@@ -36,7 +33,8 @@ fn main() -> ! {
     // unsafe { trigger_addrload_exception() };
 
     // unsafe { trgger_reserved_instruction_handler() };
-    unsafe { trigger_trap_exception() };
+    // unsafe { trigger_trap_exception() };
+    unsafe { trigger_tlb_modified_exception() };
 
     // unsafe { trigger_bus_load_exception() };
 

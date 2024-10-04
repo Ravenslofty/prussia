@@ -6,6 +6,7 @@ mod bus;
 mod reserved_instruction;
 mod cop_unusable;
 mod trap;
+mod tlb_modified;
 
 use core::arch::asm;
 
@@ -17,6 +18,7 @@ use overflow::v_common_overflow_handler;
 use prussia_debug::println_ee;
 use reserved_instruction::v_common_reserved_instruction_handler;
 use syscall::v_common_syscall_handler;
+use tlb_modified::v_common_tlb_modified_handler;
 use trap::v_common_trap_handler;
 
 use crate::{cop0::{CoP0Dump, L1Exception}, thread::ThreadControlBlock};
@@ -28,6 +30,7 @@ pub use self::{
     overflow::trigger_overflow_exception,
     reserved_instruction::trgger_reserved_instruction_handler,
     trap::trigger_trap_exception,
+    tlb_modified::trigger_tlb_modified_exception,
 };
 
 /// Address for the V_COMMON exception vector.
@@ -63,6 +66,7 @@ pub(super) fn init_v_common_handlers_table() {
     }
 
     unsafe {
+        V_COMMON_HANDLERS[1] = v_common_tlb_modified_handler as usize;
         V_COMMON_HANDLERS[4] = v_common_addr_load_handler as usize;
         V_COMMON_HANDLERS[5] = v_common_addr_store_handler as usize;
         V_COMMON_HANDLERS[6] = v_common_bus_load_handler as usize;
