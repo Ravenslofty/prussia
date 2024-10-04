@@ -7,6 +7,7 @@ mod reserved_instruction;
 mod cop_unusable;
 mod trap;
 mod tlb_modified;
+mod tlb_invalid;
 
 use core::arch::asm;
 
@@ -18,6 +19,7 @@ use overflow::v_common_overflow_handler;
 use prussia_debug::println_ee;
 use reserved_instruction::v_common_reserved_instruction_handler;
 use syscall::v_common_syscall_handler;
+use tlb_invalid::{v_common_tlb_invalid_load_handler, v_common_tlb_invalid_store_handler};
 use tlb_modified::v_common_tlb_modified_handler;
 use trap::v_common_trap_handler;
 
@@ -67,6 +69,8 @@ pub(super) fn init_v_common_handlers_table() {
 
     unsafe {
         V_COMMON_HANDLERS[1] = v_common_tlb_modified_handler as usize;
+        V_COMMON_HANDLERS[2] = v_common_tlb_invalid_load_handler as usize;
+        V_COMMON_HANDLERS[3] = v_common_tlb_invalid_store_handler as usize;
         V_COMMON_HANDLERS[4] = v_common_addr_load_handler as usize;
         V_COMMON_HANDLERS[5] = v_common_addr_store_handler as usize;
         V_COMMON_HANDLERS[6] = v_common_bus_load_handler as usize;
