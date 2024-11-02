@@ -61,15 +61,15 @@ pub unsafe extern "C" fn _rust_start() -> ! {
         fn main() -> !;
     }
 
-    println_ee!("rt - Hello world!");
+    initialise_exception_vectors();
+
+    println_ee!("rt - Exception vectors set.");
 
     zero_bss();
 
     println_ee!("rt - BSS zero-ed out.");
 
-    initialise_exception_vectors();
-
-    println_ee!("rt - Exception vectors set.");
+    println_ee!("rt - Hello world!");
 
     main()
 }
