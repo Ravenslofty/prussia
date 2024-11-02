@@ -40,66 +40,77 @@ macro_rules! impl_newtype_from_trait {
     };
 }
 
+// TODO: Fill out remaining registers.
 /// Represents a coredump of the CoP0 registers.
 #[derive(Debug)]
 pub struct CoP0Dump {
-    /// [BadVAddr] value loaded from the BadVAddr register.
-    pub bad_v_addr: BadVAddr,
-    /// [TimerCount] value loaded from the Count register.
-    pub count: TimerCount,
-    /// [Compare] value loaded from the Compare register.
-    pub compare: Compare,
-    /// [Status] value loaded from the Status register.
-    pub status: Status,
-    /// [Cause] value loaded from the Cause register.
-    pub cause: Cause,
-    /// [EPC] value loaded from the EPC register.
-    pub epc: EPC,
-    /// [BadPAddr] value loaded from the BadPAddr register.
+    /// Represents a bad physical address which triggered a BUS exception.
+    /// Loaded from the [BadPAddr] register.
     pub bad_p_addr: BadPAddr,
-    /// [PerfCounterControl] value loaded from the Perf register.
-    pub perf: PerfCounterControl,
-    /// [PCCREvent0] value loaded from the Perf.EVENT0 register field.
-    pub perf_event0: PCCREvent0,
-    /// [PCCREvent1] value loaded from the Perf.EVENT1 register field.
-    pub perf_event1: PCCREvent1,
-    /// [PerfCounter] value loaded from the PCR0 register.
-    pub pcr0: PerfCounter,
-    /// [PerfCounter] value loaded from the PCR1 register.
-    pub pcr1: PerfCounter,
-    /// [ErrorEPC] value loaded from the ErrorEPC register.
+    /// Represents a bad virtual address for a related exception (such as TLB/address exceptions).
+    /// Loaded from the [BadVAddr] register.
+    pub bad_v_addr: BadVAddr,
+    /// Contains relevant information about the type of exception.
+    /// Loaded from the [Cause] register.
+    pub cause: Cause,
+    /// The threshold value used to trigger timer interrupts when it and [TimerCount] are equal.
+    /// Loaded from the [Compare] register.
+    pub compare: Compare,
+    /// A CPU-incremented counter which triggers timer interrupts when it becomes equal to [Compare].
+    /// Loaded from the [TimerCount] register.
+    pub count: TimerCount,
+    /// The virtual address of the exception-causing instruction. If the occurred in a branch delay slot
+    /// (see [Cause::BD]), then it represents the first instruction before the branch delay slot.
+    /// Loaded from the [EPC] register.
+    pub epc: EPC,
+    /// The virtual address of an exception-causing instruction encountered when handling another exception.
+    /// Similar to [EPC], if [Cause::BD2] is set, the address points to the first instruction before the erroring instruction.
+    /// Loaded from the [ErrorEPC] register.
     pub error_epc: ErrorEPC,
+    /// An event-counter register which contains the number of counted events at the time of exception.
+    /// This represents the raw value in the register. To see what events each counter is actually counting,
+    /// see [PCCREvent0].
+    /// Loaded from the [PerfCounter] (PCR0) register.
+    pub pcr0: PerfCounter,
+    /// An event-counter register which contains the number of counted events at the time of exception.
+    /// This represents the raw value in the register. To see what events each counter is actually counting,
+    /// see [PCCREvent1].
+    /// Loaded from the [PerfCounter] (PCR1) register.
+    pub pcr1: PerfCounter,
+    /// Controls the [PerfCounter] registers by deciding which events each register will count.
+    /// Loaded from the [PerfCounterControl] register.
+    pub perf: PerfCounterControl,
+    /// Describes what events the [PerfCounter] PCR0 register is counting.
+    /// Configured by the [PerfCounterControl::EVENT0] register.
+    /// Loaded from the [PCCREvent0] register.
+    pub perf_event0: PCCREvent0,
+    /// Describes what events the [PerfCounter] PCR1 register is counting.
+    /// Configured by the [PerfCounterControl::EVENT1] register.
+    /// Loaded from the [PCCREvent1] register.
+    pub perf_event1: PCCREvent1,
+    /// Provides general system status and information on the current operating modes.
+    /// Also allows controlling of exception-masking and other instruction controls.
+    /// Loaded from the [Status] register.
+    pub status: Status,
 }
 
 impl CoP0Dump {
     /// Dumps all register contents and constructs an instance of [CoP0Dump].
     pub fn load() -> Self {
-        let bad_v_addr = BadVAddr::load();
-        let count = TimerCount::load();
-        let compare = Compare::load();
-        let status = Status::load();
-        let cause = Cause::load();
-        let epc = EPC::load();
-        let bad_p_addr = BadPAddr::load();
-        let perf = PerfCounterControl::load();
-        let pcr0 = PerfCounter::load_pcr0();
-        let pcr1 = PerfCounter::load_pcr1();
-        let error_epc = ErrorEPC::load();
-
         Self {
-            bad_v_addr,
-            count,
-            compare,
-            status,
-            cause,
-            epc,
-            bad_p_addr,
-            perf,
-            perf_event0: perf.into(),
-            perf_event1: perf.into(),
-            pcr0,
-            pcr1,
-            error_epc,
+            bad_v_addr: BadVAddr::load(),
+            count: TimerCount::load(),
+            compare: Compare::load(),
+            status: Status::load(),
+            cause: Cause::load(),
+            epc: EPC::load(),
+            bad_p_addr: BadPAddr::load(),
+            perf: PerfCounterControl::load(),
+            perf_event0: PerfCounterControl::load().into(),
+            perf_event1: PerfCounterControl::load().into(),
+            pcr0: PerfCounter::load_pcr0(),
+            pcr1: PerfCounter::load_pcr1(),
+            error_epc: ErrorEPC::load(),
         }
     }
 
