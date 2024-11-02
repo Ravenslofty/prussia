@@ -102,6 +102,16 @@ impl CoP0Dump {
             error_epc,
         }
     }
+
+    /// Gets the returning address using the [EPC] while also checking
+    /// and accounting for if the [Cause::BD] field is true.
+    pub fn returning_addr(&self) -> u32 {
+        if self.cause.intersects(Cause::BD) {
+            self.epc.bd_offset().addr()
+        } else {
+            self.epc.addr()
+        }
+    }
 }
 
 /// A virtual address responsible for either of the below exceptions:
@@ -168,7 +178,7 @@ impl Compare {
 impl_newtype_from_trait!(Compare, u32);
 
 /// A value read from the CoP0.EPC register. The value is the returning virtual address to jump to
-/// after handling an exception.
+/// after handling an exception. This DOES NOT take into account if [Cause::BD] is true (exception occurred in a branch delay slot).
 #[derive(Debug)]
 pub struct EPC(u32);
 
@@ -185,13 +195,37 @@ impl EPC {
         unsafe { _write_epc(self.0) }
     }
 
-    /// Convert to a raw pointer. Remember to check the `Cause.BD` register field to determine if an offset is needed.
-    pub fn as_raw_ptr(&self) -> *const u32 {
-        self.0 as *const u32
+    /// Offsets the address value one unit forward (`0x4`) and returns an [EPCOffset] with the new value.
+    /// This is typically used when [Cause::BD] is `true`, meaning the exception-triggering instruction is in a branch delay slot and
+    /// the [EPC] points to the instruction immediately prior to the branch delay slot (`-0x4`).
+    pub fn bd_offset(&self) -> EPCOffset {
+        EPCOffset(self.0 + 0x4, self)
+    }
+
+    /// Get the stored address.
+    pub fn addr(&self) -> u32 {
+        self.0
     }
 }
 
 impl_newtype_from_trait!(EPC, u32);
+
+/// Represents an offset computed from an [EPC] value.
+/// The [EPCOffset] stores a reference to the original [EPC] it was computed from.
+/// The struct is read-only and should **NEVER BE MODIFIED/STORED IN EPC**.
+pub struct EPCOffset<'epc>(u32, &'epc EPC);
+
+impl<'epc> EPCOffset<'epc> {
+    /// Get original [EPC].
+    pub fn epc(&self) -> &EPC {
+        self.1
+    }
+
+    /// Get the stored address.
+    pub fn addr(&self) -> u32 {
+        self.0
+    }
+}
 
 /// A physical address read from the CoP0.BadPAddr register. The value is automatically set to the
 /// most recent physical address that caused a bus error (assuming bus error masking (Status.BEM) is disabled).

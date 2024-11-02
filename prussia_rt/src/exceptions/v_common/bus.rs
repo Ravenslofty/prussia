@@ -17,8 +17,6 @@ pub unsafe fn trigger_bus_load_exception() {
 pub(super) extern "C" fn v_common_bus_load_handler(tcb_ptr: *mut ThreadControlBlock) {
     let cop0_dump = CoP0Dump::load();
 
-    let epc_addr = cop0_dump.epc;
-
     println_ee!("BUSLOAD: Instruction Fetch/Load error encountered.");
 
     println_ee!("BUSLOAD: Returning.");
@@ -28,8 +26,6 @@ pub(super) extern "C" fn v_common_bus_load_handler(tcb_ptr: *mut ThreadControlBl
 #[no_mangle]
 pub(super) extern "C" fn v_common_bus_store_handler(tcb_ptr: *mut ThreadControlBlock) {
     let cop0_dump = CoP0Dump::load();
-
-    let epc_addr = cop0_dump.epc;
 
     println_ee!("BUSSTOR: Store error encountered.");
 

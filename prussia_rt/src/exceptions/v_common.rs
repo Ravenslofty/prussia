@@ -60,13 +60,15 @@ macro_rules! increment_epc {
 
 /// Contains 16 function vectors to V_COMMON exception code handlers.
 #[no_mangle]
-pub(super) static mut V_COMMON_HANDLERS: [usize; 16] = [0; 16];
+static mut V_COMMON_HANDLERS: [usize; 16] = [0; 16];
 
 pub(super) fn init_v_common_handlers_table() {
+    // NOTE: Check if there's a better way to lock this. Since it's set once, maybe it's alright.
+    #[allow(static_mut_refs)]
     for x in unsafe { V_COMMON_HANDLERS.iter_mut() } {
         *x = unimplemented_v_common_handler as usize;
     }
-
+    
     unsafe {
         V_COMMON_HANDLERS[1] = v_common_tlb_modified_handler as usize;
         V_COMMON_HANDLERS[2] = v_common_tlb_invalid_load_handler as usize;
@@ -84,8 +86,9 @@ pub(super) fn init_v_common_handlers_table() {
     }
 }
 
+/// The default V_COMMON exception handler for unimplemented/unexpected exceptions.
 #[no_mangle]
-pub(super) extern "C" fn unimplemented_v_common_handler(tcb_ptr: *mut ThreadControlBlock) {
+pub(super) extern "C" fn unimplemented_v_common_handler(tcb_ptr: *mut ThreadControlBlock) -> ! {
     println_ee!("EXCUNKWN: Unimplemented/unrecognised V_COMMON exception!");
 
     let cop0_dump = CoP0Dump::load();
@@ -105,7 +108,6 @@ pub(super) extern "C" fn unimplemented_v_common_handler(tcb_ptr: *mut ThreadCont
 
     loop {}
 
-    unreachable!("Unhandled exceptions should not reach this point.");
 }
 
 /// First level of exception-handling. Trampolines to the main exception handler.

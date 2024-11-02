@@ -17,8 +17,6 @@ pub unsafe fn trgger_reserved_instruction_handler() {
 pub(super) extern "C" fn v_common_reserved_instruction_handler(tcb_ptr: *mut ThreadControlBlock) {
     let cop0_dump = CoP0Dump::load();
 
-    let epc_addr = cop0_dump.epc;
-
     println_ee!("RESINSTR: Reserved instruction error encountered.");
 
     increment_epc!();

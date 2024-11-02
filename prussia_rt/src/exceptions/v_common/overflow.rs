@@ -26,10 +26,10 @@ pub fn trigger_overflow_exception() {
 pub(super) extern "C" fn v_common_overflow_handler(tcb_ptr: *mut ThreadControlBlock) {
     let cop0_dump = CoP0Dump::load();
 
-    let epc_addr = cop0_dump.epc;
-    let erroring_addr = unsafe {epc_addr.as_raw_ptr().offset(-1)};
+    let epc_addr = cop0_dump.returning_addr();
 
-    println_ee!("OVERFLOW: Overflow occurred! Erroring address: {erroring_addr:?}, returning address: {epc_addr:?}");
+    println_ee!("OVERFLOW: Overflow occurred! Erroring address: {epc_addr:?}");
+
     if let Some(tcb) = unsafe {tcb_ptr.as_ref()} {
         println_ee!("OVERFLOW: TCB at time of exception: {tcb:#?}");
     } else {

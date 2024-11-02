@@ -33,8 +33,6 @@ pub unsafe fn trigger_addrload_exception() {
 pub(super) extern "C" fn v_common_addr_load_handler(tcb_ptr: *mut ThreadControlBlock) {
     let cop0_dump = CoP0Dump::load();
 
-    let epc_addr = cop0_dump.epc;
-
     println_ee!("ADDRLOAD: Instruction Fetch/Load error encountered.");
 
     println_ee!("ADDRLOAD: Returning.");
@@ -44,8 +42,6 @@ pub(super) extern "C" fn v_common_addr_load_handler(tcb_ptr: *mut ThreadControlB
 #[no_mangle]
 pub(super) extern "C" fn v_common_addr_store_handler(tcb_ptr: *mut ThreadControlBlock) {
     let cop0_dump = CoP0Dump::load();
-
-    let epc_addr = cop0_dump.epc;
 
     println_ee!("ADDRSTOR: Store error encountered.");
 

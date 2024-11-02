@@ -2,9 +2,7 @@
 #![no_main]
 
 use debug::println_ee;
-use rt::{cop0::Status, exceptions::{
-    trgger_reserved_instruction_handler, trigger_addrload_exception, trigger_bus_load_exception, trigger_overflow_exception, trigger_tlb_modified_exception, trigger_trap_exception
-}};
+use rt::cop0::Status;
 
 extern crate prussia_debug as debug;
 extern crate prussia_bios as bios;
@@ -20,23 +18,9 @@ fn main() -> ! {
 
     println_ee!("main - Status: {status:?}");
 
-    // bios::sleep_thread();
-
-    // println_ee!("main - Thread woke up!");
-
     println_ee!("main - Testing overflow.");
-
-    // trigger_overflow_exception();
     
-    // bios::set_gs_crt(bios::Interlacing::Noninterlaced, bios::VideoMode::Pal, bios::FieldFrameMode::Frame);
-
-    // unsafe { trigger_addrload_exception() };
-
-    // unsafe { trgger_reserved_instruction_handler() };
-    // unsafe { trigger_trap_exception() };
-    unsafe { trigger_tlb_modified_exception() };
-
-    // unsafe { trigger_bus_load_exception() };
+    bios::set_gs_crt(bios::Interlacing::Noninterlaced, bios::VideoMode::Pal, bios::FieldFrameMode::Frame);
 
     println_ee!("main - Returned.");
 
