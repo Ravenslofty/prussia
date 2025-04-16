@@ -1,0 +1,41 @@
+name: Build Hello-rs
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    # Not quite building, but it's a start.
+    # - name: Setup gnu-binutils for MIPS
+    #   run: |
+    #     sudo apt update
+    #     sudo apt install -y gcc make texinfo
+    #     git clone https://sourceware.org/git/binutils-gdb.git
+    #     cd binutils-gdb
+    #     mkdir build
+    #     cd build
+    #     ../configure --target="mips64el-none-elf" --prefix=/opt/binutils-mips
+    #     make configure-host
+    #     make -j$(nproc)
+    #     sudo make install
+    #     echo "/opt/binutils-mips/bin" >> $GITHUB_PATH
+
+    - name: Install Rust toolchain (nightly + custom target)
+      uses: dtolnay/rust-toolchain@stable
+      with:
+        targets: x86_64-unknown-linux-gnu
+        toolchain: nightly
+        components: rust-std
+
+    - name: Build hello-rs
+      run: |
+        rustup show
+        cargo build --release -p hello-rs
