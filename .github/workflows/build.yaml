@@ -9,23 +9,39 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    env:
+      BINUTILS_LOC: /opt/binutils-mips
+      BINUTILS_TAG: binutils-2_44
+      BUILD_TARGET: hello-rs
+      TARGET: mips64el-none-elf
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Setup gnu-binutils for MIPS
+    - name: Cache binutils
+      id: cache-binutils
+      uses: actions/cache@v4
+      with:
+        path: ${{ env.BINUTILS_LOC }}
+        key: ${{ runner.os }}-build-${{ env.TARGET }}-${{ env.BINUTILS_TAG }}
+
+    - name: Save binutils loc to PATH
+      run: echo ${{ env.BINUTILS_LOC }}/bin >> $GITHUB_PATH
+
+    - if: ${{ steps.cache-binutils.outputs.cache-hit != 'true' }}
+      name: Setup gnu-binutils for MIPS
       run: |
         sudo apt update
         sudo apt install -y gcc make texinfo libmpc-dev bison flex
-        git clone https://sourceware.org/git/binutils-gdb.git
+        git clone --branch ${{ env.BINUTILS_TAG }} https://sourceware.org/git/binutils-gdb.git
         cd binutils-gdb
         mkdir build
         cd build
-        ../configure --target="mips64el-none-elf" --prefix=/opt/binutils-mips
+        ../configure --target="${{ env.TARGET }}" --prefix=${{ env.BINUTILS_LOC }}
         make configure-host
         make -j$(nproc)
         sudo make install
-        echo "/opt/binutils-mips/bin" >> $GITHUB_PATH
 
     - name: Install Rust toolchain (nightly + custom target)
       uses: dtolnay/rust-toolchain@stable
@@ -38,3 +54,6 @@ jobs:
       run: |
         rustup show
         cargo build --release -p hello-rs
+        which cargo
+        which rustup
+        which rustc
