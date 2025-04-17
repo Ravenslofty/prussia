@@ -1,4 +1,4 @@
-name: Build Hello-rs
+name: Build Prussia
 
 on:
   push:
@@ -13,24 +13,33 @@ jobs:
       BINUTILS_LOC: /opt/binutils-mips
       BINUTILS_TAG: binutils-2_44
       BUILD_TARGET: hello-rs
+      CARGO_LOC: /root/.cargo
+      RUSTUP_LOC: /root/.rustup
       TARGET: mips64el-none-elf
+      TOOLCHAIN: nightly
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Cache binutils
+    - name: Cache gnu-binutils
       id: cache-binutils
       uses: actions/cache@v4
       with:
         path: ${{ env.BINUTILS_LOC }}
         key: ${{ runner.os }}-build-${{ env.TARGET }}-${{ env.BINUTILS_TAG }}
 
-    - name: Save binutils loc to PATH
-      run: echo ${{ env.BINUTILS_LOC }}/bin >> $GITHUB_PATH
+    - name: Cache Rust
+      id: cache-rust
+      uses: actions/cache@v4
+      with:
+        path: |
+          ${{ env.CARGO_LOC }}
+          ${{ env.RUSTUP_LOC }}
+        key: ${{ runner.os }}-build-${{ env.TARGET }}-${{ env.TOOLCHAIN }}
 
-    - if: ${{ steps.cache-binutils.outputs.cache-hit != 'true' }}
-      name: Setup gnu-binutils for MIPS
+    - name: Setup gnu-binutils
+      if: ${{ steps.cache-binutils.outputs.cache-hit != 'true' }}
       run: |
         sudo apt update
         sudo apt install -y gcc make texinfo libmpc-dev bison flex
@@ -43,17 +52,19 @@ jobs:
         make -j$(nproc)
         sudo make install
 
-    - name: Install Rust toolchain (nightly + custom target)
+    - name: Set up Rust toolchain
+      if: ${{ steps.cache-rust.outputs.cache-hit != 'true' }}
       uses: dtolnay/rust-toolchain@stable
       with:
         targets: x86_64-unknown-linux-gnu
-        toolchain: nightly
+        toolchain: ${{ env.TOOLCHAIN }}
         components: rust-std
+
+    - name: Update PATH
+      run: |
+        echo ${{ env.BINUTILS_LOC }}/bin >> $GITHUB_PATH
+        echo ${{ env.CARGO_LOC }}/bin >> $GITHUB_PATH
 
     - name: Build hello-rs
       run: |
-        rustup show
         cargo build --release -p hello-rs
-        which cargo
-        which rustup
-        which rustc
