@@ -7,4 +7,4 @@ gen_svd:
 	@echo Done
 
 analyse_workflows:
-	zizmor -p .github/workflows/*
+	zizmor -p .github/**/*

@@ -1,0 +1,87 @@
+name: Set up build environment
+description: Sets up GNU-binutils and Rust.
+
+permissions:
+  actions: none
+  attestations: none
+  checks: none
+  contents: none
+  deployments: none
+  id-token:  none
+  issues: none
+  repository-projects: none
+  discussions: none
+  packages: none
+  pages: none
+  pull-requests: none
+  security-events: none
+  statuses: none
+
+inputs:
+  binutils-version:
+    description: A tag or branch specifying the version of binutils to install.
+    default: binutils-2_44
+    required: false
+  rust-toolchain:
+    description: The channel or version of the Rust toolchain to install.
+    default: nightly
+    required: false
+
+runs:
+  using: composite
+
+  steps:
+    - name: Configure env and paths
+      id: globals
+      run: |
+        echo "BINUTILS_LOC=/opt/binutils-mips" >> "${GITHUB_OUTPUT}"
+        echo "CARGO_LOC=/root/.cargo" >> "${GITHUB_OUTPUT}"
+        echo "RUSTUP_LOC=/root/.rustup" >> "${GITHUB_OUTPUT}"
+        echo "TARGET=mips64el-none-elf" >> "${GITHUB_OUTPUT}"
+
+    - name: Cache gnu-binutils
+      id: cache-binutils
+      uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+      with:
+        path: ${{ steps.globals.outputs.BINUTILS_LOC }}
+        key: ${{ runner.os }}-build-${{ steps.globals.outputs.TARGET }}-${{ inputs.binutils-version }}
+
+    - name: Cache Rust
+      id: cache-rust
+      uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+      with:
+        path: |
+          ${{ steps.globals.outputs.CARGO_LOC }}
+          ${{ steps.globals.outputs.RUSTUP_LOC }}
+        key: ${{ runner.os }}-build-${{ steps.globals.outputs.TARGET }}-${{ inputs.rust-toolchain }}
+
+    - name: Setup gnu-binutils
+      if: ${{ steps.cache-binutils.outputs.cache-hit != 'true' }}
+      run: |
+        sudo apt update
+        sudo apt install -y gcc make texinfo libmpc-dev bison flex
+        git clone --branch ${{ inputs.binutils-version }} https://sourceware.org/git/binutils-gdb.git
+        cd binutils-gdb
+        mkdir build
+        cd build
+        ../configure --target="${{ steps.globals.outputs.TARGET }}" --prefix=${{ steps.globals.outputs.BINUTILS_LOC }}
+        make configure-host
+        make -j$(nproc)
+        sudo make install
+
+    - name: Set up Rust toolchain
+      if: ${{ steps.cache-rust.outputs.cache-hit != 'true' }}
+      run: |
+        # Installs rustup if not found (usually the case when using gh act for local testing).
+        if ! command -v echos >/dev/null 2>&1 >/dev/null
+        then
+          curl https://sh.rustup.rs -sSf | sh -s -- -y
+          . "$HOME/.cargo/env"
+        fi
+
+        rustup update ${{ inputs.rust-toolchain }} && rustup default ${{ inputs.rust-toolchain }}
+
+    - name: Set up PATH
+      run: |
+        echo ${{ steps.globals.outputs.BINUTILS_LOC }}/bin >> $GITHUB_PATH
+        echo ${{ steps.globals.outputs.CARGO_LOC }}/bin >> $GITHUB_PATH
