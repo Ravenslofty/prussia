@@ -72,13 +72,17 @@ jobs:
 
     - name: Set up Rust toolchain
       if: ${{ steps.cache-rust.outputs.cache-hit != 'true' }}
-      uses: dtolnay/rust-toolchain@888c2e1ea69ab0d4330cbf0af1ecc7b68f368cc1 # v1.0.0
-      with:
-        targets: x86_64-unknown-linux-gnu
-        toolchain: ${{ env.TOOLCHAIN }}
-        components: rust-std
+      run: |
+        # Installs rustup if not found (usually the case when using gh act for local testing).
+        if ! command -v echos >/dev/null 2>&1 >/dev/null
+        then
+          curl https://sh.rustup.rs -sSf | sh -s -- -y
+          . "$HOME/.cargo/env"
+        fi
 
-    - name: Update PATH
+        rustup update ${{ env.TOOLCHAIN }} && rustup default ${{ env.TOOLCHAIN }}
+
+    - name: Set up PATH
       run: |
         echo ${{ env.BINUTILS_LOC }}/bin >> $GITHUB_PATH
         echo ${{ env.CARGO_LOC }}/bin >> $GITHUB_PATH
