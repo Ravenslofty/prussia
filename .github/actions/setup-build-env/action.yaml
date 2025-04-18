@@ -11,6 +11,14 @@ inputs:
     default: nightly
     required: false
 
+outputs:
+  binutils-loc:
+    description: Path to binutils. Must be added to GITHUB_PATH.
+    value: ${{ steps.paths.outputs.binutils-loc }}
+  cargo-loc:
+    description: Path to Cargo and Rustup. Must be added to GITHUB_PATH.
+    value: ${{ steps.paths.outputs.cargo-loc }}
+
 runs:
   using: composite
   steps:
@@ -21,6 +29,7 @@ runs:
         echo "CARGO_LOC=/root/.cargo" >> "${GITHUB_OUTPUT}"
         echo "RUSTUP_LOC=/root/.rustup" >> "${GITHUB_OUTPUT}"
         echo "TARGET=mips64el-none-elf" >> "${GITHUB_OUTPUT}"
+      shell: bash
 
     - name: Cache gnu-binutils
       id: cache-binutils
@@ -40,20 +49,27 @@ runs:
 
     - name: Setup gnu-binutils
       if: ${{ steps.cache-binutils.outputs.cache-hit != 'true' }}
+      env:
+        BINUTILS_VERSION: ${{ inputs.binutils-version }}
+        BINUTILS_LOC: ${{ steps.globals.outputs.BINUTILS_LOC }}
+        TARGET: ${{ steps.globals.outputs.TARGET }}
       run: |
         sudo apt update
         sudo apt install -y gcc make texinfo libmpc-dev bison flex
-        git clone --branch ${{ inputs.binutils-version }} https://sourceware.org/git/binutils-gdb.git
+        git clone --branch "$BINUTILS_VERSION" https://sourceware.org/git/binutils-gdb.git
         cd binutils-gdb
         mkdir build
         cd build
-        ../configure --target="${{ steps.globals.outputs.TARGET }}" --prefix=${{ steps.globals.outputs.BINUTILS_LOC }}
+        ../configure --target=$TARGET --prefix=$BINUTILS_LOC
         make configure-host
         make -j$(nproc)
         sudo make install
+      shell: bash
 
     - name: Set up Rust toolchain
       if: ${{ steps.cache-rust.outputs.cache-hit != 'true' }}
+      env:
+        RUST_TOOLCHAIN: ${{ inputs.rust-toolchain }}
       run: |
         # Installs rustup if not found (usually the case when using gh act for local testing).
         if ! command -v echos >/dev/null 2>&1 >/dev/null
@@ -62,9 +78,15 @@ runs:
           . "$HOME/.cargo/env"
         fi
 
-        rustup update ${{ inputs.rust-toolchain }} && rustup default ${{ inputs.rust-toolchain }}
+        rustup update $RUST_TOOLCHAIN && rustup default $RUST_TOOLCHAIN
+      shell: bash
 
-    - name: Set up PATH
+    - name: Output paths
+      id: paths
+      env:
+        BINUTILS_LOC: ${{ steps.globals.outputs.BINUTILS_LOC }}
+        CARGO_LOC: ${{ steps.globals.outputs.CARGO_LOC }}
       run: |
-        echo ${{ steps.globals.outputs.BINUTILS_LOC }}/bin >> $GITHUB_PATH
-        echo ${{ steps.globals.outputs.CARGO_LOC }}/bin >> $GITHUB_PATH
+        echo "binutils-loc=$BINUTILS_LOC/bin" >> $GITHUB_OUTPUT
+        echo "cargo-loc=$CARGO_LOC/bin" >> $GITHUB_OUTPUT
+      shell: bash

@@ -33,11 +33,21 @@ jobs:
         persist-credentials: false
 
     - name: Set up build env
+      id: build-env
       uses: ./.github/actions/setup-build-env
+
+    - name: Set up PATH
+      env:
+        BINUTILS_LOC: ${{ steps.build-env.outputs.binutils-loc }}
+        CARGO_LOC: ${{ steps.build-env.outputs.cargo-loc }}
+      run: |
+        echo $BINUTILS_LOC >> $GITHUB_PATH
+        echo $CARGO_LOC >> $GITHUB_PATH
 
     - name: Assemble ASM deps
       working-directory: ./prussia_rt
-      run: ./rebuild-asm-lib.sh
+      run: |
+        ./rebuild-asm-lib.sh
 
     - name: Build hello-rs
       run: |
