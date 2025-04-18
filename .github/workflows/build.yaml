@@ -1,0 +1,96 @@
+name: Build Prussia
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+permissions:
+  actions: none
+  attestations: none
+  checks: none
+  contents: none
+  deployments: none
+  id-token:  none
+  issues: none
+  repository-projects: none
+  discussions: none
+  packages: none
+  pages: none
+  pull-requests: none
+  security-events: none
+  statuses: none
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      BINUTILS_LOC: /opt/binutils-mips
+      BINUTILS_TAG: binutils-2_44
+      CARGO_LOC: /root/.cargo
+      RUSTUP_LOC: /root/.rustup
+      TARGET: mips64el-none-elf
+      TOOLCHAIN: nightly
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938 # v4.2.0
+      with:
+        persist-credentials: false
+
+    - name: Cache gnu-binutils
+      id: cache-binutils
+      uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+      with:
+        path: ${{ env.BINUTILS_LOC }}
+        key: ${{ runner.os }}-build-${{ env.TARGET }}-${{ env.BINUTILS_TAG }}
+
+    - name: Cache Rust
+      id: cache-rust
+      uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+      with:
+        path: |
+          ${{ env.CARGO_LOC }}
+          ${{ env.RUSTUP_LOC }}
+        key: ${{ runner.os }}-build-${{ env.TARGET }}-${{ env.TOOLCHAIN }}
+
+    - name: Setup gnu-binutils
+      if: ${{ steps.cache-binutils.outputs.cache-hit != 'true' }}
+      run: |
+        sudo apt update
+        sudo apt install -y gcc make texinfo libmpc-dev bison flex
+        git clone --branch ${{ env.BINUTILS_TAG }} https://sourceware.org/git/binutils-gdb.git
+        cd binutils-gdb
+        mkdir build
+        cd build
+        ../configure --target="${{ env.TARGET }}" --prefix=${{ env.BINUTILS_LOC }}
+        make configure-host
+        make -j$(nproc)
+        sudo make install
+
+    - name: Set up Rust toolchain
+      if: ${{ steps.cache-rust.outputs.cache-hit != 'true' }}
+      uses: dtolnay/rust-toolchain@888c2e1ea69ab0d4330cbf0af1ecc7b68f368cc1 # v1.0.0
+      with:
+        targets: x86_64-unknown-linux-gnu
+        toolchain: ${{ env.TOOLCHAIN }}
+        components: rust-std
+
+    - name: Update PATH
+      run: |
+        echo ${{ env.BINUTILS_LOC }}/bin >> $GITHUB_PATH
+        echo ${{ env.CARGO_LOC }}/bin >> $GITHUB_PATH
+
+    - name: Assemble ASM deps
+      working-directory: ./prussia_rt
+      run: ./rebuild-asm-lib.sh
+
+    - name: Build hello-rs
+      run: |
+        cargo build --release -p hello-rs
+
+    - name: Build biostation
+      run: |
+        cargo build --release -p biostation
