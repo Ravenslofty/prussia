@@ -12,7 +12,6 @@ jobs:
     env:
       BINUTILS_LOC: /opt/binutils-mips
       BINUTILS_TAG: binutils-2_44
-      BUILD_TARGET: hello-rs
       CARGO_LOC: /root/.cargo
       RUSTUP_LOC: /root/.rustup
       TARGET: mips64el-none-elf
@@ -65,6 +64,14 @@ jobs:
         echo ${{ env.BINUTILS_LOC }}/bin >> $GITHUB_PATH
         echo ${{ env.CARGO_LOC }}/bin >> $GITHUB_PATH
 
+    - name: Assemble ASM deps
+      working-directory: ./prussia_rt
+      run: ./rebuild-asm-lib.sh
+
     - name: Build hello-rs
       run: |
         cargo build --release -p hello-rs
+
+    - name: Build biostation
+      run: |
+        cargo build --release -p biostation
