@@ -36,7 +36,16 @@ jobs:
         persist-credentials: false
 
     - name: Set up build env
+      id: build-env
       uses: ./.github/actions/setup-build-env
+
+    - name: Set up PATH
+      env:
+        BINUTILS_LOC: ${{ steps.build-env.outputs.binutils-loc }}
+        CARGO_LOC: ${{ steps.build-env.outputs.cargo-loc }}
+      run: |
+        echo $BINUTILS_LOC >> $GITHUB_PATH
+        echo $CARGO_LOC >> $GITHUB_PATH
 
     - name: Audit checks
       uses: rustsec/audit-check@69366f33c96575abad1ee0dba8212993eecbe998
