@@ -5,3 +5,6 @@ gen_svd:
 	@echo Formatting
 	@rustfmt playstation2-pac-rs/src/lib.rs
 	@echo Done
+
+analyse_workflows:
+	zizmor -p .github/workflows/*
