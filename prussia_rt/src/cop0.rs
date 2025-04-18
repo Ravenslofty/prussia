@@ -1,6 +1,6 @@
 //! Coprocessor 0 manipulation routines.
 
-use core::arch::{asm, global_asm};
+use core::{arch::asm, fmt::Display};
 
 use bitflags::bitflags;
 
@@ -24,6 +24,107 @@ extern "C" {
     fn _write_pcr1(pcr1: u32);
 }
 
+macro_rules! impl_newtype_from_trait {
+    ($newtype: ident, $inner: ident) => {
+        impl From<$inner> for $newtype {
+            fn from(i: $inner) -> Self {
+                Self(i)
+            }
+        }
+
+        impl From<$newtype> for $inner {
+            fn from(nt: $newtype) -> Self {
+                nt.0
+            }
+        }
+    };
+}
+
+// TODO: Fill out remaining registers.
+/// Represents a coredump of the CoP0 registers.
+#[derive(Debug)]
+pub struct CoP0Dump {
+    /// Represents a bad physical address which triggered a BUS exception.
+    /// Loaded from the [BadPAddr] register.
+    pub bad_p_addr: BadPAddr,
+    /// Represents a bad virtual address for a related exception (such as TLB/address exceptions).
+    /// Loaded from the [BadVAddr] register.
+    pub bad_v_addr: BadVAddr,
+    /// Contains relevant information about the type of exception.
+    /// Loaded from the [Cause] register.
+    pub cause: Cause,
+    /// The threshold value used to trigger timer interrupts when it and [TimerCount] are equal.
+    /// Loaded from the [Compare] register.
+    pub compare: Compare,
+    /// A CPU-incremented counter which triggers timer interrupts when it becomes equal to [Compare].
+    /// Loaded from the [TimerCount] register.
+    pub count: TimerCount,
+    /// The virtual address of the exception-causing instruction. If the occurred in a branch delay slot
+    /// (see [Cause::BD]), then it represents the first instruction before the branch delay slot.
+    /// Loaded from the [EPC] register.
+    pub epc: EPC,
+    /// The virtual address of an exception-causing instruction encountered when handling another exception.
+    /// Similar to [EPC], if [Cause::BD2] is set, the address points to the first instruction before the erroring instruction.
+    /// Loaded from the [ErrorEPC] register.
+    pub error_epc: ErrorEPC,
+    /// An event-counter register which contains the number of counted events at the time of exception.
+    /// This represents the raw value in the register. To see what events each counter is actually counting,
+    /// see [PCCREvent0].
+    /// Loaded from the [PerfCounter] (PCR0) register.
+    pub pcr0: PerfCounter,
+    /// An event-counter register which contains the number of counted events at the time of exception.
+    /// This represents the raw value in the register. To see what events each counter is actually counting,
+    /// see [PCCREvent1].
+    /// Loaded from the [PerfCounter] (PCR1) register.
+    pub pcr1: PerfCounter,
+    /// Controls the [PerfCounter] registers by deciding which events each register will count.
+    /// Loaded from the [PerfCounterControl] register.
+    pub perf: PerfCounterControl,
+    /// Describes what events the [PerfCounter] PCR0 register is counting.
+    /// Configured by the [PerfCounterControl::EVENT0] register.
+    /// Loaded from the [PCCREvent0] register.
+    pub perf_event0: PCCREvent0,
+    /// Describes what events the [PerfCounter] PCR1 register is counting.
+    /// Configured by the [PerfCounterControl::EVENT1] register.
+    /// Loaded from the [PCCREvent1] register.
+    pub perf_event1: PCCREvent1,
+    /// Provides general system status and information on the current operating modes.
+    /// Also allows controlling of exception-masking and other instruction controls.
+    /// Loaded from the [Status] register.
+    pub status: Status,
+}
+
+impl CoP0Dump {
+    /// Dumps all register contents and constructs an instance of [CoP0Dump].
+    pub fn load() -> Self {
+        Self {
+            bad_v_addr: BadVAddr::load(),
+            count: TimerCount::load(),
+            compare: Compare::load(),
+            status: Status::load(),
+            cause: Cause::load(),
+            epc: EPC::load(),
+            bad_p_addr: BadPAddr::load(),
+            perf: PerfCounterControl::load(),
+            perf_event0: PerfCounterControl::load().into(),
+            perf_event1: PerfCounterControl::load().into(),
+            pcr0: PerfCounter::load_pcr0(),
+            pcr1: PerfCounter::load_pcr1(),
+            error_epc: ErrorEPC::load(),
+        }
+    }
+
+    /// Gets the returning address using the [EPC] while also checking
+    /// and accounting for if the [Cause::BD] field is true.
+    pub fn returning_addr(&self) -> u32 {
+        if self.cause.intersects(Cause::BD) {
+            self.epc.bd_offset().addr()
+        } else {
+            self.epc.addr()
+        }
+    }
+}
+
 /// A virtual address responsible for either of the below exceptions:
 /// * TLB Invalid
 /// * TLB Modified
@@ -41,7 +142,9 @@ impl BadVAddr {
     }
 }
 
-/// A value read from the CoP0.Status register. The register increments every CPU clock cycle.
+impl_newtype_from_trait!(BadVAddr, u32);
+
+/// A value read from the CoP0.Count register. The register increments every CPU clock cycle.
 /// This register, when equal to the CoP0.Compare register, signals a timer interrupt.
 /// FIXME: Pick a method, discard the other.
 #[derive(Debug)]
@@ -55,11 +158,13 @@ impl TimerCount {
         TimerCount(count)
     }
 
-    /// Write [Self] to the _CoP0.Count_ register (`$9`).
+    /// Write [TimerCount] to the _CoP0.Count_ register (`$9`).
     pub fn store(self) {
         unsafe { _write_timercount(self.0) }
     }
 }
+
+impl_newtype_from_trait!(TimerCount, u32);
 
 /// A value read from the CoP0.Compare register. The register acts as a timer;
 /// when the Count register becomes equal to the Compare register, the interrupt bit in the Cause
@@ -81,8 +186,10 @@ impl Compare {
     }
 }
 
+impl_newtype_from_trait!(Compare, u32);
+
 /// A value read from the CoP0.EPC register. The value is the returning virtual address to jump to
-/// after handling an exception.
+/// after handling an exception. This DOES NOT take into account if [Cause::BD] is true (exception occurred in a branch delay slot).
 #[derive(Debug)]
 pub struct EPC(u32);
 
@@ -97,6 +204,37 @@ impl EPC {
     /// Write [Self] to the _CoP0.EPC_ register (`$14`).
     pub fn store(self) {
         unsafe { _write_epc(self.0) }
+    }
+
+    /// Offsets the address value one unit forward (`0x4`) and returns an [EPCOffset] with the new value.
+    /// This is typically used when [Cause::BD] is `true`, meaning the exception-triggering instruction is in a branch delay slot and
+    /// the [EPC] points to the instruction immediately prior to the branch delay slot (`-0x4`).
+    pub fn bd_offset(&self) -> EPCOffset {
+        EPCOffset(self.0 + 0x4, self)
+    }
+
+    /// Get the stored address.
+    pub fn addr(&self) -> u32 {
+        self.0
+    }
+}
+
+impl_newtype_from_trait!(EPC, u32);
+
+/// Represents an offset computed from an [EPC] value.
+/// The [EPCOffset] stores a reference to the original [EPC] it was computed from.
+/// The struct is read-only and should **NEVER BE MODIFIED/STORED IN EPC**.
+pub struct EPCOffset<'epc>(u32, &'epc EPC);
+
+impl<'epc> EPCOffset<'epc> {
+    /// Get original [EPC].
+    pub fn epc(&self) -> &EPC {
+        self.1
+    }
+
+    /// Get the stored address.
+    pub fn addr(&self) -> u32 {
+        self.0
     }
 }
 
@@ -119,6 +257,8 @@ impl BadPAddr {
     }
 }
 
+impl_newtype_from_trait!(BadPAddr, u32);
+
 /// A virtual address read from the CoP0.ErrorEPC register. The value is a return address set when
 /// an NMI, debug, or counter exception occurs and is handled. The address normally points to the
 /// instruction which generated the error. If the instruction is in a branch delay slot, the address
@@ -139,6 +279,8 @@ impl ErrorEPC {
         unsafe { _write_errorepc(self.0) }
     }
 }
+
+impl_newtype_from_trait!(ErrorEPC, u32);
 
 bitflags! {
     /// A value in the PCCR performance counter control register.
@@ -527,7 +669,7 @@ impl L1Exception {
     }
 
     /// Convert a L1 exception code in the Common exception handler.
-    /// This function rturns Option, but if it fails, you're passing in the wrong value.
+    /// This function returns Option, but if it fails, you're passing in the wrong value.
     pub fn try_from_common(x: u8) -> Option<Self> {
         match x {
             1 => Some(L1Exception::TlbModified),
@@ -545,6 +687,19 @@ impl L1Exception {
             13 => Some(L1Exception::Trap),
             _ => None,
         }
+    }
+
+    /// Convert a L1 exception code in the Common exception handler.
+    pub fn try_from_common_cause(cause: Cause) -> Option<Self> {
+        let bits: u32 = (cause & Cause::EXC_CODE).bits >> 2;
+
+        Self::try_from_common(bits as u8)
+    }
+}
+
+impl Display for L1Exception {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        write!(f, "{self:?}")
     }
 }
 

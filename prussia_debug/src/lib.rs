@@ -19,3 +19,23 @@ impl fmt::Write for EEOut {
         Ok(())
     }
 }
+
+/// Print to the [EEOut] serial interface.
+#[macro_export]
+macro_rules! print_ee {
+    ($($arg:tt)*) => {
+        {
+            use core::fmt::Write;
+            write!(prussia_debug::EEOut, "{}", format_args!($($arg)*)).unwrap();
+        }
+    };
+}
+
+/// Print lines to the [EEOut] serial interface.
+#[macro_export]
+macro_rules! println_ee {
+    () => {
+        prussia_debug::print_ee!("\n")
+    };
+    ($($arg:tt)*) => (prussia_debug::print_ee!("{}\n", format_args!($($arg)*)));
+}

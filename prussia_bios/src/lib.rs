@@ -46,6 +46,16 @@ pub fn set_gs_crt(imode: Interlacing, vmode: VideoMode, ffmode: FieldFrameMode) 
     }
 }
 
+/// Causes the active thread to sleep.
+pub fn sleep_thread() {
+    unsafe {
+        asm!(
+            "syscall",
+            in("$3") 0x32, // v1
+        )
+    }
+}
+
 /// Exit the program and return to the PS2 browser.
 ///
 /// This function is not recommended for use if developing with PS2Link; it won't return to PS2Link

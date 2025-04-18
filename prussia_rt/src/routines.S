@@ -2,12 +2,19 @@
 # Since we want to preserve this order, disable the reordering feature.
 .set noreorder
 
-# Bootstrap routine for PruSSia. LLVM only needs a stack pointer, and the rest we can do in Rust.
+# Bootstrap routine for Prussia. LLVM only needs a stack pointer, and the rest we can do in Rust.
 .extern _rust_start
 .global _start
 _start:
 	j	_rust_start		# Call Rust
 	lui	$sp, 0x20		# Set the stack pointer to 0x0020'0000.
+
+# Purposefully trigger a break.
+.global _trigger_break_exception
+_trigger_break_exception:
+	break
+	jr $ra
+	nop
 
 # Read coprocessor 0 Status register. This *could* be done with inline assembly, but I'm going to
 # aim for compilation on stable.

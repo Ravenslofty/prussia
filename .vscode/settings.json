@@ -1,0 +1,7 @@
+{
+    "rust-analyzer.check.allTargets": false,
+    "rust-analyzer.check.extraArgs": [
+        "--target",
+        "ps2.json"
+    ]
+}
