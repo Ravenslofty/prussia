@@ -82,6 +82,7 @@ runs:
         CARGO_BIN: ${{ steps.globals.outputs.CARGO_LOC }}/bin/cargo
       run: |
         $CARGO_BIN install cargo-audit
+      shell: bash
 
     - name: Output paths
       id: paths

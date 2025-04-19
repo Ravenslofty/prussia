@@ -8,3 +8,8 @@ gen_svd:
 
 analyse_workflows:
 	zizmor -p .github/**/*
+
+install_recommended_cargo_subcommands:
+	cargo install --locked \
+		zizmor \
+		cargo-audit
