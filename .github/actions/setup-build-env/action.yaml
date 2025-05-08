@@ -71,9 +71,10 @@ runs:
         then
           curl https://sh.rustup.rs -sSf | sh -s -- -y
           . "$HOME/.cargo/env"
-          ls -l /root/.cargo/bin/
+          sudo echo $USER
+          sudo ls -l /root/.cargo/bin/
           sudo chown -R $USER:$USER $HOME/.cargo/
-          ls -l /root/.cargo/bin/
+          sudo ls -l /root/.cargo/bin/
         fi
 
         rustup update $RUST_TOOLCHAIN && rustup default $RUST_TOOLCHAIN
