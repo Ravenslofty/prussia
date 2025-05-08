@@ -71,10 +71,7 @@ runs:
         then
           curl https://sh.rustup.rs -sSf | sh -s -- -y
           . "$HOME/.cargo/env"
-          sudo echo $USER
-          sudo ls -l /root/.cargo/bin/
           sudo chown -R $USER:$USER $HOME/.cargo/
-          sudo ls -l /root/.cargo/bin/
         fi
 
         rustup update $RUST_TOOLCHAIN && rustup default $RUST_TOOLCHAIN
@@ -85,7 +82,7 @@ runs:
       env:
         CARGO_BIN: ${{ steps.globals.outputs.CARGO_LOC }}/bin/cargo
       run: |
-        $CARGO_BIN install cargo-audit
+        sudo $CARGO_BIN install cargo-audit
       shell: bash
 
     - name: Output paths
