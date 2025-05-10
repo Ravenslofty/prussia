@@ -42,24 +42,24 @@ runs:
       id: cache-rust
       uses: Swatinem/rust-cache@9d47c6ad4b02e050fd481d890b2ea34778fd09d6 # v2.7.8
 
-    # - name: Setup gnu-binutils
-    #   if: ${{ steps.cache-binutils.outputs.cache-hit != 'true' }}
-    #   env:
-    #     BINUTILS_VERSION: ${{ inputs.binutils-version }}
-    #     BINUTILS_LOC: ${{ steps.globals.outputs.BINUTILS_LOC }}
-    #     TARGET: ${{ steps.globals.outputs.TARGET }}
-    #   run: |
-    #     sudo apt update
-    #     sudo apt install -y gcc clang make texinfo libmpc-dev bison flex
-    #     git clone --branch "$BINUTILS_VERSION" https://sourceware.org/git/binutils-gdb.git
-    #     cd binutils-gdb
-    #     mkdir build
-    #     cd build
-    #     ../configure --target=$TARGET --prefix=$BINUTILS_LOC
-    #     make configure-host
-    #     make -j$(nproc)
-    #     sudo make install
-    #   shell: bash
+    - name: Setup gnu-binutils
+      if: ${{ steps.cache-binutils.outputs.cache-hit != 'true' }}
+      env:
+        BINUTILS_VERSION: ${{ inputs.binutils-version }}
+        BINUTILS_LOC: ${{ steps.globals.outputs.BINUTILS_LOC }}
+        TARGET: ${{ steps.globals.outputs.TARGET }}
+      run: |
+        sudo apt update
+        sudo apt install -y gcc clang make texinfo libmpc-dev bison flex
+        git clone --branch "$BINUTILS_VERSION" https://sourceware.org/git/binutils-gdb.git
+        cd binutils-gdb
+        mkdir build
+        cd build
+        ../configure --target=$TARGET --prefix=$BINUTILS_LOC
+        make configure-host
+        make -j$(nproc)
+        sudo make install
+      shell: bash
 
     - name: Set up Rust toolchain
       if: ${{ steps.cache-rust.outputs.cache-hit != 'true' }}
