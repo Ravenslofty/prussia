@@ -26,8 +26,8 @@ runs:
       id: globals
       run: |
         echo "BINUTILS_LOC=/opt/binutils-mips" >> "${GITHUB_OUTPUT}"
-        echo "CARGO_LOC=/root/.cargo" >> "${GITHUB_OUTPUT}"
-        echo "RUSTUP_LOC=/root/.rustup" >> "${GITHUB_OUTPUT}"
+        echo "CARGO_LOC=$HOME/.cargo" >> "${GITHUB_OUTPUT}"
+        echo "RUSTUP_LOC=$HOME/.rustup" >> "${GITHUB_OUTPUT}"
         echo "TARGET=mips64el-none-elf" >> "${GITHUB_OUTPUT}"
       shell: bash
 
@@ -71,10 +71,6 @@ runs:
         then
           curl https://sh.rustup.rs -sSf | sh -s -- -y
           . "$HOME/.cargo/env"
-          sudo echo $USER
-          sudo ls -l $HOME/.cargo/bin/
-          sudo chown -R $USER:$USER $HOME/.cargo/
-          sudo ls -l $HOME/.cargo/bin/
         fi
 
         rustup update $RUST_TOOLCHAIN && rustup default $RUST_TOOLCHAIN
