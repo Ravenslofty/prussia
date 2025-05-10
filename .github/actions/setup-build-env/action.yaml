@@ -72,7 +72,6 @@ runs:
           curl https://sh.rustup.rs -sSf | sh -s -- -y
           . "$HOME/.cargo/env"
           sudo echo $USER
-          sudo ls -l /root/.cargo/bin/
           sudo chown -R $USER:$USER $HOME/.cargo/
           sudo ls -l /root/.cargo/bin/
         fi
