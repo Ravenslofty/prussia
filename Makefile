@@ -7,4 +7,9 @@ gen_svd:
 	@echo Done
 
 analyse_workflows:
-	zizmor -p .github/workflows/*
+	zizmor -p .github/**/*
+
+install_recommended_cargo_subcommands:
+	cargo install --locked \
+		zizmor \
+		cargo-audit

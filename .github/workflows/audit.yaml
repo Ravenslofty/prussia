@@ -1,8 +1,11 @@
-name: Build Prussia
+name: Audit Prussia
 
 on:
   push:
     branches: [ main ]
+    paths: 
+      - '**/Cargo.toml'
+      - '**/Cargo.lock'
   pull_request:
 
 permissions:
@@ -23,7 +26,7 @@ permissions:
 
 
 jobs:
-  build:
+  audit:
     runs-on: ubuntu-latest
 
     steps:
@@ -44,15 +47,7 @@ jobs:
         echo $BINUTILS_LOC >> $GITHUB_PATH
         echo $CARGO_LOC >> $GITHUB_PATH
 
-    - name: Assemble ASM deps
-      working-directory: ./prussia_rt
-      run: |
-        ./rebuild-asm-lib.sh
-
-    - name: Build hello-rs
-      run: |
-        cargo build --release -p hello-rs
-
-    - name: Build biostation
-      run: |
-        cargo build --release -p biostation
+    - name: Audit checks
+      uses: rustsec/audit-check@69366f33c96575abad1ee0dba8212993eecbe998
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
