@@ -81,7 +81,7 @@ runs:
       env:
         CARGO_BIN: ${{ steps.globals.outputs.CARGO_LOC }}/bin/cargo
       run: |
-        sudo $CARGO_BIN install cargo-audit
+        $CARGO_BIN install cargo-audit
       shell: bash
 
     - name: Output paths
