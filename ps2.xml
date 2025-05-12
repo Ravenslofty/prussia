@@ -5370,6 +5370,108 @@
                         </field>
                     </fields>
                 </register>
+
+                <register>
+                    <name>SIO_LSR</name>
+                    <description>Line Status Register (aka DMA/Interrupt Status Register).
+                        Provides status information about the SIO1 (serial port) channel.
+                        Some documentation is loosely based on the TMPR4937 CPU, particularly The SIDISR0/1 register.</description>
+                    <addressOffset>0x00000010</addressOffset>
+                    <resetMask>0x0000000F</resetMask>
+                    <access>read-write</access>
+
+                    <fields>
+                        <field>
+                            <name>DR</name>
+                            <description>Indicates whether or not data is available in the Rx FIFO.</description>
+                            <bitRange>[0:0]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>NO</name>
+                                    <description>Receive FIFO is empty.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>YES</name>
+                                    <description>Receive FIFO has data for reading.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>UOER</name>
+                            <description>Indicates an overrun error is present in the next Rx FIFO data to be read.
+                                This field is updated every time the Rx FIFO is read.</description>
+                            <bitRange>[1:1]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>NO_ERROR</name>
+                                    <description>No error has occurred.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ERROR</name>
+                                    <description>An overrun error has occurred.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>UPER</name>
+                            <description>Indicates a parity error is present in the next Rx FIFO data to be read.
+                                This field is updated every time the Rx FIFO is read.</description>
+                            <bitRange>[2:2]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>NO_ERROR</name>
+                                    <description>No error has occurred.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ERROR</name>
+                                    <description>A parity error has occurred.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>UFER</name>
+                            <description>Indicates a framing error is present in the next Rx FIFO data to be read.
+                                This field is updated every time the Rx FIFO is read.</description>
+                            <bitRange>[3:3]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>NO_ERROR</name>
+                                    <description>No error has occurred.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ERROR</name>
+                                    <description>A framing error has occurred.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>UBRK</name>
+                            <description>Indicates a break exception is present in the next Rx FIFO data to be read.
+                                This field is updated every time the Rx FIFO is read.</description>
+                            <bitRange>[4:4]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>NO_ERROR</name>
+                                    <description>No error has occurred.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ERROR</name>
+                                    <description>A framing error has occurred.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                    </fields>
+                </register>
             </registers>
         </peripheral>
 

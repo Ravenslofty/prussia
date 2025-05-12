@@ -15194,12 +15194,19 @@ pub mod sio {
     #[doc = "Register block"]
     pub struct RegisterBlock {
         sio_lcr: SioLcr,
+        _reserved1: [u8; 0x0c],
+        sio_lsr: SioLsr,
     }
     impl RegisterBlock {
         #[doc = "0x00 - Line Control Register. Controls the serial data format. Matches the same register found in the TMPR4937 CPU."]
         #[inline(always)]
         pub const fn sio_lcr(&self) -> &SioLcr {
             &self.sio_lcr
+        }
+        #[doc = "0x10 - Line Status Register (aka DMA/Interrupt Status Register). Provides status information about the SIO1 (serial port) channel. Some documentation is loosely based on the TMPR4937 CPU, particularly The SIDISR0/1 register."]
+        #[inline(always)]
+        pub const fn sio_lsr(&self) -> &SioLsr {
+            &self.sio_lsr
         }
     }
     #[doc = "SIO_LCR (rw) register accessor: Line Control Register. Controls the serial data format. Matches the same register found in the TMPR4937 CPU.\n\nYou can [`read`](crate::Reg::read) this register and get [`sio_lcr::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`sio_lcr::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@sio_lcr`] module"]
@@ -15891,6 +15898,348 @@ pub mod sio {
         }
         #[doc = "`reset()` method sets SIO_LCR to value 0"]
         impl crate::Resettable for SioLcrSpec {}
+    }
+    #[doc = "SIO_LSR (rw) register accessor: Line Status Register (aka DMA/Interrupt Status Register). Provides status information about the SIO1 (serial port) channel. Some documentation is loosely based on the TMPR4937 CPU, particularly The SIDISR0/1 register.\n\nYou can [`read`](crate::Reg::read) this register and get [`sio_lsr::R`]. You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`sio_lsr::W`]. You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api).\n\nFor information about available fields see [`mod@sio_lsr`] module"]
+    #[doc(alias = "SIO_LSR")]
+    pub type SioLsr = crate::Reg<sio_lsr::SioLsrSpec>;
+    #[doc = "Line Status Register (aka DMA/Interrupt Status Register). Provides status information about the SIO1 (serial port) channel. Some documentation is loosely based on the TMPR4937 CPU, particularly The SIDISR0/1 register."]
+    pub mod sio_lsr {
+        #[doc = "Register `SIO_LSR` reader"]
+        pub type R = crate::R<SioLsrSpec>;
+        #[doc = "Register `SIO_LSR` writer"]
+        pub type W = crate::W<SioLsrSpec>;
+        #[doc = "Indicates whether or not data is available in the Rx FIFO.\n\nValue on reset: 0"]
+        #[derive(Clone, Copy, Debug, PartialEq, Eq)]
+        pub enum Dr {
+            #[doc = "0: Receive FIFO is empty."]
+            No = 0,
+            #[doc = "1: Receive FIFO has data for reading."]
+            Yes = 1,
+        }
+        impl From<Dr> for bool {
+            #[inline(always)]
+            fn from(variant: Dr) -> Self {
+                variant as u8 != 0
+            }
+        }
+        #[doc = "Field `DR` reader - Indicates whether or not data is available in the Rx FIFO."]
+        pub type DrR = crate::BitReader<Dr>;
+        impl DrR {
+            #[doc = "Get enumerated values variant"]
+            #[inline(always)]
+            pub const fn variant(&self) -> Dr {
+                match self.bits {
+                    false => Dr::No,
+                    true => Dr::Yes,
+                }
+            }
+            #[doc = "Receive FIFO is empty."]
+            #[inline(always)]
+            pub fn is_no(&self) -> bool {
+                *self == Dr::No
+            }
+            #[doc = "Receive FIFO has data for reading."]
+            #[inline(always)]
+            pub fn is_yes(&self) -> bool {
+                *self == Dr::Yes
+            }
+        }
+        #[doc = "Field `DR` writer - Indicates whether or not data is available in the Rx FIFO."]
+        pub type DrW<'a, REG> = crate::BitWriter<'a, REG, Dr>;
+        impl<'a, REG> DrW<'a, REG>
+        where
+            REG: crate::Writable + crate::RegisterSpec,
+        {
+            #[doc = "Receive FIFO is empty."]
+            #[inline(always)]
+            pub fn no(self) -> &'a mut crate::W<REG> {
+                self.variant(Dr::No)
+            }
+            #[doc = "Receive FIFO has data for reading."]
+            #[inline(always)]
+            pub fn yes(self) -> &'a mut crate::W<REG> {
+                self.variant(Dr::Yes)
+            }
+        }
+        #[doc = "Indicates an overrun error is present in the next Rx FIFO data to be read. This field is updated every time the Rx FIFO is read.\n\nValue on reset: 0"]
+        #[derive(Clone, Copy, Debug, PartialEq, Eq)]
+        pub enum Uoer {
+            #[doc = "0: No error has occurred."]
+            NoError = 0,
+            #[doc = "1: An overrun error has occurred."]
+            Error = 1,
+        }
+        impl From<Uoer> for bool {
+            #[inline(always)]
+            fn from(variant: Uoer) -> Self {
+                variant as u8 != 0
+            }
+        }
+        #[doc = "Field `UOER` reader - Indicates an overrun error is present in the next Rx FIFO data to be read. This field is updated every time the Rx FIFO is read."]
+        pub type UoerR = crate::BitReader<Uoer>;
+        impl UoerR {
+            #[doc = "Get enumerated values variant"]
+            #[inline(always)]
+            pub const fn variant(&self) -> Uoer {
+                match self.bits {
+                    false => Uoer::NoError,
+                    true => Uoer::Error,
+                }
+            }
+            #[doc = "No error has occurred."]
+            #[inline(always)]
+            pub fn is_no_error(&self) -> bool {
+                *self == Uoer::NoError
+            }
+            #[doc = "An overrun error has occurred."]
+            #[inline(always)]
+            pub fn is_error(&self) -> bool {
+                *self == Uoer::Error
+            }
+        }
+        #[doc = "Field `UOER` writer - Indicates an overrun error is present in the next Rx FIFO data to be read. This field is updated every time the Rx FIFO is read."]
+        pub type UoerW<'a, REG> = crate::BitWriter<'a, REG, Uoer>;
+        impl<'a, REG> UoerW<'a, REG>
+        where
+            REG: crate::Writable + crate::RegisterSpec,
+        {
+            #[doc = "No error has occurred."]
+            #[inline(always)]
+            pub fn no_error(self) -> &'a mut crate::W<REG> {
+                self.variant(Uoer::NoError)
+            }
+            #[doc = "An overrun error has occurred."]
+            #[inline(always)]
+            pub fn error(self) -> &'a mut crate::W<REG> {
+                self.variant(Uoer::Error)
+            }
+        }
+        #[doc = "Indicates a parity error is present in the next Rx FIFO data to be read. This field is updated every time the Rx FIFO is read.\n\nValue on reset: 0"]
+        #[derive(Clone, Copy, Debug, PartialEq, Eq)]
+        pub enum Uper {
+            #[doc = "0: No error has occurred."]
+            NoError = 0,
+            #[doc = "1: A parity error has occurred."]
+            Error = 1,
+        }
+        impl From<Uper> for bool {
+            #[inline(always)]
+            fn from(variant: Uper) -> Self {
+                variant as u8 != 0
+            }
+        }
+        #[doc = "Field `UPER` reader - Indicates a parity error is present in the next Rx FIFO data to be read. This field is updated every time the Rx FIFO is read."]
+        pub type UperR = crate::BitReader<Uper>;
+        impl UperR {
+            #[doc = "Get enumerated values variant"]
+            #[inline(always)]
+            pub const fn variant(&self) -> Uper {
+                match self.bits {
+                    false => Uper::NoError,
+                    true => Uper::Error,
+                }
+            }
+            #[doc = "No error has occurred."]
+            #[inline(always)]
+            pub fn is_no_error(&self) -> bool {
+                *self == Uper::NoError
+            }
+            #[doc = "A parity error has occurred."]
+            #[inline(always)]
+            pub fn is_error(&self) -> bool {
+                *self == Uper::Error
+            }
+        }
+        #[doc = "Field `UPER` writer - Indicates a parity error is present in the next Rx FIFO data to be read. This field is updated every time the Rx FIFO is read."]
+        pub type UperW<'a, REG> = crate::BitWriter<'a, REG, Uper>;
+        impl<'a, REG> UperW<'a, REG>
+        where
+            REG: crate::Writable + crate::RegisterSpec,
+        {
+            #[doc = "No error has occurred."]
+            #[inline(always)]
+            pub fn no_error(self) -> &'a mut crate::W<REG> {
+                self.variant(Uper::NoError)
+            }
+            #[doc = "A parity error has occurred."]
+            #[inline(always)]
+            pub fn error(self) -> &'a mut crate::W<REG> {
+                self.variant(Uper::Error)
+            }
+        }
+        #[doc = "Indicates a framing error is present in the next Rx FIFO data to be read. This field is updated every time the Rx FIFO is read.\n\nValue on reset: 0"]
+        #[derive(Clone, Copy, Debug, PartialEq, Eq)]
+        pub enum Ufer {
+            #[doc = "0: No error has occurred."]
+            NoError = 0,
+            #[doc = "1: A framing error has occurred."]
+            Error = 1,
+        }
+        impl From<Ufer> for bool {
+            #[inline(always)]
+            fn from(variant: Ufer) -> Self {
+                variant as u8 != 0
+            }
+        }
+        #[doc = "Field `UFER` reader - Indicates a framing error is present in the next Rx FIFO data to be read. This field is updated every time the Rx FIFO is read."]
+        pub type UferR = crate::BitReader<Ufer>;
+        impl UferR {
+            #[doc = "Get enumerated values variant"]
+            #[inline(always)]
+            pub const fn variant(&self) -> Ufer {
+                match self.bits {
+                    false => Ufer::NoError,
+                    true => Ufer::Error,
+                }
+            }
+            #[doc = "No error has occurred."]
+            #[inline(always)]
+            pub fn is_no_error(&self) -> bool {
+                *self == Ufer::NoError
+            }
+            #[doc = "A framing error has occurred."]
+            #[inline(always)]
+            pub fn is_error(&self) -> bool {
+                *self == Ufer::Error
+            }
+        }
+        #[doc = "Field `UFER` writer - Indicates a framing error is present in the next Rx FIFO data to be read. This field is updated every time the Rx FIFO is read."]
+        pub type UferW<'a, REG> = crate::BitWriter<'a, REG, Ufer>;
+        impl<'a, REG> UferW<'a, REG>
+        where
+            REG: crate::Writable + crate::RegisterSpec,
+        {
+            #[doc = "No error has occurred."]
+            #[inline(always)]
+            pub fn no_error(self) -> &'a mut crate::W<REG> {
+                self.variant(Ufer::NoError)
+            }
+            #[doc = "A framing error has occurred."]
+            #[inline(always)]
+            pub fn error(self) -> &'a mut crate::W<REG> {
+                self.variant(Ufer::Error)
+            }
+        }
+        #[doc = "Indicates a break exception is present in the next Rx FIFO data to be read. This field is updated every time the Rx FIFO is read.\n\nValue on reset: 0"]
+        #[derive(Clone, Copy, Debug, PartialEq, Eq)]
+        pub enum Ubrk {
+            #[doc = "0: No error has occurred."]
+            NoError = 0,
+            #[doc = "1: A framing error has occurred."]
+            Error = 1,
+        }
+        impl From<Ubrk> for bool {
+            #[inline(always)]
+            fn from(variant: Ubrk) -> Self {
+                variant as u8 != 0
+            }
+        }
+        #[doc = "Field `UBRK` reader - Indicates a break exception is present in the next Rx FIFO data to be read. This field is updated every time the Rx FIFO is read."]
+        pub type UbrkR = crate::BitReader<Ubrk>;
+        impl UbrkR {
+            #[doc = "Get enumerated values variant"]
+            #[inline(always)]
+            pub const fn variant(&self) -> Ubrk {
+                match self.bits {
+                    false => Ubrk::NoError,
+                    true => Ubrk::Error,
+                }
+            }
+            #[doc = "No error has occurred."]
+            #[inline(always)]
+            pub fn is_no_error(&self) -> bool {
+                *self == Ubrk::NoError
+            }
+            #[doc = "A framing error has occurred."]
+            #[inline(always)]
+            pub fn is_error(&self) -> bool {
+                *self == Ubrk::Error
+            }
+        }
+        #[doc = "Field `UBRK` writer - Indicates a break exception is present in the next Rx FIFO data to be read. This field is updated every time the Rx FIFO is read."]
+        pub type UbrkW<'a, REG> = crate::BitWriter<'a, REG, Ubrk>;
+        impl<'a, REG> UbrkW<'a, REG>
+        where
+            REG: crate::Writable + crate::RegisterSpec,
+        {
+            #[doc = "No error has occurred."]
+            #[inline(always)]
+            pub fn no_error(self) -> &'a mut crate::W<REG> {
+                self.variant(Ubrk::NoError)
+            }
+            #[doc = "A framing error has occurred."]
+            #[inline(always)]
+            pub fn error(self) -> &'a mut crate::W<REG> {
+                self.variant(Ubrk::Error)
+            }
+        }
+        impl R {
+            #[doc = "Bit 0 - Indicates whether or not data is available in the Rx FIFO."]
+            #[inline(always)]
+            pub fn dr(&self) -> DrR {
+                DrR::new((self.bits & 1) != 0)
+            }
+            #[doc = "Bit 1 - Indicates an overrun error is present in the next Rx FIFO data to be read. This field is updated every time the Rx FIFO is read."]
+            #[inline(always)]
+            pub fn uoer(&self) -> UoerR {
+                UoerR::new(((self.bits >> 1) & 1) != 0)
+            }
+            #[doc = "Bit 2 - Indicates a parity error is present in the next Rx FIFO data to be read. This field is updated every time the Rx FIFO is read."]
+            #[inline(always)]
+            pub fn uper(&self) -> UperR {
+                UperR::new(((self.bits >> 2) & 1) != 0)
+            }
+            #[doc = "Bit 3 - Indicates a framing error is present in the next Rx FIFO data to be read. This field is updated every time the Rx FIFO is read."]
+            #[inline(always)]
+            pub fn ufer(&self) -> UferR {
+                UferR::new(((self.bits >> 3) & 1) != 0)
+            }
+            #[doc = "Bit 4 - Indicates a break exception is present in the next Rx FIFO data to be read. This field is updated every time the Rx FIFO is read."]
+            #[inline(always)]
+            pub fn ubrk(&self) -> UbrkR {
+                UbrkR::new(((self.bits >> 4) & 1) != 0)
+            }
+        }
+        impl W {
+            #[doc = "Bit 0 - Indicates whether or not data is available in the Rx FIFO."]
+            #[inline(always)]
+            pub fn dr(&mut self) -> DrW<SioLsrSpec> {
+                DrW::new(self, 0)
+            }
+            #[doc = "Bit 1 - Indicates an overrun error is present in the next Rx FIFO data to be read. This field is updated every time the Rx FIFO is read."]
+            #[inline(always)]
+            pub fn uoer(&mut self) -> UoerW<SioLsrSpec> {
+                UoerW::new(self, 1)
+            }
+            #[doc = "Bit 2 - Indicates a parity error is present in the next Rx FIFO data to be read. This field is updated every time the Rx FIFO is read."]
+            #[inline(always)]
+            pub fn uper(&mut self) -> UperW<SioLsrSpec> {
+                UperW::new(self, 2)
+            }
+            #[doc = "Bit 3 - Indicates a framing error is present in the next Rx FIFO data to be read. This field is updated every time the Rx FIFO is read."]
+            #[inline(always)]
+            pub fn ufer(&mut self) -> UferW<SioLsrSpec> {
+                UferW::new(self, 3)
+            }
+            #[doc = "Bit 4 - Indicates a break exception is present in the next Rx FIFO data to be read. This field is updated every time the Rx FIFO is read."]
+            #[inline(always)]
+            pub fn ubrk(&mut self) -> UbrkW<SioLsrSpec> {
+                UbrkW::new(self, 4)
+            }
+        }
+        #[doc = "Line Status Register (aka DMA/Interrupt Status Register). Provides status information about the SIO1 (serial port) channel. Some documentation is loosely based on the TMPR4937 CPU, particularly The SIDISR0/1 register.\n\nYou can [`read`](crate::Reg::read) this register and get [`sio_lsr::R`](R). You can [`reset`](crate::Reg::reset), [`write`](crate::Reg::write), [`write_with_zero`](crate::Reg::write_with_zero) this register using [`sio_lsr::W`](W). You can also [`modify`](crate::Reg::modify) this register. See [API](https://docs.rs/svd2rust/#read--modify--write-api)."]
+        pub struct SioLsrSpec;
+        impl crate::RegisterSpec for SioLsrSpec {
+            type Ux = u32;
+        }
+        #[doc = "`read()` method returns [`sio_lsr::R`](R) reader structure"]
+        impl crate::Readable for SioLsrSpec {}
+        #[doc = "`write(|w| ..)` method takes [`sio_lsr::W`](W) writer structure"]
+        impl crate::Writable for SioLsrSpec {
+            type Safety = crate::Unsafe;
+        }
+        #[doc = "`reset()` method sets SIO_LSR to value 0"]
+        impl crate::Resettable for SioLsrSpec {}
     }
 }
 #[no_mangle]
