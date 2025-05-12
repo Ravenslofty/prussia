@@ -5174,6 +5174,203 @@
             <description>Serial Input/Output</description>
             <groupName>SIO</groupName>
             <baseAddress>0xB000F100</baseAddress>
+
+            <registers>
+                <register>
+                    <name>SIO_LCR</name>
+                    <description>Line Control Register. Controls the serial data format.
+                        Matches the same register found in the TMPR4937 CPU.</description>
+                    <addressOffset>0x00000000</addressOffset>
+                    <resetMask>0x0000FFFF</resetMask>
+                    <access>read-write</access>
+
+                    <fields>
+                        <field>
+                            <name>UMODELEN</name>
+                            <description>The length of each data frame.</description>
+                            <bitRange>[0:0]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>BIT8</name>
+                                    <description>8-bit data length.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>BIT7</name>
+                                    <description>7-bit data length.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>UMODEMC</name>
+                            <description>Whether to add a TX wake-up bit after data bits.</description>
+                            <bitRange>[1:1]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>DISABLE</name>
+                                    <description>Multi-Controller off.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ENABLE</name>
+                                    <description>Multi-Controller on.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>USBL</name>
+                            <description>How many stop bits to add.</description>
+                            <bitRange>[2:2]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>BIT1</name>
+                                    <description>One bit.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>BIT2</name>
+                                    <description>Two bits.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>UPEN</name>
+                            <description>Enable/disable parity-checking. MUST BE DISABLED when MCENABLE is on.</description>
+                            <bitRange>[3:3]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>DISABLE</name>
+                                    <description>Parity check is disabled.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ENABLE</name>
+                                    <description>Parity check is enabled.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>UEPS</name>
+                            <description>Odd or even parity.</description>
+                            <bitRange>[4:4]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>ODD</name>
+                                    <description>Use odd parity.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>EVEN</name>
+                                    <description>Use even parity.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>SCS</name>
+                            <description>Selects the serial transfer clock.
+                                The baud rate is equal to the chosen clock frequency divided by 16.</description>
+                            <bitRange>[6:5]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>INTERNAL</name>
+                                    <description>Uses the internal clock (IMBUSCLK).</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>BRG_DIV_INTERNAL</name>
+                                    <description>The IMBUSCLK divided by the baud rate generator output.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>EXTERNAL</name>
+                                    <description>Uses an external clock (SCLK).</description>
+                                    <value>2</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>BRG_DIV_EXTERNAL</name>
+                                    <description>The SCLK divided by the baud rate generator output.</description>
+                                    <value>3</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>UFCE</name>
+                            <description>Enables RTC-CTS flow control. When high, allows data to be queued for transmission in TX FIFO if CTS is high.</description>
+                            <bitRange>[8:8]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>DISABLE</name>
+                                    <description>Flow control is disabled.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ENABLE</name>
+                                    <description>Flow control is enabled.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>UODE</name>
+                            <description>Controls the output mode of the TXD signal.
+                                Expects the slave controller to set the TXD signal to Open Drain when Multi-Controller is enabled.</description>
+                            <bitRange>[13:13]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>TOTEM_POLE</name>
+                                    <description>Totem pole output.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>OPEN_DRAIN</name>
+                                    <description>Open drain output.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>TWUB</name>
+                            <description>Specifies the Wake Up Bit (WUB) to use when in Multi-Controller System mode.</description>
+                            <bitRange>[14:14]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>DATA_FRAME</name>
+                                    <description>Data frame transfer.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ADDRESS</name>
+                                    <description>Address (ID) frame transfer.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>RWUB</name>
+                            <description>Specifies whether to expect address (ID) frames with Wake Up Bits set to 1 or data frames with Wake Up Bits set to 0.
+                                Only used when in Multi-Controller System mode.</description>
+                            <bitRange>[15:15]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>DATA_FRAME</name>
+                                    <description>Receive data frames.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ADDRESS</name>
+                                    <description>Receive Address (ID) frames.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                    </fields>
+                </register>
+            </registers>
         </peripheral>
 
         <peripheral>
