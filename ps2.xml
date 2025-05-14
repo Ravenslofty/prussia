@@ -5375,10 +5375,10 @@
                     <name>SIO_LSR</name>
                     <description>Line Status Register (aka DMA/Interrupt Status Register).
                         Provides status information about the SIO1 (serial port) channel.
-                        Some documentation is loosely based on the TMPR4937 CPU, particularly The SIDISR0/1 register.</description>
+                        Some documentation is loosely based on the TMPR4937 CPU, particularly The SIDISR0/1 register, however it mainly draws from the TX7901.</description>
                     <addressOffset>0x00000010</addressOffset>
                     <resetMask>0x0000000F</resetMask>
-                    <access>read-write</access>
+                    <access>read-only</access>
 
                     <fields>
                         <field>
@@ -5469,6 +5469,231 @@
                                     <value>1</value>
                                 </enumeratedValue>
                             </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>UTHR</name>
+                            <description>Tx FIFO Empty. Indicates there is data in the Tx FIFO pending transmission.
+                                This field is updated every time the Tx FIFO is written to or cleared.</description>
+                            <bitRange>[5:5]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>DATA</name>
+                                    <description>There is data in the FIFO.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>NO_DATA</name>
+                                    <description>The FIFO is empty.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>UTER</name>
+                            <description>Transmitter empty. Indicates there is data in the Tx FIFO and Tx Shift registers.
+                                This field is updated every time the Tx FIFO is written to or cleared.</description>
+                            <bitRange>[6:6]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>DATA</name>
+                                    <description>There is data in the FIFO and Shift.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>NO_DATA</name>
+                                    <description>The FIFO or Shift are empty.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>UFER</name>
+                            <description>Rx FIFO Error. Set to 1 when at least one error bit in the Line Status Register is set.
+                                When the LSR is read, this field is cleared.</description>
+                            <bitRange>[7:7]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>DATA</name>
+                                    <description>No errors in the LSR.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>NO_DATA</name>
+                                    <description>At least one error in the LSR.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                    </fields>
+                </register>
+
+                <register>
+                    <name>SIO_IER</name>
+                    <description>Interrupt Enable Register. Handles the enabling/disabling of SIO-specific interrupts.</description>
+                    <addressOffset>0x00000020</addressOffset>
+                    <resetMask>0x000000FF</resetMask>
+                    <access>read-write</access>
+
+                    <fields>
+                        <field>
+                            <name>ERBFI</name>
+                            <description>Toggles interrupting once the Rx FIFO contains data.</description>
+                            <bitRange>[0:0]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>DISABLE</name>
+                                    <description>Disable the interrupt.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ENABLE</name>
+                                    <description>Enable the interrupt.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>ETBEI</name>
+                            <description>Toggles interrupting when the Tx FIFO is empty.</description>
+                            <bitRange>[1:1]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>DISABLE</name>
+                                    <description>Disable the interrupt.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ENABLE</name>
+                                    <description>Enable the interrupt.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>ELSI</name>
+                            <description>When enabled, generates Rx Status Interrupts if either of bits 1, 2, 3, or 4, of the Line Status Register are set.</description>
+                            <bitRange>[2:2]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>DISABLE</name>
+                                    <description>Disable the interrupt.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ENABLE</name>
+                                    <description>Enable the interrupt.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>EDSSI</name>
+                            <description>When enabled, generates Modem Status Interrupts if either of bits 0, 1, 2, or 3, of the Modem Status Register are set.</description>
+                            <bitRange>[2:2]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>DISABLE</name>
+                                    <description>Disable the interrupt.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ENABLE</name>
+                                    <description>Enable the interrupt.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                    </fields>
+                </register>
+
+                <!-- TODO: Insufficient documentation. Needs further improvement. -->
+                <register>
+                    <name>SIO_ISR</name>
+                    <description>Interrupt Status Register. TODO: Add documentation on register.</description>
+                    <addressOffset>0x00000030</addressOffset>
+                    <resetMask>0x0000000F</resetMask>
+                    <access>read-write</access>
+
+                    <fields>
+                        <field>
+                            <name>RXDATA</name>
+                            <description>RX data is available.</description>
+                            <bitRange>[0:0]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>NO_DATA</name>
+                                    <description>No data.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>DATA</name>
+                                    <description>data present.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>TXEMPTY</name>
+                            <description>TX is empty.</description>
+                            <bitRange>[1:1]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>DATA</name>
+                                    <description>Data is present.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>EMPTY</name>
+                                    <description>No data.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>RXEMPTY</name>
+                            <description>RX is empty.</description>
+                            <bitRange>[2:2]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>DATA</name>
+                                    <description>Data is present.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>EMPTY</name>
+                                    <description>No data.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>UMSII</name>
+                            <description>Trigger Modem Status Interrupt if the appropriate flag in Line Status Register is set.</description>
+                            <bitRange>[3:3]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>DISABLED</name>
+                                    <description>Interrupt disabled.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ENABLED</name>
+                                    <description>Interrupt enabled.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>UCRUB</name>
+                            <description>Count of received unread bytes.</description>
+                            <bitRange>[11:8]</bitRange>
+                            <access>read-only</access>
+                        </field>
+                        <field>
+                            <name>UCBT</name>
+                            <description>Count of bytes pending transmission.</description>
+                            <bitRange>[15:12]</bitRange>
+                            <access>read-only</access>
                         </field>
                     </fields>
                 </register>
