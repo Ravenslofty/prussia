@@ -5697,6 +5697,117 @@
                         </field>
                     </fields>
                 </register>
+                
+                <register>
+                    <name>SIO_FCR</name>
+                    <description>Manages the Rx and Tx FIFO buffers.
+                        Additionally, controls the Receive FIFO Trigger level and sets DMA mode 1. Based on TX7901 docs.</description>
+                    <addressOffset>0x00000040</addressOffset>
+                    <access>read-write</access>
+
+                    <fields>
+                        <field>
+                            <name>UFIFOE</name>
+                            <description>Enables or disables the FIFOs.</description>
+                            <bitRange>[0:0]</bitRange>
+
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>DISABLED</name>
+                                    <description>FIFOs are disabled.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>ENABLED</name>
+                                    <description>FIFOs are enabled.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>UCLRR</name>
+                            <description>Clears the Rx FIFO when set. Self-clears once set to 1.</description>
+                            <bitRange>[1:1]</bitRange>
+
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>NOTHING</name>
+                                    <description>Does nothing.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>CLEAR</name>
+                                    <description>Clear the Rx FIFO.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>UCLRT</name>
+                            <description>Clears the Tx FIFO when set. Self-clears once set to 1.</description>
+                            <bitRange>[2:2]</bitRange>
+
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>NOTHING</name>
+                                    <description>Does nothing.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>CLEAR</name>
+                                    <description>Clear the Tx FIFO.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>UDMA1</name>
+                            <description>Sets DMA mode 1 for when the Tx/Rx ready interrupts trigger.</description>
+                            <bitRange>[3:3]</bitRange>
+
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>MODE0</name>
+                                    <description>DMA mode 0.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>MODE1</name>
+                                    <description>DMA mode 1.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                        <field>
+                            <name>URFIFOL</name>
+                            <description>Determines the amount of bytes needed in the Rx FIFO to trigger an interrupt.</description>
+                            <bitRange>[7:6]</bitRange>
+
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>BYTES_1</name>
+                                    <description>One byte to trigger the interrupt.</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>BYTES_4</name>
+                                    <description>Four bytes to trigger the interrupt.</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>BYTES_8</name>
+                                    <description>Eight bytes to trigger the interrupt.</description>
+                                    <value>2</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>BYTES_14</name>
+                                    <description>Fourteen bytes to trigger the interrupt.</description>
+                                    <value>3</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                    </fields>
+                </register>
             </registers>
         </peripheral>
 
