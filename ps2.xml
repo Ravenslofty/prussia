@@ -5808,6 +5808,50 @@
                         </field>
                     </fields>
                 </register>
+
+                <register>
+                    <name>SIO_BGR</name>
+                    <description>Baud Rate Control Register. Configures the pre-scaler and clock frequency for the Baud Rate Generator.
+                        The clock signal used is calculated based on the formula `fc / (prescaler x divisor x 16)` where fc is the clock chosen in the Line Control Register (bits 6:5).
+                        Based on the TX49 docs.</description>
+                    <addressOffset>0x00000050</addressOffset>
+                    <access>read-write</access>
+
+                    <fields>
+                        <field>
+                            <name>UBRD</name>
+                            <description>Configures the baud rate divisor value. Default value is 0xFF.</description>
+                            <bitRange>[7:0]</bitRange>
+                        </field>
+                        <field>
+                            <name>BCLK</name>
+                            <description>Configures the Baud Rate Generator Clock. Default setting is 0x3.</description>
+                            <bitRange>[9:8]</bitRange>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>FC_2</name>
+                                    <description>FC / 2</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>FC_8</name>
+                                    <description>FC / 8</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>FC_32</name>
+                                    <description>FC / 32</description>
+                                    <value>2</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>FC_128</name>
+                                    <description>FC / 128</description>
+                                    <value>3</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                        </field>
+                    </fields>
+                </register>
             </registers>
         </peripheral>
 
