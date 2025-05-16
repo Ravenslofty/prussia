@@ -5507,7 +5507,7 @@
                             </enumeratedValues>
                         </field>
                         <field>
-                            <name>UFER</name>
+                            <name>UFDER</name>
                             <description>Rx FIFO Error. Set to 1 when at least one error bit in the Line Status Register is set.
                                 When the LSR is read, this field is cleared.</description>
                             <bitRange>[7:7]</bitRange>
@@ -5849,6 +5849,36 @@
                                     <value>3</value>
                                 </enumeratedValue>
                             </enumeratedValues>
+                        </field>
+                    </fields>
+                </register>
+
+                <register>
+                    <name>SIO_TXFIFO</name>
+                    <description>Tx FIFO buffer.</description>
+                    <addressOffset>0x00000080</addressOffset>
+                    <access>write-only</access>
+
+                    <fields>
+                        <field>
+                            <name>BUFFER</name>
+                            <description>Write individual bytes to the FIFO buffer.</description>
+                            <bitRange>[7:0]</bitRange>
+                        </field>
+                    </fields>
+                </register>
+
+                <register>
+                    <name>SIO_RXFIFO</name>
+                    <description>Rx FIFO buffer.</description>
+                    <addressOffset>0x00000080</addressOffset>
+                    <access>read-only</access>
+
+                    <fields>
+                        <field>
+                            <name>BUFFER</name>
+                            <description>Read individual bytes from the FIFO buffer.</description>
+                            <bitRange>[7:0]</bitRange>
                         </field>
                     </fields>
                 </register>
