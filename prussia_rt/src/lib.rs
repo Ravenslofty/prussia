@@ -11,10 +11,22 @@
 #![no_std]
 #![deny(missing_docs)]
 #![feature(asm_experimental_arch)]
+#![feature(naked_functions)]
+#![feature(strict_provenance)]
+
+use core::panic::PanicInfo;
+
+use panic::panic_entrypoint;
+use prussia_debug::println_ee;
+
+use crate::exceptions::initialise_exception_vectors;
 
 pub mod atomic;
 pub mod cop0;
+pub mod exceptions;
 pub mod interrupts;
+pub mod panic;
+pub mod thread;
 
 // Static data initialised to zero goes in the .bss segment, which is essentially a pointer to
 // uninitialised memory. We need to zero .bss before the main program runs.
@@ -28,8 +40,16 @@ unsafe fn zero_bss() {
         static mut START_OF_BSS: u32;
         static mut END_OF_BSS: u32;
     }
+    
+    unsafe {
+        let mut i = START_OF_BSS as *mut u32;
+        let end = END_OF_BSS as *mut u32;
 
-    r0::zero_bss::<u32>(&mut START_OF_BSS as *mut u32, &mut END_OF_BSS as *mut u32);
+        while i < end {
+            core::ptr::write_volatile(i, core::mem::zeroed());
+            i = i.offset(1);
+        }
+    }
 }
 
 // A PS2 program's execution flow begins in _start, which calls the EE kernel to set up this thread
@@ -41,7 +61,20 @@ pub unsafe extern "C" fn _rust_start() -> ! {
         fn main() -> !;
     }
 
+    initialise_exception_vectors();
+
+    println_ee!("rt - Exception vectors set.");
+
     zero_bss();
 
+    println_ee!("rt - BSS zero-ed out.");
+
+    println_ee!("rt - Hello world!");
+
     main()
+}
+
+#[panic_handler]
+fn panic(info: &PanicInfo) -> ! {
+    panic_entrypoint(info);
 }
